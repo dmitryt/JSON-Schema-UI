@@ -1,0 +1,1786 @@
+[
+  {
+    "fields": [
+      {
+        "description": "Campaign",
+        "enabled": true,
+        "include_in_all": true,
+        "required": false,
+        "tags": [
+          "ordering"
+        ],
+        "type": "string",
+        "view": {
+          "v": {
+            "order": {
+              "asset_image": 5,
+              "asset_print": 5,
+              "asset_video": 5,
+              "asset_document": 5,
+              "asset_common": 4,
+              "asset_audio": 5,
+              "project_common": 4,
+              "asset_digital": 5,
+              "asset_element_project_common_common": 4,
+              "adkit_common": 4,
+              "asset_other": 5
+            },
+            "width": 1,
+            "group": {
+              "asset_image": "ProductInfo_1370513111411",
+              "asset_print": "ProductInfo_1370513111411",
+              "asset_video": "ProductInfo_1370513111411",
+              "asset_document": "ProductInfo_1370513111411",
+              "asset_common": "ProductInfo_1370513111411",
+              "asset_audio": "ProductInfo_1370513111411",
+              "project_common": "ProductInfo_1370513111411",
+              "asset_digital": "ProductInfo_1370513111411",
+              "asset_element_project_common_common": "ProductInfo_1370513111411",
+              "adkit_common": "ProductInfo_1370513111411",
+              "asset_other": "ProductInfo_1370513111411"
+            },
+            "visible": true
+          },
+          "e": {
+            "order": {
+              "asset_image": 5,
+              "asset_print": 5,
+              "asset_video": 5,
+              "asset_document": 5,
+              "asset_common": 4,
+              "asset_audio": 5,
+              "project_common": 4,
+              "asset_digital": 5,
+              "asset_element_project_common_common": 4,
+              "adkit_common": 4,
+              "asset_other": 5
+            },
+            "width": 1,
+            "group": {
+              "asset_image": "ProductInfo_1370513111411",
+              "asset_print": "ProductInfo_1370513111411",
+              "asset_video": "ProductInfo_1370513111411",
+              "asset_document": "ProductInfo_1370513111411",
+              "asset_common": "ProductInfo_1370513111411",
+              "asset_audio": "ProductInfo_1370513111411",
+              "project_common": "ProductInfo_1370513111411",
+              "asset_digital": "ProductInfo_1370513111411",
+              "asset_element_project_common_common": "ProductInfo_1370513111411",
+              "adkit_common": "ProductInfo_1370513111411",
+              "asset_other": "ProductInfo_1370513111411"
+            },
+            "visible": true
+          },
+          "schemaOrigin": "asset_element_project_common"
+        },
+        "relativePath": "_cm.asset.common.Campaign",
+        "path": "_cm.asset.common.Campaign",
+        "order": {
+          "asset_image": 5,
+          "asset_print": 5,
+          "asset_video": 5,
+          "asset_document": 5,
+          "asset_common": 4,
+          "asset_audio": 5,
+          "project_common": 4,
+          "asset_digital": 5,
+          "asset_element_project_common_common": 4,
+          "adkit_common": 4,
+          "asset_other": 5
+        },
+        "width": 1
+      },
+      {
+        "boost": 125,
+        "description": "Advertiser",
+        "enabled": true,
+        "extendable": true,
+        "include_in_all": true,
+        "maxItems": 1,
+        "name": "advertiser",
+        "required": false,
+        "scope": "agency",
+        "tags": [
+          "ordering"
+        ],
+        "type": "dictionary",
+        "highlighted": true,
+        "view": {
+          "e": {
+            "group": {
+              "asset_image": "ProductInfo_1370513111411",
+              "asset_print": "ProductInfo_1370513111411",
+              "asset_video": "ProductInfo_1370513111411",
+              "asset_document": "ProductInfo_1370513111411",
+              "asset_common": "ProductInfo_1370513111411",
+              "asset_audio": "ProductInfo_1370513111411",
+              "project_common": "ProductInfo_1370513111411",
+              "asset_digital": "ProductInfo_1370513111411",
+              "asset_element_project_common_common": "ProductInfo_1370513111411",
+              "adkit_common": "ProductInfo_1370513111411",
+              "asset_other": "ProductInfo_1370513111411"
+            },
+            "order": {
+              "asset_image": 1,
+              "asset_print": 1,
+              "asset_video": 1,
+              "asset_document": 1,
+              "asset_common": 0,
+              "asset_audio": 1,
+              "project_common": 0,
+              "asset_digital": 1,
+              "asset_element_project_common_common": 0,
+              "adkit_common": 0,
+              "asset_other": 1
+            },
+            "readonly": [
+              {
+                "path": "_cm.common.mediaType",
+                "value": "video"
+              },
+              {
+                "path": "_cm.common.mediaSubType",
+                "value": "QC-ed master"
+              }
+            ],
+            "visible": true,
+            "width": 1
+          },
+          "isMultilevel": true,
+          "v": {
+            "visible": true,
+            "order": {
+              "asset_image": 1,
+              "asset_print": 1,
+              "asset_video": 1,
+              "asset_document": 1,
+              "asset_common": 0,
+              "asset_audio": 1,
+              "project_common": 0,
+              "asset_digital": 1,
+              "asset_element_project_common_common": 0,
+              "adkit_common": 0,
+              "asset_other": 1
+            },
+            "width": 1,
+            "group": {
+              "asset_image": "ProductInfo_1370513111411",
+              "asset_print": "ProductInfo_1370513111411",
+              "asset_video": "ProductInfo_1370513111411",
+              "asset_document": "ProductInfo_1370513111411",
+              "asset_common": "ProductInfo_1370513111411",
+              "asset_audio": "ProductInfo_1370513111411",
+              "project_common": "ProductInfo_1370513111411",
+              "asset_digital": "ProductInfo_1370513111411",
+              "asset_element_project_common_common": "ProductInfo_1370513111411",
+              "adkit_common": "ProductInfo_1370513111411",
+              "asset_other": "ProductInfo_1370513111411"
+            }
+          },
+          "schemaOrigin": "asset_element_project_common"
+        },
+        "relativePath": "_cm.asset.common.advertiser",
+        "path": "_cm.asset.common.advertiser",
+        "order": {
+          "asset_image": 1,
+          "asset_print": 1,
+          "asset_video": 1,
+          "asset_document": 1,
+          "asset_common": 0,
+          "asset_audio": 1,
+          "project_common": 0,
+          "asset_digital": 1,
+          "asset_element_project_common_common": 0,
+          "adkit_common": 0,
+          "asset_other": 1
+        },
+        "width": 1,
+        "hierarchy": [
+          "_cm.asset.common.advertiser",
+          "_cm.asset.common.brand",
+          "_cm.asset.common.sub_brand",
+          "_cm.asset.common.product"
+        ]
+      },
+      {
+        "boost": 125,
+        "depends": {
+          "advertiser": "_cm.asset.common.advertiser"
+        },
+        "description": "Brand",
+        "enabled": true,
+        "extendable": true,
+        "include_in_all": true,
+        "maxItems": 1,
+        "name": "advertiser",
+        "required": false,
+        "scope": "agency",
+        "tags": [
+          "ordering"
+        ],
+        "type": "dictionary",
+        "highlighted": true,
+        "view": {
+          "v": {
+            "visible": true,
+            "order": {
+              "asset_image": 2,
+              "asset_print": 2,
+              "asset_video": 2,
+              "asset_document": 2,
+              "asset_common": 1,
+              "asset_audio": 2,
+              "project_common": 1,
+              "asset_digital": 2,
+              "asset_element_project_common_common": 1,
+              "adkit_common": 1,
+              "asset_other": 2
+            },
+            "width": 1,
+            "group": {
+              "asset_image": "ProductInfo_1370513111411",
+              "asset_print": "ProductInfo_1370513111411",
+              "asset_video": "ProductInfo_1370513111411",
+              "asset_document": "ProductInfo_1370513111411",
+              "asset_common": "ProductInfo_1370513111411",
+              "asset_audio": "ProductInfo_1370513111411",
+              "project_common": "ProductInfo_1370513111411",
+              "asset_digital": "ProductInfo_1370513111411",
+              "asset_element_project_common_common": "ProductInfo_1370513111411",
+              "adkit_common": "ProductInfo_1370513111411",
+              "asset_other": "ProductInfo_1370513111411"
+            }
+          },
+          "e": {
+            "visible": true,
+            "order": {
+              "asset_image": 2,
+              "asset_print": 2,
+              "asset_video": 2,
+              "asset_document": 2,
+              "asset_common": 1,
+              "asset_audio": 2,
+              "project_common": 1,
+              "asset_digital": 2,
+              "asset_element_project_common_common": 1,
+              "adkit_common": 1,
+              "asset_other": 2
+            },
+            "width": 1,
+            "group": {
+              "asset_image": "ProductInfo_1370513111411",
+              "asset_print": "ProductInfo_1370513111411",
+              "asset_video": "ProductInfo_1370513111411",
+              "asset_document": "ProductInfo_1370513111411",
+              "asset_common": "ProductInfo_1370513111411",
+              "asset_audio": "ProductInfo_1370513111411",
+              "project_common": "ProductInfo_1370513111411",
+              "asset_digital": "ProductInfo_1370513111411",
+              "asset_element_project_common_common": "ProductInfo_1370513111411",
+              "adkit_common": "ProductInfo_1370513111411",
+              "asset_other": "ProductInfo_1370513111411"
+            }
+          },
+          "isMultilevel": true,
+          "schemaOrigin": "asset_element_project_common"
+        },
+        "relativePath": "_cm.asset.common.brand",
+        "path": "_cm.asset.common.brand",
+        "order": {
+          "asset_image": 2,
+          "asset_print": 2,
+          "asset_video": 2,
+          "asset_document": 2,
+          "asset_common": 1,
+          "asset_audio": 2,
+          "project_common": 1,
+          "asset_digital": 2,
+          "asset_element_project_common_common": 1,
+          "adkit_common": 1,
+          "asset_other": 2
+        },
+        "width": 1,
+        "hierarchy": [
+          "_cm.asset.common.advertiser",
+          "_cm.asset.common.brand",
+          "_cm.asset.common.sub_brand",
+          "_cm.asset.common.product"
+        ]
+      },
+      {
+        "boost": 125,
+        "depends": {
+          "sub_brand": "_cm.asset.common.sub_brand"
+        },
+        "description": "Product",
+        "enabled": true,
+        "extendable": true,
+        "include_in_all": true,
+        "maxItems": 1,
+        "name": "advertiser",
+        "required": false,
+        "scope": "agency",
+        "tags": [
+          "ordering"
+        ],
+        "type": "dictionary",
+        "highlighted": true,
+        "view": {
+          "v": {
+            "visible": true,
+            "order": {
+              "asset_image": 4,
+              "asset_print": 4,
+              "asset_video": 4,
+              "asset_document": 4,
+              "asset_common": 3,
+              "asset_audio": 4,
+              "project_common": 3,
+              "asset_digital": 4,
+              "asset_element_project_common_common": 3,
+              "adkit_common": 3,
+              "asset_other": 4
+            },
+            "width": 1,
+            "group": {
+              "asset_image": "ProductInfo_1370513111411",
+              "asset_print": "ProductInfo_1370513111411",
+              "asset_video": "ProductInfo_1370513111411",
+              "asset_document": "ProductInfo_1370513111411",
+              "asset_common": "ProductInfo_1370513111411",
+              "asset_audio": "ProductInfo_1370513111411",
+              "project_common": "ProductInfo_1370513111411",
+              "asset_digital": "ProductInfo_1370513111411",
+              "asset_element_project_common_common": "ProductInfo_1370513111411",
+              "adkit_common": "ProductInfo_1370513111411",
+              "asset_other": "ProductInfo_1370513111411"
+            }
+          },
+          "e": {
+            "visible": true,
+            "order": {
+              "asset_image": 4,
+              "asset_print": 4,
+              "asset_video": 4,
+              "asset_document": 4,
+              "asset_common": 3,
+              "asset_audio": 4,
+              "project_common": 3,
+              "asset_digital": 4,
+              "asset_element_project_common_common": 3,
+              "adkit_common": 3,
+              "asset_other": 4
+            },
+            "width": 1,
+            "group": {
+              "asset_image": "ProductInfo_1370513111411",
+              "asset_print": "ProductInfo_1370513111411",
+              "asset_video": "ProductInfo_1370513111411",
+              "asset_document": "ProductInfo_1370513111411",
+              "asset_common": "ProductInfo_1370513111411",
+              "asset_audio": "ProductInfo_1370513111411",
+              "project_common": "ProductInfo_1370513111411",
+              "asset_digital": "ProductInfo_1370513111411",
+              "asset_element_project_common_common": "ProductInfo_1370513111411",
+              "adkit_common": "ProductInfo_1370513111411",
+              "asset_other": "ProductInfo_1370513111411"
+            }
+          },
+          "isMultilevel": true,
+          "schemaOrigin": "asset_element_project_common"
+        },
+        "relativePath": "_cm.asset.common.product",
+        "path": "_cm.asset.common.product",
+        "order": {
+          "asset_image": 4,
+          "asset_print": 4,
+          "asset_video": 4,
+          "asset_document": 4,
+          "asset_common": 3,
+          "asset_audio": 4,
+          "project_common": 3,
+          "asset_digital": 4,
+          "asset_element_project_common_common": 3,
+          "adkit_common": 3,
+          "asset_other": 4
+        },
+        "width": 1,
+        "hierarchy": [
+          "_cm.asset.common.advertiser",
+          "_cm.asset.common.brand",
+          "_cm.asset.common.sub_brand",
+          "_cm.asset.common.product"
+        ]
+      },
+      {
+        "boost": 125,
+        "depends": {
+          "brand": "_cm.asset.common.brand"
+        },
+        "description": "Sub Brand",
+        "enabled": true,
+        "extendable": true,
+        "include_in_all": true,
+        "maxItems": 1,
+        "name": "advertiser",
+        "required": false,
+        "scope": "agency",
+        "tags": [
+          "ordering"
+        ],
+        "type": "dictionary",
+        "highlighted": true,
+        "view": {
+          "v": {
+            "visible": true,
+            "order": {
+              "asset_image": 3,
+              "asset_print": 3,
+              "asset_video": 3,
+              "asset_document": 3,
+              "asset_common": 2,
+              "asset_audio": 3,
+              "project_common": 2,
+              "asset_digital": 3,
+              "asset_element_project_common_common": 2,
+              "adkit_common": 2,
+              "asset_other": 3
+            },
+            "width": 1,
+            "group": {
+              "asset_image": "ProductInfo_1370513111411",
+              "asset_print": "ProductInfo_1370513111411",
+              "asset_video": "ProductInfo_1370513111411",
+              "asset_document": "ProductInfo_1370513111411",
+              "asset_common": "ProductInfo_1370513111411",
+              "asset_audio": "ProductInfo_1370513111411",
+              "project_common": "ProductInfo_1370513111411",
+              "asset_digital": "ProductInfo_1370513111411",
+              "asset_element_project_common_common": "ProductInfo_1370513111411",
+              "adkit_common": "ProductInfo_1370513111411",
+              "asset_other": "ProductInfo_1370513111411"
+            }
+          },
+          "e": {
+            "visible": true,
+            "order": {
+              "asset_image": 3,
+              "asset_print": 3,
+              "asset_video": 3,
+              "asset_document": 3,
+              "asset_common": 2,
+              "asset_audio": 3,
+              "project_common": 2,
+              "asset_digital": 3,
+              "asset_element_project_common_common": 2,
+              "adkit_common": 2,
+              "asset_other": 3
+            },
+            "width": 1,
+            "group": {
+              "asset_image": "ProductInfo_1370513111411",
+              "asset_print": "ProductInfo_1370513111411",
+              "asset_video": "ProductInfo_1370513111411",
+              "asset_document": "ProductInfo_1370513111411",
+              "asset_common": "ProductInfo_1370513111411",
+              "asset_audio": "ProductInfo_1370513111411",
+              "project_common": "ProductInfo_1370513111411",
+              "asset_digital": "ProductInfo_1370513111411",
+              "asset_element_project_common_common": "ProductInfo_1370513111411",
+              "adkit_common": "ProductInfo_1370513111411",
+              "asset_other": "ProductInfo_1370513111411"
+            }
+          },
+          "isMultilevel": true,
+          "schemaOrigin": "asset_element_project_common"
+        },
+        "relativePath": "_cm.asset.common.sub_brand",
+        "path": "_cm.asset.common.sub_brand",
+        "order": {
+          "asset_image": 3,
+          "asset_print": 3,
+          "asset_video": 3,
+          "asset_document": 3,
+          "asset_common": 2,
+          "asset_audio": 3,
+          "project_common": 2,
+          "asset_digital": 3,
+          "asset_element_project_common_common": 2,
+          "adkit_common": 2,
+          "asset_other": 3
+        },
+        "width": 1,
+        "hierarchy": [
+          "_cm.asset.common.advertiser",
+          "_cm.asset.common.brand",
+          "_cm.asset.common.sub_brand",
+          "_cm.asset.common.product"
+        ]
+      },
+      {
+        "description": "Additional Details",
+        "type": "text",
+        "tags": [
+          "traffic"
+        ],
+        "view": {
+          "e": {
+            "group": {
+              "market_schema_metadata": "add_information"
+            },
+            "order": {
+              "market_schema_metadata": 300
+            },
+            "width": 1
+          },
+          "template": "textarea",
+          "v": {
+            "group": {
+              "market_schema_metadata": "add_information"
+            },
+            "order": {
+              "market_schema_metadata": 300
+            },
+            "width": 1
+          },
+          "schemaOrigin": "tv_order_item"
+        },
+        "relativePath": "_cm.common.additionalInformation",
+        "path": "_cm.common.additionalInformation",
+        "order": {
+          "market_schema_metadata": 300
+        },
+        "width": 1
+      },
+      {
+        "description": "Duration",
+        "pattern": "^((\\d+)|((\\d+h)?\\s*(\\d+mn)?\\s*(\\d+s)?\\s*(\\d+ms)?))$",
+        "required": true,
+        "type": "string",
+        "tags": [
+          "traffic"
+        ],
+        "view": {
+          "e": {
+            "group": {
+              "market_schema_metadata": "add_information"
+            },
+            "order": {
+              "market_schema_metadata": 3
+            },
+            "width": 2
+          },
+          "v": {
+            "group": {
+              "market_schema_metadata": "add_information"
+            },
+            "order": {
+              "market_schema_metadata": 3
+            },
+            "width": 2
+          },
+          "schemaOrigin": "tv_order_item"
+        },
+        "relativePath": "_cm.common.duration",
+        "path": "_cm.common.duration",
+        "order": {
+          "market_schema_metadata": 3
+        },
+        "width": 2
+      },
+      {
+        "description": "First Air Date",
+        "required": true,
+        "type": "date",
+        "tags": [
+          "traffic"
+        ],
+        "view": {
+          "e": {
+            "group": {
+              "market_schema_metadata": "add_information"
+            },
+            "order": {
+              "market_schema_metadata": 4
+            },
+            "width": 2
+          },
+          "v": {
+            "group": {
+              "market_schema_metadata": "add_information"
+            },
+            "order": {
+              "market_schema_metadata": 4
+            },
+            "width": 2
+          },
+          "schemaOrigin": "tv_order_item"
+        },
+        "relativePath": "_cm.common.firstAirDate",
+        "path": "_cm.common.firstAirDate",
+        "order": {
+          "market_schema_metadata": 4
+        },
+        "width": 2
+      },
+      {
+        "description": "Format",
+        "maxItems": 1,
+        "name": "tv_order_video_format",
+        "required": [
+          {
+            "path": "_cm.common.item_type",
+            "value": "ingest"
+          }
+        ],
+        "type": "dictionary",
+        "validate": false,
+        "tags": [
+          "traffic"
+        ],
+        "view": {
+          "e": {
+            "group": {
+              "market_schema_metadata": "add_information"
+            },
+            "order": {
+              "market_schema_metadata": 5
+            },
+            "width": 2
+          },
+          "sorted": true,
+          "v": {
+            "group": {
+              "market_schema_metadata": "add_information"
+            },
+            "order": {
+              "market_schema_metadata": 5
+            },
+            "width": 2
+          },
+          "schemaOrigin": "tv_order_item"
+        },
+        "relativePath": "_cm.common.format",
+        "path": "_cm.common.format",
+        "order": {
+          "market_schema_metadata": 5
+        },
+        "width": 2,
+        "hierarchy": [
+
+        ]
+      },
+      {
+        "type": "string",
+        "required": true,
+        "enum": [
+          "delivery",
+          "ingest"
+        ],
+        "default": "delivery",
+        "view": {
+          "e": {
+            "hidden": true
+          },
+          "schemaOrigin": "tv_order_item"
+        },
+        "relativePath": "_cm.common.item_type",
+        "path": "_cm.common.item_type",
+        "order": null,
+        "width": 1
+      },
+      {
+        "description": "Title",
+        "required": true,
+        "type": "string",
+        "tags": [
+          "traffic"
+        ],
+        "pattern": "^.{1,100}$",
+        "view": {
+          "e": {
+            "group": {
+              "market_schema_metadata": "add_information"
+            },
+            "order": {
+              "market_schema_metadata": 2
+            },
+            "width": 2
+          },
+          "v": {
+            "group": {
+              "market_schema_metadata": "add_information"
+            },
+            "order": {
+              "market_schema_metadata": 2
+            },
+            "width": 2
+          },
+          "schemaOrigin": "tv_order_item"
+        },
+        "relativePath": "_cm.common.title",
+        "path": "_cm.common.title",
+        "order": {
+          "market_schema_metadata": 2
+        },
+        "width": 2
+      },
+      {
+        "scope": "agency",
+        "description": "Media Agency",
+        "name": "MediaAgency_video",
+        "type": "dictionary",
+        "extendable": true,
+        "maxItems": 1,
+        "view": {
+          "e": {
+            "group": {
+              "market_schema_metadata": "add_information"
+            },
+            "order": {
+              "market_schema_metadata": 50
+            },
+            "width": 2
+          },
+          "v": {
+            "group": {
+              "market_schema_metadata": "add_information"
+            },
+            "order": {
+              "market_schema_metadata": 50
+            },
+            "width": 2
+          },
+          "schemaOrigin": "tv_order_item"
+        },
+        "relativePath": "_cm.common.mediaAgency",
+        "path": "_cm.common.mediaAgency",
+        "order": {
+          "market_schema_metadata": 50
+        },
+        "width": 2,
+        "hierarchy": [
+
+        ]
+      },
+      {
+        "scope": "agency",
+        "description": "Creative Agency",
+        "name": "Advertisingagency_video",
+        "type": "dictionary",
+        "extendable": true,
+        "maxItems": 1,
+        "view": {
+          "e": {
+            "group": {
+              "market_schema_metadata": "add_information"
+            },
+            "order": {
+              "market_schema_metadata": 51
+            },
+            "width": 2
+          },
+          "v": {
+            "group": {
+              "market_schema_metadata": "add_information"
+            },
+            "order": {
+              "market_schema_metadata": 51
+            },
+            "width": 2
+          },
+          "schemaOrigin": "tv_order_item"
+        },
+        "relativePath": "_cm.common.creativeAgency",
+        "path": "_cm.common.creativeAgency",
+        "order": {
+          "market_schema_metadata": 51
+        },
+        "width": 2,
+        "hierarchy": [
+
+        ]
+      },
+      {
+        "scope": "agency",
+        "description": "Posthouse",
+        "name": "Postproduction_video",
+        "type": "dictionary",
+        "extendable": true,
+        "maxItems": 1,
+        "view": {
+          "e": {
+            "group": {
+              "market_schema_metadata": "add_information"
+            },
+            "order": {
+              "market_schema_metadata": 52
+            },
+            "width": 2
+          },
+          "v": {
+            "group": {
+              "market_schema_metadata": "add_information"
+            },
+            "order": {
+              "market_schema_metadata": 52
+            },
+            "width": 2
+          },
+          "schemaOrigin": "tv_order_item"
+        },
+        "relativePath": "_cm.common.posthouse",
+        "path": "_cm.common.posthouse",
+        "order": {
+          "market_schema_metadata": 52
+        },
+        "width": 2,
+        "hierarchy": [
+
+        ]
+      },
+      {
+        "description": "Master Arrived Date",
+        "required": true,
+        "type": "date",
+        "tags": [
+          "traffic"
+        ],
+        "view": {
+          "schemaOrigin": "tv_order_item"
+        },
+        "relativePath": "_cm.common.masterArrived.date",
+        "path": "_cm.common.masterArrived.date",
+        "order": null,
+        "width": 1
+      },
+      {
+        "description": "Master Arrived Comment",
+        "required": false,
+        "type": "text",
+        "tags": [
+          "traffic"
+        ],
+        "view": {
+          "schemaOrigin": "tv_order_item"
+        },
+        "relativePath": "_cm.common.masterArrived.comment",
+        "path": "_cm.common.masterArrived.comment",
+        "order": null,
+        "width": 1
+      },
+      {
+        "description": "Tape Number",
+        "required": false,
+        "type": "string",
+        "tags": [
+          "traffic"
+        ],
+        "view": {
+          "schemaOrigin": "tv_order_item"
+        },
+        "relativePath": "_cm.common.masterArrived.tapeNumber",
+        "path": "_cm.common.masterArrived.tapeNumber",
+        "order": null,
+        "width": 1
+      },
+      {
+        "type": "string",
+        "pattern": "[0-2]\\d:\\d{2}",
+        "description": "Arrival Time",
+        "view": {
+          "schemaOrigin": "tv_order_item"
+        },
+        "relativePath": "_cm.media.uploadRequest.arrivalTime",
+        "path": "_cm.media.uploadRequest.arrivalTime",
+        "order": null,
+        "width": 1
+      },
+      {
+        "type": "date",
+        "view": {
+          "schemaOrigin": "tv_order_item"
+        },
+        "relativePath": "_cm.media.uploadRequest.deadlineDate",
+        "path": "_cm.media.uploadRequest.deadlineDate",
+        "order": null,
+        "width": 1
+      },
+      {
+        "type": "string",
+        "view": {
+          "schemaOrigin": "tv_order_item"
+        },
+        "relativePath": "_cm.media.uploadRequest.message",
+        "path": "_cm.media.uploadRequest.message",
+        "order": null,
+        "width": 1
+      },
+      {
+        "type": "string",
+        "description": "Post House",
+        "view": {
+          "schemaOrigin": "tv_order_item"
+        },
+        "relativePath": "_cm.media.uploadRequest.postHouse",
+        "path": "_cm.media.uploadRequest.postHouse",
+        "order": null,
+        "width": 1
+      },
+      {
+        "type": "dictionary",
+        "name": "media_upload_types",
+        "maxItems": 1,
+        "view": {
+          "schemaOrigin": "tv_order_item"
+        },
+        "relativePath": "_cm.media.uploadRequest.uploadType",
+        "path": "_cm.media.uploadRequest.uploadType",
+        "order": null,
+        "width": 1,
+        "hierarchy": [
+
+        ]
+      },
+      {
+        "required": false,
+        "type": "string",
+        "view": {
+          "schemaOrigin": "tv_order_item"
+        },
+        "relativePath": "_cm.tv.market",
+        "path": "_cm.tv.market",
+        "order": null,
+        "width": 1
+      },
+      {
+        "type": "string",
+        "view": {
+          "schemaOrigin": "tv_order_item"
+        },
+        "relativePath": "_cm.tv.marketCountry",
+        "path": "_cm.tv.marketCountry",
+        "order": null,
+        "width": 1
+      },
+      {
+        "description": "Market",
+        "include_in_all": false,
+        "map_fields": {
+          "market": "name",
+          "marketCountry": "country"
+        },
+        "maxItems": 1,
+        "name": "ordering_tv_market",
+        "required": true,
+        "type": "dictionary",
+        "view": {
+          "schemaOrigin": "tv_order_item"
+        },
+        "relativePath": "_cm.tv.marketId",
+        "path": "_cm.tv.marketId",
+        "order": null,
+        "width": 1,
+        "hierarchy": [
+          "_cm.tv.marketId",
+          "_cm.destinations.items[].id"
+        ]
+      },
+      {
+        "description": "Subtitles Required",
+        "maxItems": 1,
+        "name": "tv_market_uk_subtitles_required",
+        "required": true,
+        "type": "dictionary",
+        "validate": false,
+        "view": {
+          "sorted": true,
+          "showInSeparateColumn": true,
+          "e": {
+            "width": 2,
+            "order": {
+              "market_schema_metadata": 100,
+              "traffic_common": 100
+            },
+            "group": {
+              "market_schema_metadata": "add_information",
+              "traffic_common": "traffic_info"
+            },
+            "readOnlyInTraffic": true
+          },
+          "v": {
+            "width": 2,
+            "order": {
+              "market_schema_metadata": 100,
+              "traffic_common": 100
+            },
+            "group": {
+              "market_schema_metadata": "add_information",
+              "traffic_common": "traffic_info"
+            }
+          },
+          "schemaOrigin": "market_schema"
+        },
+        "relativePath": "_cm.metadata.subtitlesRequired",
+        "path": "_cm.metadata.subtitlesRequired",
+        "order": {
+          "market_schema_metadata": 100,
+          "traffic_common": 100
+        },
+        "width": 2,
+        "hierarchy": [
+
+        ]
+      },
+      {
+        "required": true,
+        "type": "string",
+        "enum": [
+          "tv_order_item"
+        ],
+        "view": {
+          "schemaOrigin": "tv_order_item"
+        },
+        "relativePath": "_subtype",
+        "path": "_subtype",
+        "order": null,
+        "width": 1
+      },
+      {
+        "type": "string",
+        "description": "denorm",
+        "view": {
+          "schemaOrigin": "tv_order_item"
+        },
+        "relativePath": "a4.advertiser",
+        "path": "a4.advertiser",
+        "order": null,
+        "width": 1
+      },
+      {
+        "type": "string",
+        "description": "denorm",
+        "view": {
+          "schemaOrigin": "tv_order_item"
+        },
+        "relativePath": "a4.campaign",
+        "path": "a4.campaign",
+        "order": null,
+        "width": 1
+      },
+      {
+        "type": "string",
+        "description": "denorm",
+        "view": {
+          "schemaOrigin": "tv_order_item"
+        },
+        "relativePath": "a4.product",
+        "path": "a4.product",
+        "order": null,
+        "width": 1
+      },
+      {
+        "type": "date",
+        "required": false,
+        "view": {
+          "schemaOrigin": "tv_order_item"
+        },
+        "relativePath": "a4.status_changed",
+        "path": "a4.status_changed",
+        "order": null,
+        "width": 1
+      },
+      {
+        "type": "string",
+        "required": false,
+        "enum": [
+          "on_hold",
+          "approved"
+        ],
+        "view": {
+          "schemaOrigin": "tv_order_item"
+        },
+        "relativePath": "approvalStatus",
+        "path": "approvalStatus",
+        "order": null,
+        "width": 1
+      },
+      {
+        "type": "string",
+        "view": {
+          "schemaOrigin": "tv_order_item"
+        },
+        "relativePath": "order.a4OrderId",
+        "path": "order.a4OrderId",
+        "order": null,
+        "width": 1
+      },
+      {
+        "type": "string",
+        "view": {
+          "schemaOrigin": "tv_order_item"
+        },
+        "relativePath": "order.jobNumber",
+        "path": "order.jobNumber",
+        "order": null,
+        "width": 1
+      },
+      {
+        "type": "string",
+        "view": {
+          "schemaOrigin": "tv_order_item"
+        },
+        "relativePath": "order.poNumber",
+        "path": "order.poNumber",
+        "order": null,
+        "width": 1
+      },
+      {
+        "type": "string",
+        "view": {
+          "schemaOrigin": "tv_order_item"
+        },
+        "relativePath": "order.orderStatus",
+        "path": "order.orderStatus",
+        "order": null,
+        "width": 1
+      },
+      {
+        "maxItems": 1,
+        "name": "order_item_statuses",
+        "required": true,
+        "type": "dictionary",
+        "view": {
+          "schemaOrigin": "tv_order_item"
+        },
+        "relativePath": "status",
+        "path": "status",
+        "order": null,
+        "width": 1,
+        "hierarchy": [
+
+        ]
+      },
+      {
+        "items": {
+          "properties": {
+            "deliveryDetails": {
+              "description": "Delivery Details",
+              "type": "text",
+              "required": false,
+              "view": {
+                "e": {
+                  "order": 7,
+                  "group": "select_non_broadcast_destinations"
+                },
+                "v": {
+                  "order": 7,
+                  "group": "select_non_broadcast_destinations"
+                },
+                "schemaOrigin": "tv_order_item"
+              }
+            },
+            "destination": {
+              "description": "Destination",
+              "type": "string",
+              "required": true,
+              "view": {
+                "e": {
+                  "order": 2,
+                  "group": "select_non_broadcast_destinations"
+                },
+                "v": {
+                  "order": 2,
+                  "group": "select_non_broadcast_destinations"
+                },
+                "schemaOrigin": "tv_order_item"
+              }
+            },
+            "format": {
+              "description": "Format",
+              "type": "dictionary",
+              "name": "non_broadcast_methods",
+              "depends": {
+                "method": "_cm.nonBroadcastDestinations.items.method"
+              },
+              "required": true,
+              "view": {
+                "e": {
+                  "order": 3,
+                  "group": "select_non_broadcast_destinations"
+                },
+                "v": {
+                  "order": 3,
+                  "group": "select_non_broadcast_destinations"
+                },
+                "schemaOrigin": "tv_order_item"
+              }
+            },
+            "mediaCompile": {
+              "description": "Media Compile",
+              "type": "dictionary",
+              "name": "non_broadcast_media_compile",
+              "required": false,
+              "view": {
+                "e": {
+                  "order": 6,
+                  "group": "select_non_broadcast_destinations"
+                },
+                "v": {
+                  "order": 6,
+                  "group": "select_non_broadcast_destinations"
+                },
+                "schemaOrigin": "tv_order_item"
+              }
+            },
+            "method": {
+              "description": "Type",
+              "include_in_all": false,
+              "maxItems": 1,
+              "name": "non_broadcast_methods",
+              "required": true,
+              "type": "dictionary",
+              "view": {
+                "e": {
+                  "order": 1,
+                  "group": "select_non_broadcast_destinations"
+                },
+                "v": {
+                  "order": 1,
+                  "group": "select_non_broadcast_destinations"
+                },
+                "schemaOrigin": "tv_order_item"
+              }
+            },
+            "noOfCopies": {
+              "description": "No. copies",
+              "pattern": "^([1-9][0-9]*)$",
+              "type": "string",
+              "required": true,
+              "view": {
+                "e": {
+                  "order": 5,
+                  "group": "select_non_broadcast_destinations"
+                },
+                "v": {
+                  "order": 5,
+                  "group": "select_non_broadcast_destinations"
+                },
+                "schemaOrigin": "tv_order_item"
+              }
+            },
+            "notesAndLabels": {
+              "description": "Notes & Labels",
+              "type": "text",
+              "required": false,
+              "view": {
+                "e": {
+                  "order": 8,
+                  "group": "select_non_broadcast_destinations"
+                },
+                "v": {
+                  "order": 8,
+                  "group": "select_non_broadcast_destinations"
+                },
+                "schemaOrigin": "tv_order_item"
+              }
+            },
+            "serviceLevel": {
+              "description": "Service Level",
+              "include_in_all": false,
+              "properties": {
+                "id": {
+                  "map_fields": {
+                    "name": "name"
+                  },
+                  "maxItems": 1,
+                  "name": "ordering_non_broadcast_service_levels",
+                  "required": true,
+                  "type": "dictionary",
+                  "view": {
+                    "schemaOrigin": "tv_order_item"
+                  }
+                },
+                "name": {
+                  "type": "string",
+                  "view": {
+                    "schemaOrigin": "tv_order_item"
+                  }
+                }
+              },
+              "required": true,
+              "type": "object",
+              "view": {
+                "e": {
+                  "order": 9,
+                  "group": "select_non_broadcast_destinations"
+                },
+                "v": {
+                  "order": 9,
+                  "group": "select_non_broadcast_destinations"
+                }
+              }
+            },
+            "specification": {
+              "description": "Specification",
+              "type": "dictionary",
+              "name": "non_broadcast_specification",
+              "maxItems": 1,
+              "include_in_all": false,
+              "required": true,
+              "view": {
+                "e": {
+                  "order": 4,
+                  "group": "select_non_broadcast_destinations"
+                },
+                "v": {
+                  "order": 4,
+                  "group": "select_non_broadcast_destinations"
+                },
+                "schemaOrigin": "tv_order_item"
+              }
+            },
+            "destinationId": {
+              "description": "Destination id",
+              "type": "string",
+              "view": {
+                "e": {
+                  "visible": false,
+                  "order": 10,
+                  "group": "select_non_broadcast_destinations"
+                },
+                "v": {
+                  "visible": false,
+                  "order": 10,
+                  "group": "select_non_broadcast_destinations"
+                },
+                "schemaOrigin": "tv_order_item"
+              }
+            },
+            "cancelled": {
+              "description": "Cancelled",
+              "type": "boolean",
+              "view": {
+                "e": {
+                  "visible": false,
+                  "order": 11,
+                  "group": "select_non_broadcast_destinations"
+                },
+                "v": {
+                  "visible": false,
+                  "order": 11,
+                  "group": "select_non_broadcast_destinations"
+                }
+              }
+            }
+          },
+          "type": "object"
+        },
+        "maxItems": 10,
+        "required": false,
+        "type": "array",
+        "view": {
+          "e": {
+            "group": "select_non_broadcast_destinations"
+          }
+        },
+        "relativePath": "_cm.nonBroadcastDestinations.items",
+        "path": "_cm.nonBroadcastDestinations.items",
+        "order": null,
+        "width": 1,
+        "children": [
+          {
+            "description": "Delivery Details",
+            "type": "text",
+            "required": false,
+            "view": {
+              "e": {
+                "order": 7,
+                "group": "select_non_broadcast_destinations"
+              },
+              "v": {
+                "order": 7,
+                "group": "select_non_broadcast_destinations"
+              },
+              "schemaOrigin": "tv_order_item"
+            },
+            "relativePath": "deliveryDetails",
+            "path": "_cm.nonBroadcastDestinations.items[].deliveryDetails",
+            "order": 7,
+            "width": 1
+          },
+          {
+            "description": "Destination",
+            "type": "string",
+            "required": true,
+            "view": {
+              "e": {
+                "order": 2,
+                "group": "select_non_broadcast_destinations"
+              },
+              "v": {
+                "order": 2,
+                "group": "select_non_broadcast_destinations"
+              },
+              "schemaOrigin": "tv_order_item"
+            },
+            "relativePath": "destination",
+            "path": "_cm.nonBroadcastDestinations.items[].destination",
+            "order": 2,
+            "width": 1
+          },
+          {
+            "description": "Format",
+            "type": "dictionary",
+            "name": "non_broadcast_methods",
+            "depends": {
+              "method": "_cm.nonBroadcastDestinations.items.method"
+            },
+            "required": true,
+            "view": {
+              "e": {
+                "order": 3,
+                "group": "select_non_broadcast_destinations"
+              },
+              "v": {
+                "order": 3,
+                "group": "select_non_broadcast_destinations"
+              },
+              "schemaOrigin": "tv_order_item"
+            },
+            "relativePath": "format",
+            "path": "_cm.nonBroadcastDestinations.items[].format",
+            "order": 3,
+            "width": 1,
+            "hierarchy": [
+              "_cm.nonBroadcastDestinations.items.method",
+              "_cm.nonBroadcastDestinations.items[].format"
+            ]
+          },
+          {
+            "description": "Media Compile",
+            "type": "dictionary",
+            "name": "non_broadcast_media_compile",
+            "required": false,
+            "view": {
+              "e": {
+                "order": 6,
+                "group": "select_non_broadcast_destinations"
+              },
+              "v": {
+                "order": 6,
+                "group": "select_non_broadcast_destinations"
+              },
+              "schemaOrigin": "tv_order_item"
+            },
+            "relativePath": "mediaCompile",
+            "path": "_cm.nonBroadcastDestinations.items[].mediaCompile",
+            "order": 6,
+            "width": 1,
+            "hierarchy": [
+
+            ]
+          },
+          {
+            "description": "Type",
+            "include_in_all": false,
+            "maxItems": 1,
+            "name": "non_broadcast_methods",
+            "required": true,
+            "type": "dictionary",
+            "view": {
+              "e": {
+                "order": 1,
+                "group": "select_non_broadcast_destinations"
+              },
+              "v": {
+                "order": 1,
+                "group": "select_non_broadcast_destinations"
+              },
+              "schemaOrigin": "tv_order_item"
+            },
+            "relativePath": "method",
+            "path": "_cm.nonBroadcastDestinations.items[].method",
+            "order": 1,
+            "width": 1,
+            "hierarchy": [
+
+            ]
+          },
+          {
+            "description": "No. copies",
+            "pattern": "^([1-9][0-9]*)$",
+            "type": "string",
+            "required": true,
+            "view": {
+              "e": {
+                "order": 5,
+                "group": "select_non_broadcast_destinations"
+              },
+              "v": {
+                "order": 5,
+                "group": "select_non_broadcast_destinations"
+              },
+              "schemaOrigin": "tv_order_item"
+            },
+            "relativePath": "noOfCopies",
+            "path": "_cm.nonBroadcastDestinations.items[].noOfCopies",
+            "order": 5,
+            "width": 1
+          },
+          {
+            "description": "Notes & Labels",
+            "type": "text",
+            "required": false,
+            "view": {
+              "e": {
+                "order": 8,
+                "group": "select_non_broadcast_destinations"
+              },
+              "v": {
+                "order": 8,
+                "group": "select_non_broadcast_destinations"
+              },
+              "schemaOrigin": "tv_order_item"
+            },
+            "relativePath": "notesAndLabels",
+            "path": "_cm.nonBroadcastDestinations.items[].notesAndLabels",
+            "order": 8,
+            "width": 1
+          },
+          {
+            "map_fields": {
+              "name": "name"
+            },
+            "maxItems": 1,
+            "name": "ordering_non_broadcast_service_levels",
+            "required": true,
+            "type": "dictionary",
+            "view": {
+              "schemaOrigin": "tv_order_item"
+            },
+            "relativePath": "serviceLevel.id",
+            "path": "_cm.nonBroadcastDestinations.items[].serviceLevel.id",
+            "order": null,
+            "width": 1,
+            "hierarchy": [
+
+            ]
+          },
+          {
+            "type": "string",
+            "view": {
+              "schemaOrigin": "tv_order_item"
+            },
+            "relativePath": "serviceLevel.name",
+            "path": "_cm.nonBroadcastDestinations.items[].serviceLevel.name",
+            "order": null,
+            "width": 1
+          },
+          {
+            "description": "Specification",
+            "type": "dictionary",
+            "name": "non_broadcast_specification",
+            "maxItems": 1,
+            "include_in_all": false,
+            "required": true,
+            "view": {
+              "e": {
+                "order": 4,
+                "group": "select_non_broadcast_destinations"
+              },
+              "v": {
+                "order": 4,
+                "group": "select_non_broadcast_destinations"
+              },
+              "schemaOrigin": "tv_order_item"
+            },
+            "relativePath": "specification",
+            "path": "_cm.nonBroadcastDestinations.items[].specification",
+            "order": 4,
+            "width": 1,
+            "hierarchy": [
+
+            ]
+          },
+          {
+            "description": "Destination id",
+            "type": "string",
+            "view": {
+              "e": {
+                "visible": false,
+                "order": 10,
+                "group": "select_non_broadcast_destinations"
+              },
+              "v": {
+                "visible": false,
+                "order": 10,
+                "group": "select_non_broadcast_destinations"
+              },
+              "schemaOrigin": "tv_order_item"
+            },
+            "relativePath": "destinationId",
+            "path": "_cm.nonBroadcastDestinations.items[].destinationId",
+            "order": 10,
+            "width": 1
+          }
+        ]
+      },
+      {
+        "items": {
+          "properties": {
+            "serviceType": {
+              "description": "Type",
+              "type": "dictionary",
+              "name": "production_service_types",
+              "required": true,
+              "view": {
+                "e": {
+                  "order": 1,
+                  "group": "select_production_services"
+                },
+                "v": {
+                  "order": 1,
+                  "group": "select_production_services"
+                },
+                "schemaOrigin": "tv_order_item"
+              }
+            },
+            "notes": {
+              "description": "Notes",
+              "type": "text",
+              "required": false,
+              "view": {
+                "e": {
+                  "order": 2,
+                  "group": "select_production_services"
+                },
+                "v": {
+                  "order": 2,
+                  "group": "select_production_services"
+                },
+                "schemaOrigin": "tv_order_item"
+              }
+            },
+            "destinationId": {
+              "description": "Destination id",
+              "type": "string",
+              "view": {
+                "e": {
+                  "visible": false,
+                  "order": 3,
+                  "group": "select_production_services"
+                },
+                "v": {
+                  "visible": false,
+                  "order": 3,
+                  "group": "select_production_services"
+                },
+                "schemaOrigin": "tv_order_item"
+              }
+            },
+            "cancelled": {
+              "description": "Cancelled",
+              "type": "boolean",
+              "view": {
+                "e": {
+                  "visible": false,
+                  "order": 4,
+                  "group": "select_production_services"
+                },
+                "v": {
+                  "visible": false,
+                  "order": 4,
+                  "group": "select_production_services"
+                }
+              }
+            }
+          },
+          "type": "object"
+        },
+        "maxItems": 9,
+        "required": false,
+        "type": "array",
+        "view": {
+          "e": {
+            "group": "select_production_services"
+          }
+        },
+        "relativePath": "_cm.productionServices.items",
+        "path": "_cm.productionServices.items",
+        "order": null,
+        "width": 1,
+        "children": [
+          {
+            "description": "Type",
+            "type": "dictionary",
+            "name": "production_service_types",
+            "required": true,
+            "view": {
+              "e": {
+                "order": 1,
+                "group": "select_production_services"
+              },
+              "v": {
+                "order": 1,
+                "group": "select_production_services"
+              },
+              "schemaOrigin": "tv_order_item"
+            },
+            "relativePath": "serviceType",
+            "path": "_cm.productionServices.items[].serviceType",
+            "order": 1,
+            "width": 1,
+            "hierarchy": [
+
+            ]
+          },
+          {
+            "description": "Notes",
+            "type": "text",
+            "required": false,
+            "view": {
+              "e": {
+                "order": 2,
+                "group": "select_production_services"
+              },
+              "v": {
+                "order": 2,
+                "group": "select_production_services"
+              },
+              "schemaOrigin": "tv_order_item"
+            },
+            "relativePath": "notes",
+            "path": "_cm.productionServices.items[].notes",
+            "order": 2,
+            "width": 1
+          },
+          {
+            "description": "Destination id",
+            "type": "string",
+            "view": {
+              "e": {
+                "visible": false,
+                "order": 3,
+                "group": "select_production_services"
+              },
+              "v": {
+                "visible": false,
+                "order": 3,
+                "group": "select_production_services"
+              },
+              "schemaOrigin": "tv_order_item"
+            },
+            "relativePath": "destinationId",
+            "path": "_cm.productionServices.items[].destinationId",
+            "order": 3,
+            "width": 1
+          }
+        ]
+      }
+    ],
+    "group": "_default",
+    "description": "",
+    "order": 0
+  }
+]

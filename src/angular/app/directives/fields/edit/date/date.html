@@ -1,0 +1,25 @@
+<div class="b-schema-fields--edit__date">
+	<label class="m-field__label">
+		<span ng-class="{'s-required': field.required}" class="m-field__description">{{ field.description }}</span>
+		<div class="b-datepicker">
+			<div class="display-table-cell">
+				<input
+				type="text"
+				class="ui-input"
+				show-button-bar="false"
+				datepicker-popup="{{ format }}"
+				ng-model scm-fields-edit-formatter
+				ng-required="field.required"
+				is-open="opened"
+				min-date="minDate"
+				datepicker-options="dateOptions"
+				close-text="Close" />
+			</div>
+			<div class="display-table-cell input-group-btn">
+				<button type="button" class="btn btn-default b-datepicker-open-btn" ng-click="open($event)">
+					<i class="spriteicon i16x16_calendar-dark"></i>
+				</button>
+			</div>
+		</div>
+	</label>
+</div>

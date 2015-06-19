@@ -1,0 +1,49 @@
+{
+  "_id": "555a42dce4b02b2bc576239c",
+  "values": {
+    "nokia": {
+      "key": "Nokia",
+      "additionalParameter": "",
+      "values": {
+        "brand": {
+          "key": "Brand",
+          "additionalParameter": "",
+          "values": {
+            "subbrand": {
+              "key": "SubBrand",
+              "additionalParameter": "",
+              "values": {
+                "product": {
+                  "key": "Product",
+                  "additionalParameter": ""
+                }
+              }
+            }
+          }
+        },
+        "brand2": {
+          "key": "Brand 2",
+          "additionalParameter": "",
+          "values": {}
+        }
+      }
+    },
+    "testclient": {
+      "key": "TEST CLIENT"
+    }
+  },
+  "name": "advertiser",
+  "_documentType": "dictionary",
+  "_version": 7,
+  "_parents": [
+    "555a40aae4b02b2bc575968b"
+  ],
+  "_modified": "2015-05-18T20:00:39.517Z",
+  "_created": "2015-05-18T19:51:56.737Z",
+  "agency": {
+    "_id": "555a40aae4b02b2bc575968b",
+    "name": "A5testAdvertiser",
+    "country": "AF"
+  },
+  "_s": 1
+}

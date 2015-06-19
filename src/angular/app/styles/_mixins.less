@@ -1,0 +1,37 @@
+.m-field {
+    font-weight: normal;
+    float: left;
+    box-sizing: border-box;
+
+    &__label {
+    	display: block;
+    }
+
+    &__hint {
+        font-size: 12px;
+        line-height: normal;
+        font-weight: normal;
+    }
+
+    &__description {
+        font-weight: normal;
+        &.s-required {
+            font-weight: bold;
+            &::after {
+                content: "*";
+                font-weight: bold;
+                color: #0082dc;
+                position: absolute;
+                padding-left: 5px;
+                width: 10px;
+                height: 10px;
+            }
+        }
+    }
+}
+
+.clearfix:after {
+  content:"";
+  display:table;
+  clear:both;
+}

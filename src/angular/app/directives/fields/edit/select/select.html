@@ -1,0 +1,11 @@
+<div class="b-schema-fields--edit__select">
+	<label class="m-field__label">
+		<span ng-class="{'s-required': field.required}" class="m-field__description">{{ field.description }}</span>
+		<ui-select ng-model scm-fields-edit-formatter theme="select2" data-width="auto" ng-disabled="fieldModel.disabled" ng-required="field.required" search-enabled="false">
+			<ui-select-match placeholder="Select or search in the list...">{{$select.selected.name || $select.selected.key}}</ui-select-match>
+			<ui-select-choices repeat="value in fieldModel.values">
+				<span>{{value.name || value.key}}</span>
+			</ui-select-choices>
+		</ui-select>
+	</label>
+</div>

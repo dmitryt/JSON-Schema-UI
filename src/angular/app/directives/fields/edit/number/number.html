@@ -1,0 +1,6 @@
+<div class="b-schema-fields--edit__number">
+    <label class="m-field__label">
+    	<span ng-class="{'s-required': field.required}" class="m-field__description">{{ field.description }}</span>
+    	<input type="number" min="{{field.view.minValue}}" max="{{field.view.maxValue}}" ng-model scm-fields-edit-formatter class="ui-input" ng-required="field.required" />
+    </label>
+</div>

@@ -1,0 +1,6 @@
+<div class="b-schema-form-group">
+    <div class="b-schema-form-group__title" ng-if="group.description">{{ group.description }}</div>
+    <div class="b-schema-form-group__content b-schema-fields clearfix">
+    	<scm-fields-edit data="data" field="field" ng-repeat="field in group.fields"></scm-fields-edit>
+    </div>
+</div>
