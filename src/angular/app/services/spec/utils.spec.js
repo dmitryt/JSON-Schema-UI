@@ -1,6 +1,6 @@
 describe('schemaUtils', function(){
     var utils;
-    beforeEach(module('adstreamJsonSchemaUI'));
+    beforeEach(module('json-schema-ui'));
     beforeEach(inject(function(_schemaUtils_){
         utils = _schemaUtils_;
     }));

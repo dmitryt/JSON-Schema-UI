@@ -1,0 +1,21 @@
+<div class="b-schema-field--array">
+    <div class="b-schema-field--array__label" ng-if=""></div>
+    <ng-form ng-if="!isReadonly">
+        <scm-field data="formModel" field="childField" ng-repeat="childField in field.fields"></scm-field>
+        <div class="b-fields-array-buttons">
+            <button class="btn btn-primary" ng-click="onSaveItem()">{{editItemIndex > -1 ? 'Update' : 'Save'}}</button>
+            <button class="btn" ng-click="resetForm()">Reset</button>
+        </div>
+    </ng-form>
+    <div class="b-schema-field--array__values">
+        <div class="b-schema-field--array__values__item row" ng-repeat="item in values">
+            <div class="cell col-xs-10 col-md-10">
+                <scm-field data="item" field="childField" is-readonly="true" ng-repeat="childField in field.fields"></scm-field>
+            </div>
+            <div class="cell col-xs-2 col-md-2 text-right" ng-hide="isReadonly">
+                <div class="glyphicon glyphicon-pencil" ng-click="onEditItem($index)" title="Edit"></div>
+                <div class="glyphicon glyphicon-trash" ng-click="onRemoveItem($index)" title="Remove"></div>
+            </div>
+        </div>
+    </div>
+</div>

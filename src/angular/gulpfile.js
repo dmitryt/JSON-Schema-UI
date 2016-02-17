@@ -6,15 +6,19 @@ var path = require('path'),
 	less = require('gulp-less'),
 	ngtemplate = require('gulp-ng-template'),
 	minifyHtml = require("gulp-minify-html"),
-	PACKAGE_NAME = "adstream-json-schema-ui";
+	webserver = require('gulp-webserver'),
+	PACKAGE_NAME = "json-schema-ui";
 
 gulp.task('js', function(){
 	merge2(
-		gulp.src('bower_components/angular-ui-select/dist/select.js'),
+		gulp.src('bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js'),
+		gulp.src('bower_components/angular-sanitize/angular-sanitize.min.js'),
+		gulp.src('bower_components/angular-resource/angular-resource.min.js'),
+		gulp.src('bower_components/angular-ui-select/dist/select.min.js'),
 		gulp.src(['app/app.js', 'app/**/*.js', '!app/**/*.spec.js']),
 		gulp.src("./app/directives/**/*.html")
 			.pipe(ngtemplate({
-				moduleName: 'adstreamJsonSchemaUI',
+				moduleName: 'json-schema-ui',
 				prefix: '/schema/'
 	        }))
 	)
@@ -24,7 +28,7 @@ gulp.task('js', function(){
 
 gulp.task('css', function(){
 	merge2(
-		gulp.src('bower_components/angular-ui-select/dist/select.css'),
+		gulp.src('bower_components/angular-ui-select/dist/select.min.css'),
 		gulp.src('app/styles/index.less')
 			.pipe(less({
 				paths: ['app/styles/less']
@@ -34,8 +38,18 @@ gulp.task('css', function(){
 	.pipe(gulp.dest('./build/'));
 });
 
-gulp.task('default', ['js', 'css'], function(){
+gulp.task('watch', function(){
 	gulp.watch('app/**/*.js', ['js']);
 	gulp.watch('app/directives/**/*.html', ['js']);
 	gulp.watch('app/**/*.less', ['css']);
 });
+
+gulp.task('webserver', ['build', 'watch'], function() {
+    gulp.src('./')
+    .pipe(webserver({
+        livereload: true
+    }));
+});
+
+gulp.task('build', ['js', 'css']);
+gulp.task('default', ['build', 'watch']);

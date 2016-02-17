@@ -1,6 +1,6 @@
 (function(){
 'use strict';
-angular.module('adstreamJsonSchemaUI', [
+angular.module('json-schema-ui', [
 	'ngSanitize',
 	'ngResource',
 	'ui.select',

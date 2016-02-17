@@ -1,0 +1,15 @@
+<div class="input-group" ng-if="!isReadonly">
+    <input type="text" class="form-control"
+        uib-datepicker-popup="{{dateFormat}}"
+        ng-model scm-field-formatter
+        is-open="opened"
+        max-date="today"
+        datepicker-mode="{{datepickerMode}}"
+        min-mode="{{minMode}}"
+        datepickerOptions="dateOptions"
+        ng-required="true"
+        close-text="Close" />
+    <div class="input-group-btn">
+        <button type="button" class="btn btn-default" ng-click="open()"><div class="glyphicon glyphicon-calendar"></div></button>
+    </div>
+</div>

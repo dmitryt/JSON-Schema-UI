@@ -2,13 +2,15 @@
 'use strict';
 	var ID = 'scmForm';
 
-	angular.module('adstreamJsonSchemaUI')
+	angular.module('json-schema-ui')
 	.directive(ID, [
 		function() {
 			return {
 				scope:{
-					groups:'=',
-					data:'='
+					fields:'=',
+					data:'=',
+					isReadonly: "=",
+					subPath: "@"
 				},
 				restrict: "E",
 				replace:true,

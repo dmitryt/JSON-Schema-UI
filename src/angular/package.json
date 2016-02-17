@@ -1,6 +1,6 @@
 {
-  "name": "adstream-json-schema-ui",
-  "version": "0.0.1",
+  "name": "json-schema-ui",
+  "version": "1.0.1",
   "description": "UI components for rendering controls from JSON Schema, generated via JSON Schema Parser",
   "main": "index.js",
   "scripts": {
@@ -9,12 +9,13 @@
   "author": "Dmitry Tselinko <dmitry.tselinko@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "gulp": "~3.8.11",
-    "gulp-concat": "~2.5.2",
-    "gulp-less": "~3.0.1",
-    "gulp-minify-html": "~1.0.2",
-    "gulp-ng-template": "~0.2.1",
-    "gulp-uglify": "~1.1.0",
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-less": "^3.0.5",
+    "gulp-minify-html": "^1.0.5",
+    "gulp-ng-template": "^0.2.2",
+    "gulp-uglify": "^1.5.2",
+    "gulp-webserver": "^0.9.1",
     "jasmine-core": "~2.3.2",
     "karma": "~0.12.31",
     "karma-jasmine": "~0.3.5",

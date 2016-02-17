@@ -9,7 +9,7 @@ describe('schemaDictionaryService', function(){
             getFixture = function(name) {
                 return loadJSONFixtures(name)[name];
             };
-        beforeEach(module('adstreamJsonSchemaUI', function($provide) {
+        beforeEach(module('json-schema-ui', function($provide) {
             var mockResource = function() {
                     return {
                         get: function(params, cb){

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.9/angular.min.js"></script>
+        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-sanitize/1.4.9/angular-sanitize.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-select/0.14.2/select.min.js"></script> -->
+        <script src="../build/json-schema-ui.js"></script>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+        <link rel="stylesheet" type="text/css" href="../build/json-schema-ui.css" />
+    </head>
+    <body ng-app="test">
+        <div ng-controller="MyController" style="padding: 10px">
+            <h3>Rendering the form</h3>
+            <div style="border: 1px solid #ccc; padding: 10px">
+                <h4>Form</h4>
+                <scm-form fields="formFields" data="formData"></scm-form>
+                <h4>Model</h4>
+                <div style="background-color: grey; padding: 10px">
+                    {{formData}}
+                </div>
+            </div>
+            <h3>Rendering the form with dynamic changed model</h3>
+            <div style="border: 1px solid #ccc; padding: 10px">
+                <h4>Form</h4>
+                <label>
+                    <div>Locale</div>
+                    <ui-select ng-model="selected.locale" theme="bootstrap">
+                		<ui-select-match placeholder="{{placeholder}}">{{$select.selected.label}}</ui-select-match>
+                		<ui-select-choices repeat="item.key as item in languages | filter: $select.search">
+                			<span ng-bind-html="item.label | highlight: $select.search"></span>
+                		</ui-select-choices>
+                	</ui-select>
+                </label>
+                <scm-form fields="dynamicChangedModelFields" sub-path="{{selected.locale}}" data="dynamicChangedModelData"></scm-form>
+                <h4>Model</h4>
+                <div style="background-color: grey; padding: 10px">
+                    {{dynamicChangedModelData}}
+                </div>
+            </div>
+            <h3>Rendering readonly form</h3>
+            <div style="border: 1px solid #ccc; padding: 10px">
+                <h4>Form</h4>
+                <scm-form fields="formFields" data="readonlyFormData" is-readonly="true"></scm-form>
+            </div>
+            <h3>Rendering the single field</h3>
+            <div style="border: 1px solid #ccc; padding: 10px">
+                <h4>Field</h4>
+                <scm-field field="fields.input" data="fieldData"></scm-field>
+                <h4>Model</h4>
+                <div style="background-color: grey; padding: 10px">
+                    {{fieldData}}
+                </div>
+            </div>
+            <h3>Rendering the custom directive</h3>
+            <div style="border: 1px solid #ccc; padding: 10px">
+                <h4>Field</h4>
+                <scm-field field="fields.custom" data="customData"></scm-field>
+                <h4>Model</h4>
+                <div style="background-color: grey; padding: 10px">
+                    {{customData}}
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+            angular.module('test', ['json-schema-ui'])
+                .config(['schemaStateServiceProvider', function(schemaStateServiceProvider){
+                    schemaStateServiceProvider.set('dictionaryEndpoint', '/example');
+                    schemaStateServiceProvider.set('dictionaryParser', function(data){
+                        return data.map(function(item){
+                            return {
+                                key: item.value,
+                                label: item.name
+                            };
+                        });
+                    });
+                }])
+                .directive('myDirective', function(){
+                    return {
+                        restrict: "E",
+                        replace: true,
+                        template: "<div><div>Custom directive</div><scm-field-input field='fields.custom' data='data'></scm-field-input></div>"
+                    }
+                })
+                .controller("MyController", function($scope){
+                    var fields = {
+                        input: {
+                            "type": "input",
+                            "path": "path.from.root.input",
+                            "view": {
+                                "label": "Input Label",
+                                "description": "Input Description"
+                            }
+                        },
+                        dynamicModelInput: {
+                            "type": "input",
+                            "path": "path.from.root.input.locales[subPath]",
+                            "view": {
+                                "label": "Input Label",
+                                "description": "Input Description"
+                            }
+                        },
+                        checkbox: {
+                            "type": "checkbox",
+                            "path": "path.from.root.checkbox",
+                            "value": "checked_value",
+                            "view": {
+                                "label": "Checkbox Label"
+                            }
+                        },
+                        radio: {
+                            "type": "radio",
+                            "path": "path.from.root.radio",
+                            "source": "animals.json",
+                            "view": {
+                                "label": "Radio Label"
+                            }
+                        },
+                        date: {
+                            "type": "date",
+                            "path": "path.from.root.date",
+                            "view": {
+                                "label": "Date Label",
+                                "description": "Date Description"
+                            }
+                        },
+                        select: {
+                            "type": "select",
+                            "source": "people.json",
+                            "path": "path.from.root.select",
+                            "view": {
+                                "label": "Select Label",
+                                "description": "Select Description"
+                            }
+                        },
+                        textarea: {
+                            "type": "textarea",
+                            "path": "path.from.root.textarea",
+                            "view": {
+                                "label": "Textarea Label",
+                                "description": "Textarea Description"
+                            }
+                        },
+                        array: {
+                            "type": "array",
+                            "complex": true,
+                            "path": "path.from.root.array",
+                            "fields": [{
+                                "type": "input",
+                                "path": "child1",
+                                "view": {
+                                    "label": "Child1 Label"
+                                }
+                            }, {
+                                "type": "input",
+                                "path": "child2",
+                                "view": {
+                                    "label": "Child2 Label"
+                                }
+                            }]
+                        },
+                        custom: {
+                            "directive": "my-directive",
+                            "path": "path.from.root.custom",
+                            "view": {
+                                "description": "Custom Description"
+                            }
+                        }
+                    };
+                    $scope.selected = {
+                        locale: "en"
+                    };
+                    $scope.languages = [
+                        {label: "English", key: "en"},
+                        {label: "French", key: "fr"},
+                        {label: "Deutsch", key: "de"}
+                    ];
+
+                    $scope.formData = {};
+                    $scope.dynamicChangedModelData = {};
+                    $scope.readonlyFormData = {
+                        "path": {
+                            "from": {
+                                "root": {
+                                    "input": "Readonly input value",
+                                    "select": "Readonly select value",
+                                    "checkbox": "checked_value",
+                                    "textarea": "Readonly textarea value",
+                                    "array": [{
+                                            "child1": "first item: child1",
+                                            "child2": "first item: child2"
+                                        },{
+                                            "child1": "second item: child1",
+                                            "child2": "second item: child2"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    };
+                    $scope.fieldData = {};
+                    $scope.customData = {};
+
+                    $scope.fields = fields;
+                    $scope.formFields = [fields.input, fields.checkbox, fields.radio, fields.date, fields.select, fields.textarea, fields.array];
+                    $scope.dynamicChangedModelFields = [fields.dynamicModelInput];
+                });
+        </script>
+    </body>
+</html>

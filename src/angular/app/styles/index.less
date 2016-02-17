@@ -1,14 +1,74 @@
-.b-form-schema {
-	@import "_mixins";
-	.b-schema-fields--edit {
-		@import "../directives/fields/edit/array/array";
-		@import "../directives/fields/edit/checkbox/checkbox";
-		@import "../directives/fields/edit/date/date";
-		@import "../directives/fields/edit/email/email";
-		@import "../directives/fields/edit/enum/enum";
-		@import "../directives/fields/edit/input/input";
-		@import "../directives/fields/edit/number/number";
-		@import "../directives/fields/edit/select/select";
-		@import "../directives/fields/edit/textarea/textarea";
+.b-schema-field {
+	&__container {
+		font-weight: normal;
+	    box-sizing: border-box;
+		display: block;
+	}
+
+    &__label {
+    	display: block;
+		font-weight: bold;
+		cursor: pointer;
+		&.s-required {
+			&::after {
+				content: "*";
+				font-weight: bold;
+				color: red;
+				position: absolute;
+				padding-left: 5px;
+				width: 10px;
+				height: 10px;
+			}
+		}
+    }
+
+	&--radio {
+		cursor: pointer;
+		&__icon {
+			display: inline-block;
+			width: 20px;
+			height: 20px;
+			border: 1px solid blue;
+			border-radius: 50%;
+			float: left;
+		}
+		&__text {
+			margin-left: 25px;
+		}
+		&.active & {
+			&__icon {
+				background-color: blue;
+			}
+		}
+	}
+
+	&--checkbox {
+		cursor: pointer;
+		&__icon {
+			display: inline-block;
+			width: 20px;
+			height: 20px;
+			padding-left: 4px;
+			border: 1px solid blue;
+			float: left;
+		}
+		&__text {
+			margin-left: 25px;
+		}
+		&.active & {
+			&__icon::after {
+				content: "\2714"
+			}
+		}
+	}
+
+	&--array {
+		padding: 10px;
+    	border: 1px dashed grey;
+		&__values {
+			.glyphicon {
+				cursor: pointer;
+			}
+		}
 	}
 }

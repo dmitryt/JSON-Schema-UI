@@ -1,0 +1,42 @@
+[
+  {
+    "name": "Adam",
+    "value": "adam@email.com",
+    "age": 10
+  },
+  {
+    "name": "Amalie",
+    "value": "amalie@email.com",
+    "age": 12
+  },
+  {
+    "name": "Wladimir",
+    "value": "wladimir@email.com",
+    "age": 30
+  },
+  {
+    "name": "Samantha",
+    "value": "samantha@email.com",
+    "age": 31
+  },
+  {
+    "name": "Estefanía",
+    "value": "estefanía@email.com",
+    "age": 16
+  },
+  {
+    "name": "Natasha",
+    "value": "natasha@email.com",
+    "age": 54
+  },
+  {
+    "name": "Nicole",
+    "value": "nicole@email.com",
+    "age": 43
+  },
+  {
+    "name": "Adrian",
+    "value": "adrian@email.com",
+    "age": 21
+  }
+]

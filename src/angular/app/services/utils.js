@@ -3,69 +3,9 @@
 
 	var ID = 'schemaUtils';
 
-	angular.module('adstreamJsonSchemaUI')
+	angular.module('json-schema-ui')
 	.factory(ID, [
 		function schemaUtils() {
-
-			function _isGroupVisible(group, hideEmptyFields, fieldChecker) {
-				if (group.hidden || !group.fields || !group.fields.length) {
-					return false;
-				}
-				return group.fields.some(function(f){
-					return fieldChecker(f, hideEmptyFields);
-				});
-			}
-
-			function _isFieldVisible(field, hideEmptyFields, mode) {
-				var ctxKey = {
-					view: 'v',
-					edit: 'e'
-				}[mode];
-
-				var value;
-				if (Array.isArray(field.value)) {
-					value = field.value.length > 0;
-				} else {
-					value = Boolean(field.value);
-				}
-
-				if (hideEmptyFields && !value) {
-					return false;
-				}
-
-				if (field.hidden === true || (field.view && field.view.deleted === true)) {
-					return false;
-				}
-
-				if (field.view && field.view[ctxKey]) {
-					var view = field.view[ctxKey];
-					if (angular.isDefined(view.hidden)) {
-						return !view.hidden;
-					}
-					if (angular.isDefined(view.visible)) {
-						return view.visible;
-					}
-				}
-
-				return true;
-			}
-
-			function isFieldVisibleForView(field, hideEmptyFields) {
-				return _isFieldVisible(field, hideEmptyFields, 'view');
-			}
-
-			function isFieldVisibleForEdit(field, hideEmptyFields) {
-				return _isFieldVisible(field, hideEmptyFields, 'edit');
-			}
-
-			function isGroupVisibleForView(group, hideEmptyFields) {
-				return _isGroupVisible(group, hideEmptyFields, isFieldVisibleForView);
-			}
-
-			function isGroupVisibleForEdit(group, hideEmptyFields) {
-				return _isGroupVisible(group, hideEmptyFields, isFieldVisibleForEdit);
-			}
-
 			function getObject(path, context) {
 				var pts = path && path.split('.') || null, splcontainer, symb;
 				if (!pts) {
@@ -110,10 +50,6 @@
 			}
 
 			return {
-				isGroupVisibleForView: isGroupVisibleForView,
-				isFieldVisibleForView: isFieldVisibleForView,
-				isGroupVisibleForEdit: isGroupVisibleForEdit,
-				isFieldVisibleForEdit: isFieldVisibleForEdit,
 				getObject: getObject
 			};
 

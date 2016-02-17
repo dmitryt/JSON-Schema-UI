@@ -1,6 +1,6 @@
 describe('schemaFieldsService', function(){
     var service;
-    beforeEach(module('adstreamJsonSchemaUI'));
+    beforeEach(module('json-schema-ui'));
     beforeEach(inject(function(_schemaFieldsService_){
         service = _schemaFieldsService_;
     }));

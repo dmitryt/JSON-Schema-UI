@@ -19,7 +19,7 @@ Insert that script into your application
 Inside *your-module.js* add dependency:
 ```javascript
 angular.module('my-module', [
-    'adstreamJsonSchemaUI'
+    'jsonSchemaUI'
 ]);
 ```
 There are 3 directives, that are suggested to use:

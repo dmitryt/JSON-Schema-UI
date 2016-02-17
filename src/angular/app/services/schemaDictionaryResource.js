@@ -2,22 +2,17 @@
 	'use strict';
 	var ID = "schemaDictionaryResource";
 
-	angular.module("adstreamJsonSchemaUI")
-	.provider(ID,
-		function schemaDictionaryResourceProvider() {
-			var endPoint = null;
+	angular.module("json-schema-ui")
+	.service(ID, ["$http", "schemaStateService",
+		function schemaDictionaryResource($http, schemaStateService) {
+			var endPoint = schemaStateService.get("dictionaryEndpoint"),
+				dParser = schemaStateService.get("dictionaryParser");
 			return {
-				setEndPoint: function(value) {
-					endPoint = value;
-				},
-				$get: ["$resource", function($resource) {
-					return function schemaDictionaryResource(params) {
-						var path = [endPoint || "dictionaries", ":dictionaryName"].join('/'),
-							_params = angular.extend(params || {}, {cache: true});
-						return $resource(path, {dictionaryName: '@dictionaryName'}, _params);
-					}
-				}]
-			}
+				get: function(source) {
+					var url = [endPoint || "dictionaries", source].join('/');
+					return $http.get(url, {cache: true});
+				}
+			};
 		}
-	);
+	]);
 })();
