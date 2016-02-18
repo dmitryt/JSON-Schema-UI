@@ -1,0 +1,19 @@
+&--checkbox {
+    cursor: pointer;
+    &__icon {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        padding-left: 4px;
+        border: 1px solid blue;
+        float: left;
+    }
+    &__text {
+        margin-left: 25px;
+    }
+    &.active & {
+        &__icon::after {
+            content: "\2714"
+        }
+    }
+}

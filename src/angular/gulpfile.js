@@ -29,10 +29,7 @@ gulp.task('js', function(){
 gulp.task('css', function(){
 	merge2(
 		gulp.src('bower_components/angular-ui-select/dist/select.min.css'),
-		gulp.src('app/styles/index.less')
-			.pipe(less({
-				paths: ['app/styles/less']
-			}))
+		gulp.src('app/directives/field/field.less').pipe(less())
 	)
 	.pipe(concat([PACKAGE_NAME, 'css'].join('.')))
 	.pipe(gulp.dest('./build/'));
@@ -47,7 +44,11 @@ gulp.task('watch', function(){
 gulp.task('webserver', ['build', 'watch'], function() {
     gulp.src('./')
     .pipe(webserver({
-        livereload: true
+        livereload: {
+			port: 35730,
+			enable: true
+		},
+		port: 8001
     }));
 });
 

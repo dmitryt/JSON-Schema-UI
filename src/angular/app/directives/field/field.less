@@ -1,0 +1,28 @@
+.b-schema-field {
+	&__container {
+		font-weight: normal;
+	    box-sizing: border-box;
+		display: block;
+	}
+
+    &__label {
+    	display: block;
+		font-weight: bold;
+		cursor: pointer;
+		&.s-required {
+			&::after {
+				content: "*";
+				font-weight: bold;
+				color: red;
+				position: absolute;
+				padding-left: 5px;
+				width: 10px;
+				height: 10px;
+			}
+		}
+    }
+
+    @import "checkbox/checkbox";
+    @import "radio/radio";
+    @import "array/array";
+}

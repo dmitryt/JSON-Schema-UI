@@ -3,24 +3,21 @@
 	var ID = "schemaStateService";
 
 	angular.module("json-schema-ui")
-	.provider(ID,
+	.provider(ID, [
 		function schemaStateServiceProvider() {
-            var store = {},
-				availableOptions = ['dictionaryEndpoint', 'dictionaryParser'];
+            var config = {};
 			return {
-				set: function(key, value) {
-					if (availableOptions.indexOf(key) !== -1) {
-						store[key] = value;
-					}
+				configure: function(_config) {
+					angular.merge(config, _config || {});
 				},
-				$get: [function schemaStateService() {
+				$get: ["$parse", function schemaStateService($parse) {
 					return {
 						get: function(key) {
-							return store[key];
+							return $parse(key)(config);
 						}
 					};
 				}]
 			}
 		}
-	);
+	]);
 })();

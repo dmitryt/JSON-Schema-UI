@@ -15,7 +15,7 @@
             <h3>Rendering the form</h3>
             <div style="border: 1px solid #ccc; padding: 10px">
                 <h4>Form</h4>
-                <scm-form fields="formFields" data="formData"></scm-form>
+                <scm-form schema="formFields" data="formData"></scm-form>
                 <h4>Model</h4>
                 <div style="background-color: grey; padding: 10px">
                     {{formData}}
@@ -33,16 +33,25 @@
                 		</ui-select-choices>
                 	</ui-select>
                 </label>
-                <scm-form fields="dynamicChangedModelFields" sub-path="{{selected.locale}}" data="dynamicChangedModelData"></scm-form>
+                <scm-form schema="dynamicChangedModelFields" sub-path="{{selected.locale}}" data="dynamicChangedModelData"></scm-form>
                 <h4>Model</h4>
                 <div style="background-color: grey; padding: 10px">
                     {{dynamicChangedModelData}}
                 </div>
             </div>
+            <h3>Rendering form from external source</h3>
+            <div style="border: 1px solid #ccc; padding: 10px">
+                <h4>Form</h4>
+                <scm-form schema="'test1.json@some.path'" data="externalSourceFormData"></scm-form>
+                <h4>Model</h4>
+                <div style="background-color: grey; padding: 10px">
+                    {{externalSourceFormData}}
+                </div>
+            </div>
             <h3>Rendering readonly form</h3>
             <div style="border: 1px solid #ccc; padding: 10px">
                 <h4>Form</h4>
-                <scm-form fields="formFields" data="readonlyFormData" is-readonly="true"></scm-form>
+                <scm-form schema="formFields" data="readonlyFormData" is-readonly="true"></scm-form>
             </div>
             <h3>Rendering the single field</h3>
             <div style="border: 1px solid #ccc; padding: 10px">
@@ -66,14 +75,17 @@
         <script type="text/javascript">
             angular.module('test', ['json-schema-ui'])
                 .config(['schemaStateServiceProvider', function(schemaStateServiceProvider){
-                    schemaStateServiceProvider.set('dictionaryEndpoint', '/example');
-                    schemaStateServiceProvider.set('dictionaryParser', function(data){
-                        return data.map(function(item){
-                            return {
-                                key: item.value,
-                                label: item.name
-                            };
-                        });
+                    schemaStateServiceProvider.configure({
+                        schemaEndpoint: '/example/schemas',
+                        dictionaryEndpoint: '/example/dictionaries',
+                        dictionaryParser: function(data){
+                            return data.map(function(item){
+                                return {
+                                    key: item.value,
+                                    label: item.name
+                                };
+                            });
+                        }
                     });
                 }])
                 .directive('myDirective', function(){
@@ -178,6 +190,7 @@
                     ];
 
                     $scope.formData = {};
+                    $scope.externalSourceFormData = {};
                     $scope.dynamicChangedModelData = {};
                     $scope.readonlyFormData = {
                         "path": {

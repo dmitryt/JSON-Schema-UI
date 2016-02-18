@@ -1,0 +1,22 @@
+{
+    "some": {
+        "path": [
+            {
+                "type": "input",
+                "path": "path.from.root.input",
+                "view": {
+                    "label": "External Source Input Label",
+                    "description": "External Source Input Description"
+                }
+            },
+            {
+                "type": "checkbox",
+                "path": "path.from.root.checkbox",
+                "value": "checked_value",
+                "view": {
+                    "label": "External Source Checkbox Label"
+                }
+            }
+        ]
+    }
+}

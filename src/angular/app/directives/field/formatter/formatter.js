@@ -11,8 +11,7 @@
                 require: "ngModel",
                 controller: ["$scope", "$attrs",
                     function($scope, $attrs) {
-                        var subPath = $parse("subPath")($scope),
-                            path = $parse("field.path")($scope),
+                        var path = $parse("field.path")($scope),
                             modelPath = ["data", path].join(".");
                         $attrs["ngModel"] = modelPath;
                     }
