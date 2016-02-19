@@ -13,7 +13,7 @@
 					subPath: "@"
 				},
 				restrict: "E",
-				replace:true,
+				replace: true,
 				templateUrl: "/schema/form/form.html",
 				link: function(scope, element, attrs) {
 					var url;

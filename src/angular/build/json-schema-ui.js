@@ -65,6 +65,7 @@ angular.module('json-schema-ui', [
 	angular.module("json-schema-ui")
 	.service(ID, ["$q", "$http", "schemaStateService",
 		function schemaFieldsService($q, $http, schemaStateService) {
+			var store = {};
 			return {
 				loadDictionary: function(source) {
 					var df = $q.defer(),
@@ -74,11 +75,14 @@ angular.module('json-schema-ui', [
 							var url = [endPoint || "dictionaries", source].join('/');
 							return $http.get(url, {cache: true});
 						};
-					resource(source)
-						.then(function(res){
-							var d = res.data || [];
-							df.resolve(dParser ? dParser(d) : d);
-						});
+					if (store[source]) {
+						df.resolve(store[source]);
+					} else {
+						resource(source).then(function(res){
+							store[source] = dParser ? dParser(res.data): res.data;
+							df.resolve(store[source]);
+						}.bind(this));
+					}
 					return df.promise;
 				},
 				loadSchema: function(source) {
@@ -152,6 +156,16 @@ angular.module('json-schema-ui', [
                 restrict: "E",
                 replace: true,
                 templateUrl: TEMPLATE_PATH,
+                controller: ["$scope", "$attrs",
+                    function($scope, $attrs) {
+                        $scope.$watch("field.path", function(value){
+                            var modelPath = ["data", value].join(".");
+                            if (angular.isDefined(value)) {
+                                $scope.displayedValue = $parse(modelPath)($scope);
+                            }
+                        });
+                    }
+                ],
                 link: function postLink(scope, element, attrs) {
                     var sField = scope.field || {},
                         type = $parse("type")(sField),
@@ -163,7 +177,6 @@ angular.module('json-schema-ui', [
                     } else {
                         console.error("[JSON-Schema-UI]: Directive is not supported", sField);
                     }
-                    scope.displayedValue = $parse(scope.field.path)(scope.data);
                 }
             };
         }
@@ -186,7 +199,7 @@ angular.module('json-schema-ui', [
 					subPath: "@"
 				},
 				restrict: "E",
-				replace:true,
+				replace: true,
 				templateUrl: "/schema/form/form.html",
 				link: function(scope, element, attrs) {
 					var url;
@@ -249,7 +262,6 @@ angular.module('json-schema-ui', [
 						scope.formModel = {};
 		                scope.editItemIndex = -1;
 					};
-
 					scope.resetForm();
 				}
 			};
@@ -371,30 +383,6 @@ angular.module('json-schema-ui')
 
 (function() {
     'use strict';
-    var ID = 'scmFieldSelect';
-    angular.module('json-schema-ui')
-    .directive(ID, ["schemaFieldsService",
-        function(schemaFieldsService) {
-            return {
-                restrict: "E",
-                replace: true,
-                templateUrl: "/schema/field/select/select.html",
-                link: function(scope, element, attrs) {
-                    var updateValues = function() {
-                        schemaFieldsService.loadDictionary(scope.field.source)
-                        .then(function(values){
-                            scope.values = values;
-                        });
-                    };
-                    updateValues();
-                }
-            }
-        }
-    ]);
-})();
-
-(function() {
-    'use strict';
     var ID = 'scmFieldRadio';
     angular.module('json-schema-ui')
     .directive(ID, ["schemaFieldsService",
@@ -404,13 +392,33 @@ angular.module('json-schema-ui')
                 replace: true,
                 templateUrl: "/schema/field/radio/radio.html",
                 link: function(scope, element, attrs) {
-                    var updateValues = function() {
-                        schemaFieldsService.loadDictionary(scope.field.source)
-                        .then(function(values){
-                            scope.values = values;
-                        });
-                    };
-                    updateValues();
+                    schemaFieldsService.loadDictionary(scope.field.source)
+                    .then(function(values){
+                        scope.values = values;
+                    });
+                }
+            }
+        }
+    ]);
+})();
+
+(function() {
+    'use strict';
+    var ID = 'scmFieldSelect';
+    angular.module('json-schema-ui')
+    .directive(ID, ["schemaFieldsService",
+        function(schemaFieldsService) {
+            return {
+                restrict: "E",
+                replace: true,
+                templateUrl: "/schema/field/select/select.html",
+                link: function(scope, element, attrs) {
+                    schemaFieldsService.loadDictionary(scope.field.source)
+                    .then(function(values){
+                        scope.values = values;
+                        scope.loading = values.length === 0;
+                    });
+                    scope.loading = true;
                 }
             }
         }
@@ -432,41 +440,17 @@ angular.module('json-schema-ui')
     ]);
 })();
 
-(function() {
-	'use strict';
-    var ID = 'scmFieldsEditArrayItem';
-
-	angular.module('json-schema-ui')
-	.directive(ID, ['schemaUtils',
-		function(schemaUtils) {
-			return {
-				scope: {
-					field: '=',
-					data: '='
-				},
-				restrict: 'E',
-				replace: true,
-				transclude: true,
-				templateUrl: "/schema/fields/edit/array/item/item.html",
-				link: function(scope) {
-					scope.isVisible = schemaUtils.isFieldVisibleForEdit;
-				}
-			};
-		}
-	]);
-})();
-
 ;(function(){
 
 'use strict';
 
 angular.module('json-schema-ui').run(['$templateCache', function($templateCache) {
 
-  $templateCache.put('/schema/field/field.html', '<div class="b-schema-field">\n    <label class="b-schema-field__container" ng-if="!field.complex">\n        <div class="b-schema-field__label" ng-class="{\'s-required\': field.required}" ng-show="field.view.label && field.type !== \'checkbox\'">\n            {{ field.view.label }}\n        </div>\n    	<div class="b-schema-field__description" ng-hide="isReadonly">{{ field.view.description }}</div>\n        <div class="b-schema-field__value" ng-show="isReadonly && displayedValue">{{ displayedValue }}</div>\n        <%s class="b-schema-field__control" ng-if="!isReadonly"></%s>\n    </label>\n    <%s ng-if="field.complex"></%s>\n</div>\n');
+  $templateCache.put('/schema/field/field.html', '<div class="b-schema-field">\n    <label class="b-schema-field__container clearfix" ng-if="!field.complex">\n        <div class="b-schema-field__label" ng-class="{\'s-required\': field.required}" ng-show="field.view.label && field.type !== \'checkbox\'">\n            {{ field.view.label }}\n        </div>\n    	<div class="b-schema-field__description" ng-hide="isReadonly || !field.view.description">{{ field.view.description }}</div>\n        <div class="b-schema-field__value" ng-show="isReadonly && displayedValue">{{ displayedValue }}</div>\n        <%s class="b-schema-field__control" ng-if="!isReadonly"></%s>\n    </label>\n    <%s ng-if="field.complex"></%s>\n</div>\n');
 
-  $templateCache.put('/schema/form/form.html', '<div class="b-schema-form">\n    <scm-field data="data" field="::field" is-readonly="::isReadonly" sub-path="{{subPath}}" ng-repeat="field in fields"></scm-field>\n</div>\n');
+  $templateCache.put('/schema/form/form.html', '<div class="b-schema-form">\n    <scm-field data="data" field="field" is-readonly="isReadonly" sub-path="{{subPath}}" ng-repeat="field in fields"></scm-field>\n</div>\n');
 
-  $templateCache.put('/schema/field/array/array.html', '<div class="b-schema-field--array">\n    <div class="b-schema-field--array__label" ng-if=""></div>\n    <ng-form ng-if="!isReadonly">\n        <scm-field data="formModel" field="childField" ng-repeat="childField in field.fields"></scm-field>\n        <div class="b-fields-array-buttons">\n            <button class="btn btn-primary" ng-click="onSaveItem()">{{editItemIndex > -1 ? \'Update\' : \'Save\'}}</button>\n            <button class="btn" ng-click="resetForm()">Reset</button>\n        </div>\n    </ng-form>\n    <div class="b-schema-field--array__values">\n        <div class="b-schema-field--array__values__item row" ng-repeat="item in values">\n            <div class="cell col-xs-10 col-md-10">\n                <scm-field data="item" field="childField" is-readonly="true" ng-repeat="childField in field.fields"></scm-field>\n            </div>\n            <div class="cell col-xs-2 col-md-2 text-right" ng-hide="isReadonly">\n                <div class="glyphicon glyphicon-pencil" ng-click="onEditItem($index)" title="Edit"></div>\n                <div class="glyphicon glyphicon-trash" ng-click="onRemoveItem($index)" title="Remove"></div>\n            </div>\n        </div>\n    </div>\n</div>\n');
+  $templateCache.put('/schema/field/array/array.html', '<div class="b-schema-field--array">\n    <div class="b-schema-field--array__label" ng-if=""></div>\n    <ng-form ng-if="!isReadonly">\n        <scm-field data="formModel" field="childField" sub-path="{{subPath}}" ng-repeat="childField in field.fields"></scm-field>\n        <div class="b-fields-array-buttons">\n            <button class="btn btn-primary" ng-click="onSaveItem()">{{editItemIndex > -1 ? \'Update\' : \'Save\'}}</button>\n            <button class="btn" ng-click="resetForm()">Reset</button>\n        </div>\n    </ng-form>\n    <div class="b-schema-field--array__values">\n        <div class="b-schema-field--array__values__item row" ng-repeat="item in values">\n            <div class="cell col-xs-10 col-md-10">\n                <scm-field data="item" field="childField" is-readonly="true" sub-path="{{subPath}}" ng-repeat="childField in field.fields"></scm-field>\n            </div>\n            <div class="cell col-xs-2 col-md-2 text-right" ng-hide="isReadonly">\n                <div class="glyphicon glyphicon-pencil" ng-click="onEditItem($index)" title="Edit"></div>\n                <div class="glyphicon glyphicon-trash" ng-click="onRemoveItem($index)" title="Remove"></div>\n            </div>\n        </div>\n    </div>\n</div>\n');
 
   $templateCache.put('/schema/field/checkbox/checkbox.html', '<div class="b-schema-field--checkbox" ng-model scm-field-formatter uib-btn-checkbox btn-checkbox-true="field.value" btn-checkbox-false="null">\n    <div class="b-schema-field--checkbox__icon"></div>\n    <div class="b-schema-field--checkbox__text">{{field.view.label}}</div>\n</div>\n');
 
@@ -474,13 +458,11 @@ angular.module('json-schema-ui').run(['$templateCache', function($templateCache)
 
   $templateCache.put('/schema/field/input/input.html', '<input type="text" ng-model scm-field-formatter ng-required="field.required" class="form-control"/>\n');
 
-  $templateCache.put('/schema/field/select/select.html', '<div>\n	<ui-select ng-model scm-field-formatter theme="bootstrap" ng-disabled="loading">\n		<ui-select-match placeholder="{{placeholder}}">{{$select.selected.label}}</ui-select-match>\n		<ui-select-choices repeat="item.key as item in values | filter: $select.search">\n			<span ng-bind-html="item.label | highlight: $select.search"></span>\n		</ui-select-choices>\n	</ui-select>\n</div>\n');
-
   $templateCache.put('/schema/field/radio/radio.html', '<label class="b-schema-field--radio" ng-repeat="item in values" ng-model scm-field-formatter uib-btn-radio="item.key">\n    <div class="b-schema-field--radio__icon"></div>\n    <div class="b-schema-field--radio__text">{{item.label}}</div>\n</label>\n');
 
-  $templateCache.put('/schema/field/textarea/textarea.html', '<textarea ng-model scm-field-formatter ng-required="field.required" class="form-control"></textarea>\n');
+  $templateCache.put('/schema/field/select/select.html', '<div>\n	<ui-select ng-model scm-field-formatter theme="bootstrap" ng-disabled="loading">\n		<ui-select-match placeholder="{{field.view.placeholder}}">{{$select.selected.label}}</ui-select-match>\n		<ui-select-choices repeat="item.key as item in values | filter: $select.search">\n			<span ng-bind-html="item.label | highlight: $select.search"></span>\n		</ui-select-choices>\n	</ui-select>\n</div>\n');
 
-  $templateCache.put('/schema/field/array/item/item.html', '<div class="b-schema-fields--edit__array-item">\n    <schema-form-fields-edit ng-repeat="f in field.children | orderBy: \'order\'" ng-if="isVisible(f)" data="data" field="f"></schema-form-fields-edit>\n    <ng-transclude></ng-transclude>\n</div>');
+  $templateCache.put('/schema/field/textarea/textarea.html', '<textarea ng-model scm-field-formatter ng-required="field.required" class="form-control"></textarea>\n');
 
 }]);
 

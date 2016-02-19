@@ -1,15 +1,20 @@
 &--checkbox {
     cursor: pointer;
+    display: table;
+    &__text,
     &__icon {
-        display: inline-block;
+        display: table-cell;
+        vertical-align: middle;
+    }
+    &__icon {
         width: 20px;
         height: 20px;
         padding-left: 4px;
         border: 1px solid blue;
-        float: left;
+        font-size: 13px;
     }
     &__text {
-        margin-left: 25px;
+        padding-left: 10px;
     }
     &.active & {
         &__icon::after {

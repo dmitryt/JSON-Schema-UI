@@ -9,13 +9,12 @@
                 replace: true,
                 templateUrl: "/schema/field/select/select.html",
                 link: function(scope, element, attrs) {
-                    var updateValues = function() {
-                        schemaFieldsService.loadDictionary(scope.field.source)
-                        .then(function(values){
-                            scope.values = values;
-                        });
-                    };
-                    updateValues();
+                    schemaFieldsService.loadDictionary(scope.field.source)
+                    .then(function(values){
+                        scope.values = values;
+                        scope.loading = values.length === 0;
+                    });
+                    scope.loading = true;
                 }
             }
         }

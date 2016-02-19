@@ -40,7 +40,6 @@
 						scope.formModel = {};
 		                scope.editItemIndex = -1;
 					};
-
 					scope.resetForm();
 				}
 			};

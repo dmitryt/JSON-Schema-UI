@@ -5,6 +5,7 @@
 	angular.module("json-schema-ui")
 	.service(ID, ["$q", "$http", "schemaStateService",
 		function schemaFieldsService($q, $http, schemaStateService) {
+			var store = {};
 			return {
 				loadDictionary: function(source) {
 					var df = $q.defer(),
@@ -14,11 +15,14 @@
 							var url = [endPoint || "dictionaries", source].join('/');
 							return $http.get(url, {cache: true});
 						};
-					resource(source)
-						.then(function(res){
-							var d = res.data || [];
-							df.resolve(dParser ? dParser(d) : d);
-						});
+					if (store[source]) {
+						df.resolve(store[source]);
+					} else {
+						resource(source).then(function(res){
+							store[source] = dParser ? dParser(res.data): res.data;
+							df.resolve(store[source]);
+						}.bind(this));
+					}
 					return df.promise;
 				},
 				loadSchema: function(source) {

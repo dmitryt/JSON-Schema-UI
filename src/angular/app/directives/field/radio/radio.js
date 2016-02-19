@@ -9,13 +9,10 @@
                 replace: true,
                 templateUrl: "/schema/field/radio/radio.html",
                 link: function(scope, element, attrs) {
-                    var updateValues = function() {
-                        schemaFieldsService.loadDictionary(scope.field.source)
-                        .then(function(values){
-                            scope.values = values;
-                        });
-                    };
-                    updateValues();
+                    schemaFieldsService.loadDictionary(scope.field.source)
+                    .then(function(values){
+                        scope.values = values;
+                    });
                 }
             }
         }

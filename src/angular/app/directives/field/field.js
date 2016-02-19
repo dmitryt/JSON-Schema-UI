@@ -20,6 +20,16 @@
                 restrict: "E",
                 replace: true,
                 templateUrl: TEMPLATE_PATH,
+                controller: ["$scope", "$attrs",
+                    function($scope, $attrs) {
+                        $scope.$watch("field.path", function(value){
+                            var modelPath = ["data", value].join(".");
+                            if (angular.isDefined(value)) {
+                                $scope.displayedValue = $parse(modelPath)($scope);
+                            }
+                        });
+                    }
+                ],
                 link: function postLink(scope, element, attrs) {
                     var sField = scope.field || {},
                         type = $parse("type")(sField),
@@ -31,7 +41,6 @@
                     } else {
                         console.error("[JSON-Schema-UI]: Directive is not supported", sField);
                     }
-                    scope.displayedValue = $parse(scope.field.path)(scope.data);
                 }
             };
         }
