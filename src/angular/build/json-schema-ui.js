@@ -58,82 +58,6 @@ angular.module('json-schema-ui', [
 ]);
 })();
 
-(function(){
-	'use strict';
-	var ID = "schemaFieldsService";
-
-	angular.module("json-schema-ui")
-	.service(ID, ["$q", "$http", "schemaStateService",
-		function schemaFieldsService($q, $http, schemaStateService) {
-			var store = {};
-			return {
-				loadDictionary: function(source) {
-					var df = $q.defer(),
-						endPoint = schemaStateService.get("dictionaryEndpoint"),
-						dParser = schemaStateService.get("dictionaryParser"),
-						resource = function(source) {
-							var url = [endPoint || "dictionaries", source].join('/');
-							return $http.get(url, {cache: true});
-						};
-					if (store[source]) {
-						df.resolve(store[source]);
-					} else {
-						resource(source).then(function(res){
-							store[source] = dParser ? dParser(res.data): res.data;
-							df.resolve(store[source]);
-						}.bind(this));
-					}
-					return df.promise;
-				},
-				loadSchema: function(source) {
-					var df = $q.defer(),
-						endPoint = schemaStateService.get("schemaEndpoint"),
-						resource = function(source) {
-							var url = [endPoint || "schemas", source].join('/');
-							return $http.get(url, {cache: true});
-						};
-					return resource(source);
-				},
-				getDirectiveByType: function(type) {
-					return {
-                        "input": "scm-field-input",
-                        "textarea": "scm-field-textarea",
-                        "select": "scm-field-select",
-                        "date": "scm-field-date",
-                        "checkbox": "scm-field-checkbox",
-						"radio": "scm-field-radio",
-                        "array": "scm-field-array"
-                    }[type];
-				}
-			};
-		}
-	]);
-})();
-
-(function(){
-	'use strict';
-	var ID = "schemaStateService";
-
-	angular.module("json-schema-ui")
-	.provider(ID, [
-		function schemaStateServiceProvider() {
-            var config = {};
-			return {
-				configure: function(_config) {
-					angular.merge(config, _config || {});
-				},
-				$get: ["$parse", function schemaStateService($parse) {
-					return {
-						get: function(key) {
-							return $parse(key)(config);
-						}
-					};
-				}]
-			}
-		}
-	]);
-})();
-
 (function() {
     'use strict';
     var ID = 'scmField',
@@ -220,6 +144,82 @@ angular.module('json-schema-ui', [
 	]);
 })();
 
+(function(){
+	'use strict';
+	var ID = "schemaFieldsService";
+
+	angular.module("json-schema-ui")
+	.service(ID, ["$q", "$http", "schemaStateService",
+		function schemaFieldsService($q, $http, schemaStateService) {
+			var store = {};
+			return {
+				loadDictionary: function(source) {
+					var df = $q.defer(),
+						endPoint = schemaStateService.get("dictionaryEndpoint"),
+						dParser = schemaStateService.get("dictionaryParser"),
+						resource = function(source) {
+							var url = [endPoint || "dictionaries", source].join('/');
+							return $http.get(url, {cache: true});
+						};
+					if (store[source]) {
+						df.resolve(store[source]);
+					} else {
+						resource(source).then(function(res){
+							store[source] = dParser ? dParser(res.data): res.data;
+							df.resolve(store[source]);
+						}.bind(this));
+					}
+					return df.promise;
+				},
+				loadSchema: function(source) {
+					var df = $q.defer(),
+						endPoint = schemaStateService.get("schemaEndpoint"),
+						resource = function(source) {
+							var url = [endPoint || "schemas", source].join('/');
+							return $http.get(url, {cache: true});
+						};
+					return resource(source);
+				},
+				getDirectiveByType: function(type) {
+					return {
+                        "input": "scm-field-input",
+                        "textarea": "scm-field-textarea",
+                        "select": "scm-field-select",
+                        "date": "scm-field-date",
+                        "checkbox": "scm-field-checkbox",
+						"radio": "scm-field-radio",
+                        "array": "scm-field-array"
+                    }[type];
+				}
+			};
+		}
+	]);
+})();
+
+(function(){
+	'use strict';
+	var ID = "schemaStateService";
+
+	angular.module("json-schema-ui")
+	.provider(ID, [
+		function schemaStateServiceProvider() {
+            var config = {};
+			return {
+				configure: function(_config) {
+					angular.merge(config, _config || {});
+				},
+				$get: ["$parse", function schemaStateService($parse) {
+					return {
+						get: function(key) {
+							return $parse(key)(config);
+						}
+					};
+				}]
+			}
+		}
+	]);
+})();
+
 (function() {
 	'use strict';
     var ID = 'scmFieldArray';
@@ -288,15 +288,18 @@ angular.module('json-schema-ui', [
     var ID = 'scmFieldDate';
 
 angular.module('json-schema-ui')
-.directive(ID, [
-    function() {
+.directive(ID, ["$parse", "schemaStateService",
+    function($parse, schemaStateService) {
         return {
             restrict: "E",
             replace: true,
             templateUrl: "/schema/field/date/date.html",
             link: function(scope, element, attrs) {
+                var format = schemaStateService.get('dateFormat') || 'dd/MM/yyyy',
+                    minMode = $parse("field.view.minMode")(scope);
+                scope.today = new Date();
                 scope.open = function() {
-                    scope.opened = true;
+                    scope.popup.opened = true;
                 };
 
                 scope.dateOptions = {
@@ -304,8 +307,11 @@ angular.module('json-schema-ui')
                     startingDay: 1
                 };
 
-                // TODO => Move to settings
-                scope.format = 'dd/MM/yyyy';
+                scope.popup = {
+                    opened: false
+                };
+
+                scope.format = minMode === 'year' ? 'yyyy' : format;
             }
         };
     }
@@ -334,20 +340,19 @@ angular.module('json-schema-ui')
                 link: function(scope, element, attrs, ngModel) {
                     var type = $parse("field.type")(scope),
                         FORMATTERS = {
-                            dictionary: function(value) {
-                                var s = scope,
-                                    storeItem = null;
-                                if (value) {
-                                    storeItem = ($parse("fieldModel.values")(scope) || []).filter(function(i){
-                                        return i.key == String(value);
-                                    })[0];
-                                }
-                                return storeItem || value;
-                            }
+                            
                         },
                         PARSERS = {
                             date: function(value) {
-                                return angular.isDate(value) ? value.toISOString() : value;
+                                var result = value,
+                                    mode = $parse("field.view.minMode")(scope);
+                                if (angular.isDate(value)) {
+                                    result = value.toISOString();
+                                    if (mode === 'year') {
+                                        result = value.getFullYear();
+                                    }
+                                }
+                                return result;
                             },
                             dictionary: function(value) {
                                 return [value.key || value.name || value];
@@ -454,7 +459,7 @@ angular.module('json-schema-ui').run(['$templateCache', function($templateCache)
 
   $templateCache.put('/schema/field/checkbox/checkbox.html', '<div class="b-schema-field--checkbox" ng-model scm-field-formatter uib-btn-checkbox btn-checkbox-true="field.value" btn-checkbox-false="null">\n    <div class="b-schema-field--checkbox__icon"></div>\n    <div class="b-schema-field--checkbox__text">{{field.view.label}}</div>\n</div>\n');
 
-  $templateCache.put('/schema/field/date/date.html', '<div class="input-group" ng-if="!isReadonly">\n    <input type="text" class="form-control"\n        uib-datepicker-popup="{{dateFormat}}"\n        ng-model scm-field-formatter\n        is-open="opened"\n        max-date="today"\n        datepicker-mode="{{datepickerMode}}"\n        min-mode="{{minMode}}"\n        datepickerOptions="dateOptions"\n        ng-required="true"\n        close-text="Close" />\n    <div class="input-group-btn">\n        <button type="button" class="btn btn-default" ng-click="open()"><div class="glyphicon glyphicon-calendar"></div></button>\n    </div>\n</div>\n');
+  $templateCache.put('/schema/field/date/date.html', '<div class="input-group" ng-if="!isReadonly">\n    <input type="text" class="form-control"\n        uib-datepicker-popup="{{format}}"\n        ng-model scm-field-formatter\n        is-open="popup.opened"\n        max-date="today"\n        min-mode="field.view.minMode"\n        datepickerOptions="dateOptions"\n        ng-required="true"\n        close-text="Close" />\n    <div class="input-group-btn">\n        <button type="button" class="btn btn-default" ng-click="open()"><div class="glyphicon glyphicon-calendar"></div></button>\n    </div>\n</div>\n');
 
   $templateCache.put('/schema/field/input/input.html', '<input type="text" ng-model scm-field-formatter ng-required="field.required" class="form-control"/>\n');
 

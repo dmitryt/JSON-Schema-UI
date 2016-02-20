@@ -1,7 +1,6 @@
 ## JSON Schema UI
 ### Description
 Set of Angular Bootstrap UI components.
-[Demo page](https://github.com/dmitryt/JSON-Schema-UI/commit/3fce7167a4c6c3b7037bb594e078ab659b5e0971)
 
 ### Installation
 ```bash

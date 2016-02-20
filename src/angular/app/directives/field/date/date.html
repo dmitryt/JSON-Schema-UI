@@ -1,11 +1,10 @@
 <div class="input-group" ng-if="!isReadonly">
     <input type="text" class="form-control"
-        uib-datepicker-popup="{{dateFormat}}"
+        uib-datepicker-popup="{{format}}"
         ng-model scm-field-formatter
-        is-open="opened"
+        is-open="popup.opened"
         max-date="today"
-        datepicker-mode="{{datepickerMode}}"
-        min-mode="{{minMode}}"
+        min-mode="field.view.minMode"
         datepickerOptions="dateOptions"
         ng-required="true"
         close-text="Close" />

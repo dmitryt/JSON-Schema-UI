@@ -1,6 +1,6 @@
 {
   "name": "json-schema-ui",
-  "version": "1.0.1",
+  "version": "0.1.1",
   "description": "UI components for rendering controls from JSON Schema, generated via JSON Schema Parser",
   "main": "index.js",
   "scripts": {

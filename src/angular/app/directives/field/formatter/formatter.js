@@ -19,20 +19,19 @@
                 link: function(scope, element, attrs, ngModel) {
                     var type = $parse("field.type")(scope),
                         FORMATTERS = {
-                            dictionary: function(value) {
-                                var s = scope,
-                                    storeItem = null;
-                                if (value) {
-                                    storeItem = ($parse("fieldModel.values")(scope) || []).filter(function(i){
-                                        return i.key == String(value);
-                                    })[0];
-                                }
-                                return storeItem || value;
-                            }
+                            
                         },
                         PARSERS = {
                             date: function(value) {
-                                return angular.isDate(value) ? value.toISOString() : value;
+                                var result = value,
+                                    mode = $parse("field.view.minMode")(scope);
+                                if (angular.isDate(value)) {
+                                    result = value.toISOString();
+                                    if (mode === 'year') {
+                                        result = value.getFullYear();
+                                    }
+                                }
+                                return result;
                             },
                             dictionary: function(value) {
                                 return [value.key || value.name || value];

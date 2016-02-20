@@ -2,12 +2,9 @@
 <html>
     <head>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.9/angular.min.js"></script>
-        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-sanitize/1.4.9/angular-sanitize.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-select/0.14.2/select.min.js"></script> -->
         <script src="../build/json-schema-ui.js"></script>
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-
         <link rel="stylesheet" type="text/css" href="../build/json-schema-ui.css" />
     </head>
     <body ng-app="test">
@@ -137,6 +134,14 @@
                                 "description": "Date Description"
                             }
                         },
+                        dateYear: {
+                            "type": "date",
+                            "path": "path.from.root.dateYear",
+                            "view": {
+                                "label": "Year Picker Label",
+                                "minMode": "year"
+                            }
+                        },
                         select: {
                             "type": "select",
                             "source": "people.json",
@@ -216,7 +221,7 @@
                     $scope.customData = {};
 
                     $scope.fields = fields;
-                    $scope.formFields = [fields.input, fields.checkbox, fields.radio, fields.date, fields.select, fields.textarea, fields.array];
+                    $scope.formFields = [fields.input, fields.checkbox, fields.radio, fields.date, fields.dateYear, fields.select, fields.textarea, fields.array];
                     $scope.dynamicChangedModelFields = [fields.dynamicModelInput];
                 });
         </script>

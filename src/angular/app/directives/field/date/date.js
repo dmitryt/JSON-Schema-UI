@@ -2,15 +2,18 @@
     var ID = 'scmFieldDate';
 
 angular.module('json-schema-ui')
-.directive(ID, [
-    function() {
+.directive(ID, ["$parse", "schemaStateService",
+    function($parse, schemaStateService) {
         return {
             restrict: "E",
             replace: true,
             templateUrl: "/schema/field/date/date.html",
             link: function(scope, element, attrs) {
+                var format = schemaStateService.get('dateFormat') || 'dd/MM/yyyy',
+                    minMode = $parse("field.view.minMode")(scope);
+                scope.today = new Date();
                 scope.open = function() {
-                    scope.opened = true;
+                    scope.popup.opened = true;
                 };
 
                 scope.dateOptions = {
@@ -18,8 +21,11 @@ angular.module('json-schema-ui')
                     startingDay: 1
                 };
 
-                // TODO => Move to settings
-                scope.format = 'dd/MM/yyyy';
+                scope.popup = {
+                    opened: false
+                };
+
+                scope.format = minMode === 'year' ? 'yyyy' : format;
             }
         };
     }
