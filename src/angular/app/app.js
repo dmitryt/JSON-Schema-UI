@@ -4,6 +4,7 @@ angular.module('json-schema-ui', [
 	'ngSanitize',
 	'ngResource',
 	'ui.select',
-	'ui.bootstrap'
+	'ui.bootstrap',
+	'pascalprecht.translate'
 ]);
 })();

@@ -3,11 +3,10 @@
 	var ID = "schemaFieldsService";
 
 	angular.module("json-schema-ui")
-	.service(ID, ["$q", "$http", "schemaStateService",
-		function schemaFieldsService($q, $http, schemaStateService) {
-			var store = {};
-			return {
-				loadDictionary: function(source) {
+	.service(ID, ["$q", "$rootScope", "$http", "schemaStateService",
+		function schemaFieldsService($q, $rootScope, $http, schemaStateService) {
+			var store = {},
+				fetchDictionary = function(source) {
 					var df = $q.defer(),
 						endPoint = schemaStateService.get("dictionaryEndpoint"),
 						dParser = schemaStateService.get("dictionaryParser"),
@@ -24,6 +23,23 @@
 						}.bind(this));
 					}
 					return df.promise;
+				};
+			return {
+				getDictionary: function(source, cb) {
+					var df = $q.defer(),
+	                    isTranslated = schemaStateService.get('i18n'),
+						loadValues = function(locale) {
+							fetchDictionary(source).then(function(values) {
+								cb(isTranslated ? values[locale || 'en'] : values);
+							});
+						};
+					if (isTranslated) {
+                        $rootScope.$on('$translateChangeSuccess', function(event, obj){
+							var value = (obj.language || "").split("-")[0];
+							loadValues(value);
+                        });
+                    }
+					loadValues();
 				},
 				loadSchema: function(source) {
 					var df = $q.defer(),

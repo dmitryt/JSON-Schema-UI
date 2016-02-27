@@ -1,0 +1,18 @@
+[
+    {"name": "Afghanistan", "value": "AF", "locales": {"en": "Afghanistan", "de": "Afghanistan", "ru": "Афганистан"}},
+    {"name": "Belgium", "value": "BE", "locales": {"en": "Belgium", "de": "Belgien", "ru": "Бельгия"}},
+    {"name": "Bolivia", "value": "BO", "locales": {"en": "Bolivia", "de": "Bolivien", "ru": "Боливия"}},
+    {"name": "Bosnia and Herzegovina", "value": "BA", "locales": {"en": "Bosnia and Herzegovina", "de": "Bosnien und Herzegowina", "ru": "Босния и Герцоговина"}},
+    {"name": "Botswana", "value": "BW", "locales": {"en": "Botswana", "de": "Botswana", "ru": "Ботсвана"}},
+    {"name": "Cambodia", "value": "KH", "locales": {"en": "Cambodia", "de": "Kambodscha", "ru": "Камбоджа"}},
+    {"name": "Cameroon", "value": "CM", "locales": {"en": "Cameroon", "de": "Kamerun", "ru": "Камерун"}},
+    {"name": "Canada", "value": "CA", "locales": {"en": "Canada", "de": "Kanada", "ru": "Канада"}},
+    {"name": "Denmark", "value": "DK", "locales": {"en": "Denmark", "de": "Dänemark", "ru": "Дания"}},
+    {"name": "Thailand", "value": "TH", "locales": {"en": "Thailand", "de": "Thailand", "ru": "Таиланд"}},
+    {"name": "Tunisia", "value": "TN", "locales": {"en": "Tunisia", "de": "Tunesien", "ru": "Тунис"}},
+    {"name": "Turkey", "value": "TR", "locales": {"en": "Turkey", "de": "Truthahn", "ru": "Турция"}},
+    {"name": "United Kingdom", "value": "GB", "locales": {"en": "United Kingdom", "de": "Großbritannien", "ru": "Великобритания"}},
+    {"name": "United States", "value": "US", "locales": {"en": "United States", "de": "Vereinigte Staaten von Amerika", "ru": "Соединенные Штаты Америки"}},
+    {"name": "Venezuela", "value": "VE", "locales": {"en": "Venezuela", "de": "Venezuela", "ru": "Венесуэла"}},
+    {"name": "Zimbabwe", "value": "ZW", "locales": {"en": "Zimbabwe", "de": "Simbabwe", "ru": "Зимбабве"}}
+]

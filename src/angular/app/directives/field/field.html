@@ -1,9 +1,9 @@
-<div class="b-schema-field">
+<div class="b-schema-field" ng-cloak>
     <label class="b-schema-field__container clearfix" ng-if="!field.complex">
         <div class="b-schema-field__label" ng-class="{'s-required': field.required}" ng-show="field.view.label && field.type !== 'checkbox'">
-            {{ field.view.label }}
+            {{ field.view.label | translate }}
         </div>
-    	<div class="b-schema-field__description" ng-hide="isReadonly || !field.view.description">{{ field.view.description }}</div>
+    	<div class="b-schema-field__description" ng-hide="isReadonly || !field.view.description">{{ field.view.description | translate }}</div>
         <div class="b-schema-field__value" ng-show="isReadonly && displayedValue">{{ displayedValue }}</div>
         <%s class="b-schema-field__control" ng-if="!isReadonly"></%s>
     </label>

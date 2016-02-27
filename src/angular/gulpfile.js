@@ -14,6 +14,7 @@ gulp.task('js', function(){
 		gulp.src('bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js'),
 		gulp.src('bower_components/angular-sanitize/angular-sanitize.min.js'),
 		gulp.src('bower_components/angular-resource/angular-resource.min.js'),
+		gulp.src('bower_components/angular-translate/angular-translate.min.js'),
 		gulp.src('bower_components/angular-ui-select/dist/select.min.js'),
 		gulp.src(['app/app.js', 'app/**/*.js', '!app/**/*.spec.js']),
 		gulp.src("./app/directives/**/*.html")

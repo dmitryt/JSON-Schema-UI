@@ -9,8 +9,7 @@
                 replace: true,
                 templateUrl: "/schema/field/radio/radio.html",
                 link: function(scope, element, attrs) {
-                    schemaFieldsService.loadDictionary(scope.field.source)
-                    .then(function(values){
+                    schemaFieldsService.getDictionary(scope.field.source, function(values){
                         scope.values = values;
                     });
                 }

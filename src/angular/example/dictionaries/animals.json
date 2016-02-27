@@ -1,14 +1,17 @@
 [
   {
     "name": "Tiger",
-    "value": "tiger"
+    "value": "tiger",
+    "locales": {"en": "Tiger", "de": "Tiger", "ru": "Тигр"}
   },
   {
     "name": "Lion",
-    "value": "lion"
+    "value": "lion",
+    "locales": {"en": "Lion", "de": "Löwe", "ru": "Лев"}
   },
   {
     "name": "Elephant",
-    "value": "elephant"
+    "value": "elephant",
+    "locales": {"en": "Elephant", "de": "Elefant", "ru": "Слон"}
   }
 ]
