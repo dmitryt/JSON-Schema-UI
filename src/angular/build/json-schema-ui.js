@@ -308,6 +308,43 @@ angular.module('json-schema-ui', [
 })();
 
 (function() {
+    var ID = 'scmFieldDate';
+
+angular.module('json-schema-ui')
+.directive(ID, ["$parse", "schemaStateService",
+    function($parse, schemaStateService) {
+        return {
+            restrict: "E",
+            replace: true,
+            templateUrl: "/schema/field/date/date.html",
+            link: function(scope, element, attrs) {
+                var format = schemaStateService.get('dateFormat') || 'dd/MM/yyyy',
+                    minMode = $parse("field.view.minMode")(scope);
+                scope.today = new Date();
+                scope.open = function() {
+                    scope.popup.opened = true;
+                };
+
+                scope.dateOptions = {
+                    formatYear: 'yy',
+                    startingDay: 1
+                };
+
+                scope.popup = {
+                    opened: false
+                };
+
+                scope.minMode = minMode || 'day';
+
+                scope.format = minMode === 'year' ? 'yyyy' : format;
+            }
+        };
+    }
+]);
+
+})();
+
+(function() {
     'use strict';
     var ID = 'scmFieldFormatter';
 
@@ -360,41 +397,6 @@ angular.module('json-schema-ui', [
 })();
 
 (function() {
-    var ID = 'scmFieldDate';
-
-angular.module('json-schema-ui')
-.directive(ID, ["$parse", "schemaStateService",
-    function($parse, schemaStateService) {
-        return {
-            restrict: "E",
-            replace: true,
-            templateUrl: "/schema/field/date/date.html",
-            link: function(scope, element, attrs) {
-                var format = schemaStateService.get('dateFormat') || 'dd/MM/yyyy',
-                    minMode = $parse("field.view.minMode")(scope);
-                scope.today = new Date();
-                scope.open = function() {
-                    scope.popup.opened = true;
-                };
-
-                scope.dateOptions = {
-                    formatYear: 'yy',
-                    startingDay: 1
-                };
-
-                scope.popup = {
-                    opened: false
-                };
-
-                scope.format = minMode === 'year' ? 'yyyy' : format;
-            }
-        };
-    }
-]);
-
-})();
-
-(function() {
     'use strict';
     var ID = 'scmFieldInput';
     angular.module('json-schema-ui')
@@ -404,6 +406,26 @@ angular.module('json-schema-ui')
                 restrict: "E",
                 replace: true,
                 templateUrl: "/schema/field/input/input.html"
+            }
+        }
+    ]);
+})();
+
+(function() {
+    'use strict';
+    var ID = 'scmFieldRadio';
+    angular.module('json-schema-ui')
+    .directive(ID, ["schemaFieldsService",
+        function(schemaFieldsService) {
+            return {
+                restrict: "E",
+                replace: true,
+                templateUrl: "/schema/field/radio/radio.html",
+                link: function(scope, element, attrs) {
+                    schemaFieldsService.getDictionary(scope.field.source, function(values){
+                        scope.values = values;
+                    });
+                }
             }
         }
     ]);
@@ -460,26 +482,6 @@ angular.module('json-schema-ui')
     ]);
 })();
 
-(function() {
-    'use strict';
-    var ID = 'scmFieldRadio';
-    angular.module('json-schema-ui')
-    .directive(ID, ["schemaFieldsService",
-        function(schemaFieldsService) {
-            return {
-                restrict: "E",
-                replace: true,
-                templateUrl: "/schema/field/radio/radio.html",
-                link: function(scope, element, attrs) {
-                    schemaFieldsService.getDictionary(scope.field.source, function(values){
-                        scope.values = values;
-                    });
-                }
-            }
-        }
-    ]);
-})();
-
 ;(function(){
 
 'use strict';
@@ -494,15 +496,15 @@ angular.module('json-schema-ui').run(['$templateCache', function($templateCache)
 
   $templateCache.put('/schema/field/checkbox/checkbox.html', '<div class="b-schema-field--checkbox" ng-model scm-field-formatter uib-btn-checkbox btn-checkbox-true="field.value" btn-checkbox-false="null">\n    <div class="b-schema-field--checkbox__icon"></div>\n    <div class="b-schema-field--checkbox__text">{{field.view.label | translate}}</div>\n</div>\n');
 
-  $templateCache.put('/schema/field/date/date.html', '<div class="input-group" ng-if="!isReadonly">\n    <input type="text" class="form-control"\n        uib-datepicker-popup="{{format}}"\n        ng-model scm-field-formatter\n        is-open="popup.opened"\n        max-date="today"\n        min-mode="field.view.minMode"\n        datepickerOptions="dateOptions"\n        ng-required="true"\n        close-text="Close" />\n    <div class="input-group-btn">\n        <button type="button" class="btn btn-default" ng-click="open()"><div class="glyphicon glyphicon-calendar"></div></button>\n    </div>\n</div>\n');
+  $templateCache.put('/schema/field/date/date.html', '<div class="input-group" ng-if="!isReadonly">\n    <input type="text" class="form-control"\n        uib-datepicker-popup="{{format}}"\n        ng-model scm-field-formatter\n        is-open="popup.opened"\n        max-date="today"\n        min-mode="minMode"\n        show-button-bar="false"\n        datepickerOptions="dateOptions"\n        ng-required="true"\n        close-text="Close" />\n    <div class="input-group-btn">\n        <button type="button" class="btn btn-default" ng-click="open()"><div class="glyphicon glyphicon-calendar"></div></button>\n    </div>\n</div>\n');
 
   $templateCache.put('/schema/field/input/input.html', '<input type="text" ng-model scm-field-formatter ng-required="field.required" class="form-control"/>\n');
+
+  $templateCache.put('/schema/field/radio/radio.html', '<label class="b-schema-field--radio" ng-repeat="item in values" ng-model scm-field-formatter uib-btn-radio="item.key">\n    <div class="b-schema-field--radio__icon"></div>\n    <div class="b-schema-field--radio__text">{{item.label}}</div>\n</label>\n');
 
   $templateCache.put('/schema/field/select/select.html', '<div>\n	<ui-select ng-model scm-field-formatter theme="bootstrap" ng-disabled="loading">\n		<ui-select-match placeholder="{{field.view.placeholder | translate}}">{{selected.label || $select.selected.label}}</ui-select-match>\n		<ui-select-choices repeat="item.key as item in values | filter: {label: $select.search}">\n			<span ng-bind-html="item.label | highlight: $select.search"></span>\n		</ui-select-choices>\n	</ui-select>\n</div>\n');
 
   $templateCache.put('/schema/field/textarea/textarea.html', '<textarea ng-model scm-field-formatter ng-required="field.required" class="form-control"></textarea>\n');
-
-  $templateCache.put('/schema/field/radio/radio.html', '<label class="b-schema-field--radio" ng-repeat="item in values" ng-model scm-field-formatter uib-btn-radio="item.key">\n    <div class="b-schema-field--radio__icon"></div>\n    <div class="b-schema-field--radio__text">{{item.label}}</div>\n</label>\n');
 
 }]);
 

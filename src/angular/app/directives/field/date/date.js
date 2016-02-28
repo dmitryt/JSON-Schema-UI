@@ -25,6 +25,8 @@ angular.module('json-schema-ui')
                     opened: false
                 };
 
+                scope.minMode = minMode || 'day';
+
                 scope.format = minMode === 'year' ? 'yyyy' : format;
             }
         };
