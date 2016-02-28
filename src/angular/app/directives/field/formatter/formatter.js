@@ -18,13 +18,19 @@
                 ],
                 link: function(scope, element, attrs, ngModel) {
                     var type = $parse("field.type")(scope),
+                        mode = $parse("field.view.minMode")(scope),
                         FORMATTERS = {
-                            
+                            date: function(value) {
+                                var result = value;
+                                if (result && mode === 'year') {
+                                    result = new Date(value, 0);
+                                }
+                                return result;
+                            }
                         },
                         PARSERS = {
                             date: function(value) {
-                                var result = value,
-                                    mode = $parse("field.view.minMode")(scope);
+                                var result = value;
                                 if (angular.isDate(value)) {
                                     result = value.toISOString();
                                     if (mode === 'year') {

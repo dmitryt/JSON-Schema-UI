@@ -293,21 +293,6 @@ angular.module('json-schema-ui', [
 })();
 
 (function() {
-    'use strict';
-    var ID = 'scmFieldCheckbox';
-    angular.module('json-schema-ui')
-    .directive(ID, [
-        function() {
-            return {
-                restrict: "E",
-                replace: true,
-                templateUrl: "/schema/field/checkbox/checkbox.html"
-            }
-        }
-    ]);
-})();
-
-(function() {
     var ID = 'scmFieldDate';
 
 angular.module('json-schema-ui')
@@ -346,6 +331,21 @@ angular.module('json-schema-ui')
 
 (function() {
     'use strict';
+    var ID = 'scmFieldCheckbox';
+    angular.module('json-schema-ui')
+    .directive(ID, [
+        function() {
+            return {
+                restrict: "E",
+                replace: true,
+                templateUrl: "/schema/field/checkbox/checkbox.html"
+            }
+        }
+    ]);
+})();
+
+(function() {
+    'use strict';
     var ID = 'scmFieldFormatter';
 
     angular.module('json-schema-ui')
@@ -364,13 +364,19 @@ angular.module('json-schema-ui')
                 ],
                 link: function(scope, element, attrs, ngModel) {
                     var type = $parse("field.type")(scope),
+                        mode = $parse("field.view.minMode")(scope),
                         FORMATTERS = {
-                            
+                            date: function(value) {
+                                var result = value;
+                                if (result && mode === 'year') {
+                                    result = new Date(value, 0);
+                                }
+                                return result;
+                            }
                         },
                         PARSERS = {
                             date: function(value) {
-                                var result = value,
-                                    mode = $parse("field.view.minMode")(scope);
+                                var result = value;
                                 if (angular.isDate(value)) {
                                     result = value.toISOString();
                                     if (mode === 'year') {
@@ -494,9 +500,9 @@ angular.module('json-schema-ui').run(['$templateCache', function($templateCache)
 
   $templateCache.put('/schema/field/array/array.html', '<div class="b-schema-field--array">\n    <div class="b-schema-field--array__label" ng-if=""></div>\n    <ng-form ng-if="!isReadonly">\n        <scm-field data="formModel" field="childField" sub-path="{{subPath}}" ng-repeat="childField in field.fields"></scm-field>\n        <div class="b-fields-array-buttons">\n            <button class="btn btn-primary" ng-click="onSaveItem()">{{editItemIndex > -1 ? \'Update\' : \'Save\' | translate}}</button>\n            <button class="btn" ng-click="resetForm()">{{\'Reset\' | translate}}</button>\n        </div>\n    </ng-form>\n    <div class="b-schema-field--array__values">\n        <div class="b-schema-field--array__values__item row" ng-repeat="item in values">\n            <div class="cell col-xs-10 col-md-10">\n                <scm-field data="item" field="childField" is-readonly="true" sub-path="{{subPath}}" ng-repeat="childField in field.fields"></scm-field>\n            </div>\n            <div class="cell col-xs-2 col-md-2 text-right" ng-hide="isReadonly">\n                <div class="glyphicon glyphicon-pencil" ng-click="onEditItem($index)" title="Edit"></div>\n                <div class="glyphicon glyphicon-trash" ng-click="onRemoveItem($index)" title="Remove"></div>\n            </div>\n        </div>\n    </div>\n</div>\n');
 
-  $templateCache.put('/schema/field/checkbox/checkbox.html', '<div class="b-schema-field--checkbox" ng-model scm-field-formatter uib-btn-checkbox btn-checkbox-true="field.value" btn-checkbox-false="null">\n    <div class="b-schema-field--checkbox__icon"></div>\n    <div class="b-schema-field--checkbox__text">{{field.view.label | translate}}</div>\n</div>\n');
+  $templateCache.put('/schema/field/date/date.html', '<div class="input-group" ng-if="!isReadonly">\n    <input type="text" class="form-control"\n        uib-datepicker-popup="{{format}}"\n        ng-model scm-field-formatter\n        is-open="popup.opened"\n        max-date="today"\n        min-mode="{{minMode}}"\n        show-button-bar="false"\n        datepickerOptions="dateOptions"\n        ng-required="true"\n        close-text="Close" />\n    <div class="input-group-btn">\n        <button type="button" class="btn btn-default" ng-click="open()"><div class="glyphicon glyphicon-calendar"></div></button>\n    </div>\n</div>\n');
 
-  $templateCache.put('/schema/field/date/date.html', '<div class="input-group" ng-if="!isReadonly">\n    <input type="text" class="form-control"\n        uib-datepicker-popup="{{format}}"\n        ng-model scm-field-formatter\n        is-open="popup.opened"\n        max-date="today"\n        min-mode="minMode"\n        show-button-bar="false"\n        datepickerOptions="dateOptions"\n        ng-required="true"\n        close-text="Close" />\n    <div class="input-group-btn">\n        <button type="button" class="btn btn-default" ng-click="open()"><div class="glyphicon glyphicon-calendar"></div></button>\n    </div>\n</div>\n');
+  $templateCache.put('/schema/field/checkbox/checkbox.html', '<div class="b-schema-field--checkbox" ng-model scm-field-formatter uib-btn-checkbox btn-checkbox-true="field.value" btn-checkbox-false="null">\n    <div class="b-schema-field--checkbox__icon"></div>\n    <div class="b-schema-field--checkbox__text">{{field.view.label | translate}}</div>\n</div>\n');
 
   $templateCache.put('/schema/field/input/input.html', '<input type="text" ng-model scm-field-formatter ng-required="field.required" class="form-control"/>\n');
 
