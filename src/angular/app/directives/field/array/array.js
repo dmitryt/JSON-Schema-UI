@@ -41,6 +41,9 @@
 		                scope.editItemIndex = -1;
 					};
 					scope.resetForm();
+					scope.$watchCollection('values', function() {
+						scope.$broadcast('JsonSchemaUi:scmFieldArray:onItemUpdate', angular.copy(scope.values));
+					});
 				}
 			};
 		}
