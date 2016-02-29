@@ -34,9 +34,9 @@ angular.module('test', ['json-schema-ui', 'pascalprecht.translate'])
           'Child1 Label': "Tag Nachkomme1",
           'Child2 Label': "Tag Nachkomme2",
           'Year Picker Label': "Label-Feld das Jahr zu wählen",
-          'Save': "Behalten",
-          'Update': "Aktualisierung",
-          'Reset': "Zurückstellen"
+          'BUTTON_SAVE': "Behalten",
+          'BUTTON_UPDATE': "Aktualisierung",
+          'BUTTON_RESET': "Zurückstellen"
         });
         $translateProvider.translations('ru', {
           'Input Label': "Метка поля ввода",
@@ -52,9 +52,9 @@ angular.module('test', ['json-schema-ui', 'pascalprecht.translate'])
           'Child1 Label': "Метка потомка1",
           'Child2 Label': "Метка потомка2",
           'Year Picker Label': "Метка поля для выбора года",
-          'Save': "Сохранить",
-          'Update': "Обновить",
-          'Reset': "Сбросить"
+          'BUTTON_SAVE': "Сохранить",
+          'BUTTON_UPDATE': "Обновить",
+          'BUTTON_RESET': "Сбросить"
         });
         $translateProvider.preferredLanguage('en');
         $translateProvider.useSanitizeValueStrategy('escaped');

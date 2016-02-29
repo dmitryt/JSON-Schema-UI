@@ -3,9 +3,12 @@
 	var ID = "schemaFieldsService";
 
 	angular.module("json-schema-ui")
-	.service(ID, ["$q", "$rootScope", "$http", "schemaStateService",
-		function schemaFieldsService($q, $rootScope, $http, schemaStateService) {
+	.service(ID, ["$q", "$parse", "$rootScope", "$http", "schemaStateService",
+		function schemaFieldsService($q, $parse, $rootScope, $http, schemaStateService) {
 			var store = {},
+				localeChangedListeners = {},
+				selectedLocale = null,
+				localeChangedIndex = 0,
 				fetchDictionary = function(source) {
 					var df = $q.defer(),
 						endPoint = schemaStateService.get("dictionaryEndpoint"),
@@ -24,22 +27,39 @@
 					}
 					return df.promise;
 				};
+			$rootScope.$on('$translateChangeSuccess', function(event, obj){
+				var locale = (obj.language || "").split("-")[0];
+				selectedLocale = locale;
+				angular.forEach(localeChangedListeners, function(fn) {
+					if (angular.isFunction(fn)) {
+						fn();
+					}
+				});
+			});
 			return {
-				getDictionary: function(source, cb) {
+				getDictionary: function(source) {
 					var df = $q.defer(),
-	                    isTranslated = schemaStateService.get('i18n'),
-						loadValues = function(locale) {
-							fetchDictionary(source).then(function(values) {
-								cb(isTranslated ? values[locale || 'en'] : values);
-							});
-						};
-					if (isTranslated) {
-                        $rootScope.$on('$translateChangeSuccess', function(event, obj){
-							var value = (obj.language || "").split("-")[0];
-							loadValues(value);
-                        });
-                    }
-					loadValues();
+	                    isTranslated = schemaStateService.get('i18n');
+					fetchDictionary(source).then(function(values) {
+						df.resolve(isTranslated ? values[selectedLocale || 'en'] : values);
+					});
+					return df.promise;
+				},
+				subscribeOnLocaleChanged: function(cb) {
+					localeChangedListeners[++localeChangedIndex] = cb;
+				},
+				unsubscribeOnLocaleChanged: function(index) {
+					delete localeChangedListeners[index];
+				},
+				findSelectedItem: function(values, path, data) {
+					var selectedValue = $parse(path)(data || {}),
+						selectedItem = null;
+					if (selectedValue) {
+						selectedItem = (values || []).filter(function(item) {
+							return item.key === selectedValue;
+						})[0];
+					}
+					return selectedItem;
 				},
 				loadSchema: function(source) {
 					var df = $q.defer(),

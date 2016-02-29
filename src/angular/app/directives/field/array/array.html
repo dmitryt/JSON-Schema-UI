@@ -3,8 +3,8 @@
     <ng-form ng-if="!isReadonly">
         <scm-field data="formModel" field="childField" sub-path="{{subPath}}" ng-repeat="childField in field.fields"></scm-field>
         <div class="b-fields-array-buttons">
-            <button class="btn btn-primary" ng-click="onSaveItem()">{{editItemIndex > -1 ? 'Update' : 'Save' | translate}}</button>
-            <button class="btn" ng-click="resetForm()">{{'Reset' | translate}}</button>
+            <button class="btn btn-primary" ng-click="onSaveItem()">{{editItemIndex > -1 ? 'BUTTON_UPDATE' : 'BUTTON_SAVE' | translate}}</button>
+            <button class="btn" ng-click="resetForm()">{{'BUTTON_RESET' | translate}}</button>
         </div>
     </ng-form>
     <div class="b-schema-field--array__values">
