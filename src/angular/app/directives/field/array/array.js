@@ -3,8 +3,8 @@
     var ID = 'scmFieldArray';
 
 	angular.module('json-schema-ui')
-	.directive(ID, ["$parse",
-		function($parse) {
+	.directive(ID, ["$parse", "$q",
+		function($parse, $q) {
 			return {
 				restrict: 'E',
 				replace: true,
@@ -22,12 +22,36 @@
 
 					scope.values = getOrInitArray();
 					scope.onSaveItem = function() {
-		                if (scope.editItemIndex > -1) {
-							scope.values[scope.editItemIndex] = scope.formModel;
-		                } else {
-							scope.values.unshift(scope.formModel);
-		                }
-						scope.resetForm();
+						var cb = function() {
+								if (scope.editItemIndex > -1) {
+									values[scope.editItemIndex] = scope.formModel;
+				                } else {
+									values.unshift(scope.formModel);
+				                }
+								scope.resetForm();
+							},
+							values = scope.values;
+						if (_field.unique) {
+							var fieldObject = _field.fields.filter(function(o){
+									return o.path === _field.unique;
+								})[0],
+								fieldValues = values.map(function(o){
+									return $parse(fieldObject.path)(o);
+								}),
+								fieldUniqueIndex = fieldValues.indexOf($parse(fieldObject.path)(scope.formModel)),
+								df = $q.defer();
+							if (fieldUniqueIndex !== -1 && scope.editItemIndex === -1) {
+								scope.$emit('Json-Schema-Ui:scmFieldArray#onItemUpdate', {df: df, fieldLabel: $parse('view.label')(fieldObject)});
+								df.promise.then(function(){
+									scope.editItemIndex = fieldUniqueIndex;
+									cb();
+								});
+							} else {
+								cb();
+							}
+						} else {
+							cb();
+						}
 					};
 					scope.onRemoveItem = function(index) {
 						scope.values.splice(index, 1);
@@ -41,9 +65,6 @@
 		                scope.editItemIndex = -1;
 					};
 					scope.resetForm();
-					scope.$watchCollection('values', function() {
-						scope.$broadcast('JsonSchemaUi:scmFieldArray:onItemUpdate', angular.copy(scope.values));
-					});
 				}
 			};
 		}
