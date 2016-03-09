@@ -73,6 +73,8 @@
 				getDirectiveByType: function(type) {
 					return {
                         "input": "scm-field-input",
+						"email": "scm-field-input",
+						"password": "scm-field-input",
                         "textarea": "scm-field-textarea",
                         "select": "scm-field-select",
                         "date": "scm-field-date",
@@ -80,6 +82,11 @@
 						"radio": "scm-field-radio",
                         "array": "scm-field-array"
                     }[type];
+				},
+				getPattern: function(key) {
+					return {
+						"email": /^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/
+					}[key];
 				}
 			};
 		}

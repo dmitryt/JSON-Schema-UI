@@ -1,7 +1,6 @@
 (function() {
 	'use strict';
     var ID = 'scmFieldArray';
-
 	angular.module('json-schema-ui')
 	.directive(ID, ["$parse", "$q",
 		function($parse, $q) {

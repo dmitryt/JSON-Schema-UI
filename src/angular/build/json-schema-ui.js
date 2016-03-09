@@ -140,6 +140,8 @@ angular.module('json-schema-ui', [
 				getDirectiveByType: function(type) {
 					return {
                         "input": "scm-field-input",
+						"email": "scm-field-input",
+						"password": "scm-field-input",
                         "textarea": "scm-field-textarea",
                         "select": "scm-field-select",
                         "date": "scm-field-date",
@@ -147,6 +149,11 @@ angular.module('json-schema-ui', [
 						"radio": "scm-field-radio",
                         "array": "scm-field-array"
                     }[type];
+				},
+				getPattern: function(key) {
+					return {
+						"email": /^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/
+					}[key];
 				}
 			};
 		}
@@ -266,7 +273,6 @@ angular.module('json-schema-ui', [
 (function() {
 	'use strict';
     var ID = 'scmFieldArray';
-
 	angular.module('json-schema-ui')
 	.directive(ID, ["$parse", "$q",
 		function($parse, $q) {
@@ -450,12 +456,26 @@ angular.module('json-schema-ui')
     'use strict';
     var ID = 'scmFieldInput';
     angular.module('json-schema-ui')
-    .directive(ID, [
-        function() {
+    .directive(ID, ["$parse", "schemaFieldsService",
+        function($parse, schemaFieldsService) {
             return {
                 restrict: "E",
                 replace: true,
-                templateUrl: "/schema/field/input/input.html"
+                templateUrl: "/schema/field/input/input.html",
+                link: function(scope, element, attrs) {
+                    var PREDEFINED_INPUT_TYPES = {
+                        "email": "email",
+                        "password": "password"
+                    };
+                    scope.pattern = schemaFieldsService.getPattern(scope.field.type);
+                    scope.type = PREDEFINED_INPUT_TYPES[scope.field.type] || 'text';
+                    scope.validate = function () {
+                        if (!scope.pattern) {
+                            return true;
+                        }
+                        return scope.pattern.test($parse(scope.field.path)(scope.data));
+                    };
+                }
             }
         }
     ]);
@@ -559,7 +579,7 @@ angular.module('json-schema-ui')
 
 angular.module('json-schema-ui').run(['$templateCache', function($templateCache) {
 
-  $templateCache.put('/schema/field/field.html', '<div class="b-schema-field" ng-cloak>\n    <label class="b-schema-field__container clearfix" ng-if="!field.complex">\n        <div class="b-schema-field__label" ng-class="{\'s-required\': field.required}" ng-show="field.view.label && field.type !== \'checkbox\'">\n            {{ field.view.label | translate }}\n        </div>\n    	<div class="b-schema-field__description" ng-hide="isReadonly || !field.view.description">{{ field.view.description | translate }}</div>\n        <div class="b-schema-field__value" ng-show="isReadonly && displayedValue">{{ displayedValue }}</div>\n        <%s class="b-schema-field__control" ng-hide="isReadonly"></%s>\n    </label>\n    <%s ng-if="field.complex"></%s>\n</div>\n');
+  $templateCache.put('/schema/field/field.html', '<div class="b-schema-field b-schema-field__{{field.type}}" ng-cloak>\n    <label class="b-schema-field__container clearfix" ng-if="!field.complex">\n        <div class="b-schema-field__label" ng-class="{\'s-required\': field.required}" ng-show="field.view.label && field.type !== \'checkbox\'">\n            {{ field.view.label | translate }}\n        </div>\n    	<div class="b-schema-field__description" ng-hide="isReadonly || !field.view.description">{{ field.view.description | translate }}</div>\n        <div class="b-schema-field__value" ng-show="isReadonly && displayedValue">{{ displayedValue }}</div>\n        <%s class="b-schema-field__control" ng-hide="isReadonly"></%s>\n    </label>\n    <%s ng-if="field.complex"></%s>\n</div>\n');
 
   $templateCache.put('/schema/form/form.html', '<div class="b-schema-form">\n    <scm-field data="data" field="field" is-readonly="isReadonly" sub-path="{{subPath}}" ng-repeat="field in fields"></scm-field>\n</div>\n');
 
@@ -569,7 +589,7 @@ angular.module('json-schema-ui').run(['$templateCache', function($templateCache)
 
   $templateCache.put('/schema/field/date/date.html', '<div class="input-group" ng-if="!isReadonly">\n    <input type="text" class="form-control"\n        uib-datepicker-popup="{{format}}"\n        ng-model scm-field-formatter\n        is-open="popup.opened"\n        max-date="today"\n        min-mode="{{minMode}}"\n        show-button-bar="false"\n        datepickerOptions="dateOptions"\n        ng-required="true"\n        close-text="Close" />\n    <div class="input-group-btn">\n        <button type="button" class="btn btn-default" ng-click="open()"><div class="glyphicon glyphicon-calendar"></div></button>\n    </div>\n</div>\n');
 
-  $templateCache.put('/schema/field/input/input.html', '<input type="text" ng-model scm-field-formatter ng-required="field.required" class="form-control"/>\n');
+  $templateCache.put('/schema/field/input/input.html', '<div class="display-table">\n    <div class="display-table-cell">\n        <input type="{{type}}" ng-model scm-field-formatter ng-pattern="pattern" ng-required="field.required" class="form-control"/>\n    </div>\n    <div class="display-table-cell b-hint" ng-show="pattern && validate()">{{\'HINT_ACCEPTED\' | translate}}</div>\n</div>\n');
 
   $templateCache.put('/schema/field/radio/radio.html', '<label class="b-schema-field--radio" ng-repeat="item in values" ng-model scm-field-formatter uib-btn-radio="item.key">\n    <div class="b-schema-field--radio__icon"></div>\n    <div class="b-schema-field--radio__text">{{item.label}}</div>\n</label>\n');
 

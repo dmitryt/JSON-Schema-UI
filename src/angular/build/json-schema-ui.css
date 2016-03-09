@@ -21,6 +21,19 @@
   width: 10px;
   height: 10px;
 }
+.b-schema-field__input,
+.b-schema-field__email {
+  position: relative;
+}
+.b-schema-field__input .display-table,
+.b-schema-field__email .display-table {
+  display: table;
+  width: 100%;
+}
+.b-schema-field__input .display-table-cell,
+.b-schema-field__email .display-table-cell {
+  display: table-cell;
+}
 .b-schema-field--checkbox {
   cursor: pointer;
   display: table;
