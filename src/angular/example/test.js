@@ -63,7 +63,7 @@ angular.module('test', ['json-schema-ui', 'pascalprecht.translate'])
         return {
             restrict: "E",
             replace: true,
-            template: "<div><div>Custom directive</div><scm-field-input field='fields.custom' data='data'></scm-field-input></div>"
+            template: "<div><div>Custom directive</div><scm-field-input></scm-field-input></div>"
         }
     })
     .controller("MyController", function($scope, $translate){

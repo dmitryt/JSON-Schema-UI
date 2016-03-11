@@ -34,7 +34,7 @@
                     var sField = scope.field || {},
                         type = $parse("type")(sField),
                         tpl = $templateCache.get(TEMPLATE_PATH),
-                        directiveName = type ? schemaFieldsService.getDirectiveByType(type) : $parse('directive')(sField),
+                        directiveName = $parse('directive')(sField) || schemaFieldsService.getDirectiveByType(type),
                         directiveStr = tpl.replace(/\%s/g, directiveName);
                     if (directiveName) {
                         element.replaceWith($compile(directiveStr)(scope));

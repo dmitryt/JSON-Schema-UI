@@ -65,6 +65,42 @@ angular.module('json-schema-ui', [
 ]);
 })();
 
+(function() {
+'use strict';
+	var ID = 'scmForm';
+
+	angular.module('json-schema-ui')
+	.directive(ID, ["$parse", "schemaFieldsService",
+		function($parse, schemaFieldsService) {
+			return {
+				scope:{
+					schema:'=',
+					data:'=',
+					isReadonly: "=",
+					subPath: "@"
+				},
+				restrict: "E",
+				replace: true,
+				templateUrl: "/schema/form/form.html",
+				link: function(scope, element, attrs) {
+					var url;
+                    if (Array.isArray(scope.schema)) {
+						scope.fields = scope.schema;
+					} else if (typeof scope.schema === 'string') {
+						url = scope.schema.split('@');
+						schemaFieldsService.loadSchema(url[0])
+						.then(function(res){
+							var data = res.data,
+								path = url[1];
+							scope.fields = path ? $parse(path)(data) : data;
+						});
+					}
+                }
+			};
+		}
+	]);
+})();
+
 (function(){
 	'use strict';
 	var ID = "schemaFieldsService";
@@ -220,7 +256,7 @@ angular.module('json-schema-ui', [
                     var sField = scope.field || {},
                         type = $parse("type")(sField),
                         tpl = $templateCache.get(TEMPLATE_PATH),
-                        directiveName = type ? schemaFieldsService.getDirectiveByType(type) : $parse('directive')(sField),
+                        directiveName = $parse('directive')(sField) || schemaFieldsService.getDirectiveByType(type),
                         directiveStr = tpl.replace(/\%s/g, directiveName);
                     if (directiveName) {
                         element.replaceWith($compile(directiveStr)(scope));
@@ -235,39 +271,95 @@ angular.module('json-schema-ui', [
 })();
 
 (function() {
-'use strict';
-	var ID = 'scmForm';
-
-	angular.module('json-schema-ui')
-	.directive(ID, ["$parse", "schemaFieldsService",
-		function($parse, schemaFieldsService) {
-			return {
-				scope:{
-					schema:'=',
-					data:'=',
-					isReadonly: "=",
-					subPath: "@"
-				},
-				restrict: "E",
-				replace: true,
-				templateUrl: "/schema/form/form.html",
-				link: function(scope, element, attrs) {
-					var url;
-                    if (Array.isArray(scope.schema)) {
-						scope.fields = scope.schema;
-					} else if (typeof scope.schema === 'string') {
-						url = scope.schema.split('@');
-						schemaFieldsService.loadSchema(url[0])
-						.then(function(res){
-							var data = res.data,
-								path = url[1];
-							scope.fields = path ? $parse(path)(data) : data;
-						});
-					}
+    'use strict';
+    var ID = 'scmFieldRadio';
+    angular.module('json-schema-ui')
+    .directive(ID, ["schemaFieldsService", "schemaStateService",
+        function(schemaFieldsService, schemaStateService) {
+            return {
+                restrict: "E",
+                replace: true,
+                templateUrl: "/schema/field/radio/radio.html",
+                link: function(scope, element, attrs) {
+                    var updateCb = function() {
+                        schemaFieldsService.getDictionary(scope.field.source).then(function(values){
+                            var selectedItem = null;
+                            scope.values = values;
+                            if (!Array.isArray(values)) {
+                                return console.error("json-schema-ui#scmFieldRadio: Expected Array, got: ", values);
+                            }
+                            selectedItem = schemaFieldsService.findSelectedItem(values, scope.field.path, scope.data);
+                            if (selectedItem) {
+                                scope.displayedValue = selectedItem.label;
+                            }
+                        });
+                    };
+                    updateCb();
+                    if (schemaStateService.get('i18n')) {
+                        var token = schemaFieldsService.subscribeOnLocaleChanged(updateCb);
+                        scope.$on('destroy', function() {
+                            schemaFieldsService.unsubscribeOnLocaleChanged(token);
+                        });
+                    }
                 }
-			};
-		}
-	]);
+            }
+        }
+    ]);
+})();
+
+(function() {
+    'use strict';
+    var ID = 'scmFieldSelect';
+    angular.module('json-schema-ui')
+    .directive(ID, ["$rootScope", "schemaFieldsService", "schemaStateService",
+        function($rootScope, schemaFieldsService, schemaStateService) {
+            return {
+                restrict: "E",
+                replace: true,
+                templateUrl: "/schema/field/select/select.html",
+                link: function(scope, element, attrs) {
+                    scope.selected = {};
+                    var updateCb = function() {
+                        schemaFieldsService.getDictionary(scope.field.source).then(function(values){
+                            var selectedItem = null;
+                            if (!Array.isArray(values)) {
+                                return console.error("json-schema-ui#scmFieldSelect: Expected Array, got: ", values);
+                            }
+                            scope.values = values;
+                            scope.loading = values.length === 0;
+                            selectedItem = schemaFieldsService.findSelectedItem(values, scope.field.path, scope.data);
+                            if (selectedItem) {
+                                scope.displayedValue = selectedItem.label;
+                            }
+                        });
+                    };
+                    updateCb();
+                    scope.loading = true;
+                    if (schemaStateService.get('i18n')) {
+                        var token = schemaFieldsService.subscribeOnLocaleChanged(updateCb);
+                        scope.$on('destroy', function() {
+                            schemaFieldsService.unsubscribeOnLocaleChanged(token);
+                        });
+                    }
+                }
+            }
+        }
+    ]);
+})();
+
+(function() {
+    'use strict';
+    var ID = 'scmFieldTextarea';
+    angular.module('json-schema-ui')
+    .directive(ID, [
+        function() {
+            return {
+                restrict: "E",
+                replace: true,
+                templateUrl: "/schema/field/textarea/textarea.html"
+            }
+        }
+    ]);
 })();
 
 (function() {
@@ -481,98 +573,6 @@ angular.module('json-schema-ui')
     ]);
 })();
 
-(function() {
-    'use strict';
-    var ID = 'scmFieldRadio';
-    angular.module('json-schema-ui')
-    .directive(ID, ["schemaFieldsService", "schemaStateService",
-        function(schemaFieldsService, schemaStateService) {
-            return {
-                restrict: "E",
-                replace: true,
-                templateUrl: "/schema/field/radio/radio.html",
-                link: function(scope, element, attrs) {
-                    var updateCb = function() {
-                        schemaFieldsService.getDictionary(scope.field.source).then(function(values){
-                            var selectedItem = null;
-                            scope.values = values;
-                            if (!Array.isArray(values)) {
-                                return console.error("json-schema-ui#scmFieldRadio: Expected Array, got: ", values);
-                            }
-                            selectedItem = schemaFieldsService.findSelectedItem(values, scope.field.path, scope.data);
-                            if (selectedItem) {
-                                scope.displayedValue = selectedItem.label;
-                            }
-                        });
-                    };
-                    updateCb();
-                    if (schemaStateService.get('i18n')) {
-                        var token = schemaFieldsService.subscribeOnLocaleChanged(updateCb);
-                        scope.$on('destroy', function() {
-                            schemaFieldsService.unsubscribeOnLocaleChanged(token);
-                        });
-                    }
-                }
-            }
-        }
-    ]);
-})();
-
-(function() {
-    'use strict';
-    var ID = 'scmFieldSelect';
-    angular.module('json-schema-ui')
-    .directive(ID, ["$rootScope", "schemaFieldsService", "schemaStateService",
-        function($rootScope, schemaFieldsService, schemaStateService) {
-            return {
-                restrict: "E",
-                replace: true,
-                templateUrl: "/schema/field/select/select.html",
-                link: function(scope, element, attrs) {
-                    scope.selected = {};
-                    var updateCb = function() {
-                        schemaFieldsService.getDictionary(scope.field.source).then(function(values){
-                            var selectedItem = null;
-                            if (!Array.isArray(values)) {
-                                return console.error("json-schema-ui#scmFieldSelect: Expected Array, got: ", values);
-                            }
-                            scope.values = values;
-                            scope.loading = values.length === 0;
-                            selectedItem = schemaFieldsService.findSelectedItem(values, scope.field.path, scope.data);
-                            if (selectedItem) {
-                                scope.displayedValue = selectedItem.label;
-                            }
-                        });
-                    };
-                    updateCb();
-                    scope.loading = true;
-                    if (schemaStateService.get('i18n')) {
-                        var token = schemaFieldsService.subscribeOnLocaleChanged(updateCb);
-                        scope.$on('destroy', function() {
-                            schemaFieldsService.unsubscribeOnLocaleChanged(token);
-                        });
-                    }
-                }
-            }
-        }
-    ]);
-})();
-
-(function() {
-    'use strict';
-    var ID = 'scmFieldTextarea';
-    angular.module('json-schema-ui')
-    .directive(ID, [
-        function() {
-            return {
-                restrict: "E",
-                replace: true,
-                templateUrl: "/schema/field/textarea/textarea.html"
-            }
-        }
-    ]);
-})();
-
 ;(function(){
 
 'use strict';
@@ -585,9 +585,9 @@ angular.module('json-schema-ui').run(['$templateCache', function($templateCache)
 
   $templateCache.put('/schema/field/array/array.html', '<div class="b-schema-field--array">\n    <div class="b-schema-field--array__label" ng-if=""></div>\n    <ng-form ng-if="!isReadonly">\n        <scm-field data="formModel" field="childField" sub-path="{{subPath}}" ng-repeat="childField in field.fields"></scm-field>\n        <div class="b-fields-array-buttons">\n            <button class="btn btn-primary" ng-click="onSaveItem()">{{editItemIndex > -1 ? \'BUTTON_UPDATE\' : \'BUTTON_SAVE\' | translate}}</button>\n            <button class="btn" ng-click="resetForm()">{{\'BUTTON_RESET\' | translate}}</button>\n        </div>\n    </ng-form>\n    <div class="b-schema-field--array__values">\n        <div class="b-schema-field--array__values__item row" ng-repeat="item in values">\n            <div class="cell col-xs-10 col-md-10">\n                <scm-field data="item" field="childField" is-readonly="true" sub-path="{{subPath}}" ng-repeat="childField in field.fields"></scm-field>\n            </div>\n            <div class="cell col-xs-2 col-md-2 text-right" ng-hide="isReadonly">\n                <div class="glyphicon glyphicon-pencil" ng-click="onEditItem($index)" title="Edit"></div>\n                <div class="glyphicon glyphicon-trash" ng-click="onRemoveItem($index)" title="Remove"></div>\n            </div>\n        </div>\n    </div>\n</div>\n');
 
-  $templateCache.put('/schema/field/checkbox/checkbox.html', '<div class="b-schema-field--checkbox" ng-model scm-field-formatter uib-btn-checkbox btn-checkbox-true="field.value" btn-checkbox-false="null">\n    <div class="b-schema-field--checkbox__icon"></div>\n    <div class="b-schema-field--checkbox__text">{{field.view.label | translate}}</div>\n</div>\n');
-
   $templateCache.put('/schema/field/date/date.html', '<div class="input-group" ng-if="!isReadonly">\n    <input type="text" class="form-control"\n        uib-datepicker-popup="{{format}}"\n        ng-model scm-field-formatter\n        is-open="popup.opened"\n        max-date="today"\n        min-mode="{{minMode}}"\n        show-button-bar="false"\n        datepickerOptions="dateOptions"\n        ng-required="true"\n        close-text="Close" />\n    <div class="input-group-btn">\n        <button type="button" class="btn btn-default" ng-click="open()"><div class="glyphicon glyphicon-calendar"></div></button>\n    </div>\n</div>\n');
+
+  $templateCache.put('/schema/field/checkbox/checkbox.html', '<div class="b-schema-field--checkbox" ng-model scm-field-formatter uib-btn-checkbox btn-checkbox-true="field.value" btn-checkbox-false="null">\n    <div class="b-schema-field--checkbox__icon"></div>\n    <div class="b-schema-field--checkbox__text">{{field.view.label | translate}}</div>\n</div>\n');
 
   $templateCache.put('/schema/field/input/input.html', '<div class="display-table">\n    <div class="display-table-cell">\n        <input type="{{type}}" ng-model scm-field-formatter ng-pattern="pattern" ng-required="field.required" class="form-control"/>\n    </div>\n    <div class="display-table-cell b-hint" ng-show="pattern && validate()">{{\'HINT_ACCEPTED\' | translate}}</div>\n</div>\n');
 
