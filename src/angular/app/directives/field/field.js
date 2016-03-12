@@ -28,6 +28,15 @@
                                 $scope.displayedValue = $parse(modelPath)($scope);
                             }
                         });
+                        $scope.getValue = function(key) {
+                            var path = $scope.field.path,
+                                pathArr = ($scope.field.path || "").split('.');
+                            if (key) {
+                                pathArr[pathArr.length - 1] = key;
+                                path = pathArr.join('.');
+                            }
+                            return $parse(path)($scope.data);
+                        };
                     }
                 ],
                 link: function postLink(scope, element, attrs) {

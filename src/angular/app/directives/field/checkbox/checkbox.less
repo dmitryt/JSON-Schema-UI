@@ -1,24 +1,23 @@
 &--checkbox {
-    cursor: pointer;
-    display: table;
-    &__text,
-    &__icon {
-        display: table-cell;
-        vertical-align: middle;
+    &__table {
+        width: auto;
     }
-    &__icon {
-        width: 20px;
-        height: 20px;
-        padding-left: 4px;
-        border: 1px solid blue;
-        font-size: 13px;
-    }
-    &__text {
-        padding-left: 10px;
-    }
-    &.active & {
-        &__icon::after {
-            content: "\2714"
+    &__inner {
+        cursor: pointer;
+        &__icon {
+            width: 20px;
+            height: 20px;
+            padding-left: 4px;
+            border: 1px solid blue;
+            font-size: 13px;
+        }
+        &__text {
+            padding-left: 10px;
+        }
+        &.active & {
+            &__icon::after {
+                content: "\2714"
+            }
         }
     }
 }

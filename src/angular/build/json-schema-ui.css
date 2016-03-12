@@ -21,60 +21,65 @@
   width: 10px;
   height: 10px;
 }
-.b-schema-field__input,
-.b-schema-field__email {
-  position: relative;
-}
-.b-schema-field__input .display-table,
-.b-schema-field__email .display-table {
+.b-schema-field__table {
   display: table;
   width: 100%;
 }
-.b-schema-field__input .display-table-cell,
-.b-schema-field__email .display-table-cell {
-  display: table-cell;
-}
-.b-schema-field--checkbox {
-  cursor: pointer;
-  display: table;
-}
-.b-schema-field--checkbox__text,
-.b-schema-field--checkbox__icon {
+.b-schema-field__cell {
   display: table-cell;
   vertical-align: middle;
 }
-.b-schema-field--checkbox__icon {
+.b-schema-field__hint {
+  visibility: hidden;
+  margin-left: 17px;
+}
+.b-schema-field__hint.accepted {
+  visibility: visible;
+}
+.b-schema-field--input,
+.b-schema-field--email {
+  position: relative;
+}
+.b-schema-field--input .ng-invalid,
+.b-schema-field--email .ng-invalid {
+  color: red;
+  border-color: red;
+}
+.b-schema-field--checkbox__table {
+  width: auto;
+}
+.b-schema-field--checkbox__inner {
+  cursor: pointer;
+}
+.b-schema-field--checkbox__inner__icon {
   width: 20px;
   height: 20px;
   padding-left: 4px;
   border: 1px solid blue;
   font-size: 13px;
 }
-.b-schema-field--checkbox__text {
+.b-schema-field--checkbox__inner__text {
   padding-left: 10px;
 }
-.b-schema-field--checkbox.active .b-schema-field--checkbox__icon::after {
+.b-schema-field--checkbox__inner.active .b-schema-field--checkbox__inner__icon::after {
   content: "\2714";
 }
-.b-schema-field--radio {
+.b-schema-field--radio__table {
+  width: auto;
+}
+.b-schema-field--radio__inner {
   cursor: pointer;
-  display: table;
 }
-.b-schema-field--radio__text,
-.b-schema-field--radio__icon {
-  display: table-cell;
-  vertical-align: middle;
-}
-.b-schema-field--radio__icon {
+.b-schema-field--radio__inner__icon {
   width: 20px;
   height: 20px;
   border: 1px solid blue;
   border-radius: 50%;
 }
-.b-schema-field--radio__text {
+.b-schema-field--radio__inner__text {
   padding-left: 10px;
 }
-.b-schema-field--radio.active .b-schema-field--radio__icon {
+.b-schema-field--radio__inner.active .b-schema-field--radio__inner__icon {
   background-color: blue;
 }
 .b-schema-field--array {

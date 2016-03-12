@@ -1,4 +1,4 @@
-<div class="b-schema-field b-schema-field__{{field.type}}" ng-cloak>
+<div class="b-schema-field b-schema-field--{{field.type}}" ng-cloak>
     <label class="b-schema-field__container clearfix" ng-if="!field.complex">
         <div class="b-schema-field__label" ng-class="{'s-required': field.required}" ng-show="field.view.label && field.type !== 'checkbox'">
             {{ field.view.label | translate }}

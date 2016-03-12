@@ -10,17 +10,21 @@
                 templateUrl: "/schema/field/input/input.html",
                 link: function(scope, element, attrs) {
                     var PREDEFINED_INPUT_TYPES = {
-                        "email": "email",
-                        "password": "password"
-                    };
-                    scope.pattern = schemaFieldsService.getPattern(scope.field.type);
-                    scope.type = PREDEFINED_INPUT_TYPES[scope.field.type] || 'text';
-                    scope.validate = function () {
-                        if (!scope.pattern) {
-                            return true;
-                        }
-                        return scope.pattern.test($parse(scope.field.path)(scope.data));
-                    };
+                            "email": "email",
+                            "password": "password"
+                        },
+                        type = scope.field.type,
+                        pattern;
+                    scope.type = PREDEFINED_INPUT_TYPES[type] || 'text';
+                    if (type === 'email') {
+                        scope.pattern = schemaFieldsService.getPattern(type);
+                        scope.field.validators = [{
+                            label: 'HINT_ACCEPTED',
+                            fn: function() {
+                                return scope.pattern.test($parse(scope.field.path)(scope.data));
+                            }
+                        }];
+                    }
                 }
             }
         }

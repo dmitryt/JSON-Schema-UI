@@ -1,24 +1,22 @@
 &--radio {
-    cursor: pointer;
-    display: table;
-    &__text,
-    &__icon {
-        display: table-cell;
-        vertical-align: middle;
+    &__table {
+        width: auto;
     }
-
-    &__icon {
-        width: 20px;
-        height: 20px;
-        border: 1px solid blue;
-        border-radius: 50%;
-    }
-    &__text {
-        padding-left: 10px;
-    }
-    &.active & {
+    &__inner {
+        cursor: pointer;
         &__icon {
-            background-color: blue;
+            width: 20px;
+            height: 20px;
+            border: 1px solid blue;
+            border-radius: 50%;
+        }
+        &__text {
+            padding-left: 10px;
+        }
+        &.active & {
+            &__icon {
+                background-color: blue;
+            }
         }
     }
 }
