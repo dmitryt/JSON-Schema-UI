@@ -1,6 +1,6 @@
 <div class="b-schema-field__table" ng-hide="isReadonly">
     <div class="b-schema-field__cell">
-        <input type="{{field.type}}" ng-model scm-field-formatter ng-pattern="pattern" ng-required="field.required" class="form-control"/>
+        <input type="{{field.type}}" ng-model scm-field-formatter ng-required="field.required" ng-disabled="field.disabled" class="form-control"/>
     </div>
     <div class="b-schema-field__cell" ng-show="field.validators.length">
         <div class="b-schema-field__hint" ng-repeat="v in field.validators" ng-class="{accepted: __meta__.validation[v.label]}">{{v.label | translate: v.params}}</div>
