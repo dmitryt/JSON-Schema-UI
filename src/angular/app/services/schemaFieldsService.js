@@ -87,6 +87,16 @@
 					return {
 						"email": /^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/
 					}[key];
+				},
+				setModelValidators: function(ngModel, validators, acc) {
+					if (Array.isArray(validators)) {
+						validators.forEach(function(v){
+							var _key = v.key || v.label;
+							ngModel.$validators[_key] = function() {
+								return acc[_key] = v.fn.apply(v.fn, arguments);
+							};
+						});
+					}
 				}
 			};
 		}

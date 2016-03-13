@@ -3,8 +3,8 @@
     var ID = 'scmFieldFormatter';
 
     angular.module('json-schema-ui')
-    .directive(ID, ["$parse",
-        function($parse) {
+    .directive(ID, ["$parse", "schemaFieldsService",
+        function($parse, schemaFieldsService) {
             return {
                 restrict: "A",
                 priority: 2,
@@ -42,12 +42,17 @@
                             dictionary: function(value) {
                                 return [value.key || value.name || value];
                             }
-                        };
+                        },
+                        acc;
                     if (PARSERS[type]) {
                         ngModel.$parsers.push(PARSERS[type]);
                     }
                     if (FORMATTERS[type]) {
                         ngModel.$formatters.push(FORMATTERS[type]);
+                    }
+                    if (scope.field.validators) {
+                        scope.__meta__.validation = acc = {};
+                        schemaFieldsService.setModelValidators(ngModel, scope.field.validators, acc);
                     }
                 }
             };

@@ -21,7 +21,7 @@
                 		</ui-select-choices>
                 	</ui-select>
                 </label>
-                <scm-form schema="formFields" data="formData"></scm-form>
+                <scm-fieldset schema="formFields" data="formData"></scm-fieldset>
                 <h4>Model</h4>
                 <div style="background-color: grey; padding: 10px">
                     {{formData}}
@@ -39,7 +39,7 @@
                 		</ui-select-choices>
                 	</ui-select>
                 </label>
-                <scm-form schema="dynamicChangedModelFields" sub-path="{{selected.locale}}" data="dynamicChangedModelData"></scm-form>
+                <scm-fieldset schema="dynamicChangedModelFields" sub-path="{{selected.locale}}" data="dynamicChangedModelData"></scm-fieldset>
                 <h4>Model</h4>
                 <div style="background-color: grey; padding: 10px">
                     {{dynamicChangedModelData}}
@@ -48,7 +48,7 @@
             <h3>Rendering form from external source</h3>
             <div style="border: 1px solid #ccc; padding: 10px">
                 <h4>Form</h4>
-                <scm-form schema="'test1.json@some.path'" data="externalSourceFormData"></scm-form>
+                <scm-fieldset schema="'test1.json@some.path'" data="externalSourceFormData"></scm-fieldset>
                 <h4>Model</h4>
                 <div style="background-color: grey; padding: 10px">
                     {{externalSourceFormData}}
@@ -57,7 +57,7 @@
             <h3>Rendering readonly form</h3>
             <div style="border: 1px solid #ccc; padding: 10px">
                 <h4>Form</h4>
-                <scm-form schema="formFields" data="readonlyFormData" is-readonly="true"></scm-form>
+                <scm-fieldset schema="formFields" data="readonlyFormData" is-readonly="true"></scm-fieldset>
             </div>
             <h3>Rendering the single field</h3>
             <div style="border: 1px solid #ccc; padding: 10px">

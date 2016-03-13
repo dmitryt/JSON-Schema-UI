@@ -37,11 +37,13 @@
   visibility: visible;
 }
 .b-schema-field--input,
-.b-schema-field--email {
+.b-schema-field--email,
+.b-schema-field--password {
   position: relative;
 }
-.b-schema-field--input .ng-invalid,
-.b-schema-field--email .ng-invalid {
+.b-schema-field--input .ng-invalid.ng-dirty,
+.b-schema-field--email .ng-invalid.ng-dirty,
+.b-schema-field--password .ng-invalid.ng-dirty {
   color: red;
   border-color: red;
 }

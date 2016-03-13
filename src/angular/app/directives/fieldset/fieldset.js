@@ -1,6 +1,6 @@
 (function() {
 'use strict';
-	var ID = 'scmForm';
+	var ID = 'scmFieldset';
 
 	angular.module('json-schema-ui')
 	.directive(ID, ["$parse", "schemaFieldsService",
@@ -14,7 +14,17 @@
 				},
 				restrict: "E",
 				replace: true,
-				templateUrl: "/schema/form/form.html",
+				templateUrl: "/schema/fieldset/fieldset.html",
+				controller: ['$scope', function($scope) {
+					this.getField = function(path) {
+						if (Array.isArray($scope.fields)) {
+							return $scope.fields.filter(function(f){
+								return f.path === path;
+							})[0];
+						}
+						return null;
+					};
+				}],
 				link: function(scope, element, attrs) {
 					var url;
                     if (Array.isArray(scope.schema)) {
