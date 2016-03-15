@@ -1,5 +1,5 @@
 <div>
-	<ui-select ng-model scm-field-formatter theme="bootstrap" ng-disabled="loading">
+	<ui-select ng-model scm-field-formatter theme="bootstrap" ng-disabled="loading" on-select="onSelect()">
 		<ui-select-match placeholder="{{field.view.placeholder | translate}}">{{displayedValue || $select.selected.label}}</ui-select-match>
 		<ui-select-choices repeat="item.key as item in values | filter: {label: $select.search}">
 			<span ng-bind-html="item.label | highlight: $select.search"></span>
