@@ -27,6 +27,8 @@ angular.module('my-module', [
 angular.module('my-module', ['json-schema-ui'])
     .config(['schemaStateServiceProvider', function(schemaStateServiceProvider){
         schemaStateServiceProvider.configure({
+            i18n: true, /* Optional. Whether localization is supported or not */
+            dateFormat: 'dd.MM.yyyy', /* Optional. Date format for date field. Default is 'dd/MM/yyyy'.*/
             schemaEndpoint: '/example/schemas', /* Optional. Endpoint for schema loading; */
             dictionaryEndpoint: '/example/dictionaries', /* Optional. Endpoint for dictionary loading; */
             dictionaryParser: function(data){  /* Optional. Is used to transform dictionary structure; */
@@ -40,9 +42,9 @@ angular.module('my-module', ['json-schema-ui'])
         });
     }])
 ```
-I highly recommend to use iether *scm-form* directive
+I highly recommend to use iether *scm-fieldset* directive
 ```
-<scm-form schema="formFields" data="formData" is-readonly="true" sub-path="subPath"></scm-form>
+<scm-fieldset schema="formFields" data="formData" is-readonly="true" sub-path="subPath"></scm-fieldset>
 ```
 or *scm-field* directive
 ```
@@ -50,7 +52,7 @@ or *scm-field* directive
 ```
 *schema* - field schema or array of field schemas.
 *data* - data model.
-*isReadonly* - form|field mode.
+*isReadonly* - fieldset|field mode.
 *subPath* - dynamic data path.
 Let's take a look at structure of field schema:
 ```
@@ -68,11 +70,15 @@ Let's take a look at structure of field schema:
 | Option        | Description   |
 | ------------- | ------------- |
 | path          | *Required*. Model path.|
-| type          | *Optional*. It's used to define default type of control. Available types: input, checkbox, radio, date, select, textarea, array.  |
+| type          | *Optional*. It's used to define default type of control. Available types: *input, email, password, checkbox, radio, date, select, textarea, array*.  |
 | directive     | *Optional*. It's possible to provide custom directive, if it's not enough to use the existing controls. Don't provide *type* option in this case|
 | value         | *Optional*. Actual for *checkbox* control. It's a value, that will be filled in model data, when checkbox will be checked. |
 | source         | *Optional*. Actual for *select* and *radio* control. Name of source data. Don't forget to cinfgiure *dictionaryEndpoint* to load it. |
 | complex        | *Optional*. Default is false. Every field has predefined behaviour - it has edit and view modes. But if the field is complex, than it wil be easier for client to provide its own behaviour for such cases. For instance, one of the predefined complex field - is *array* field. |
+| unique        | *Optional\|Experimental*. Is used for *array* field. If attribute is set as unique, than only one item of array has it. If user tries to add array item with the same attribute, than event will be fired. The key of event is 'Json-Schema-Ui:scmFieldArray#onItemUpdate'.|
+| required      | *Optional*. Is passed into ng-required |
+| disabled      | *Optional*. Is passed into ng-disabled |
+| validators    | *Optional*. Array of validators with the next format [{label: <string>, fn: <function>}...]. Validator should return true if value if valid and false otherwise.|
 | view.label    | *Optional*. Label, that will be described under the provided control.|
 | view.description    | *Optional*. Description, that will be described under the provided control.|
 | view.minMode  | *Optional*. Actual for *date* control. Available option: "year".
