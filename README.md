@@ -1,6 +1,7 @@
 ## JSON Schema UI
 ### Description
 Set of Angular Bootstrap UI components.
+[Demo Page](https://plnkr.co/edit/8JEEH5lvFspKpCHGsLuI?p=preview)
 
 ### Installation
 ```bash
