@@ -76,6 +76,20 @@ angular.module('test', ['json-schema-ui', 'pascalprecht.translate'])
                     "description": "Input Description"
                 }
             },
+            inputWithCustomModelData: {
+                "type": "input",
+                "path": "path.from.root.customModelInput@some.other.path",
+                "model": {
+                    "any": "data",
+                    "is": {
+                        "here": "there"
+                    }
+                },
+                "view": {
+                    "label": "Input With Custom Model",
+                    "description": "Input With Custom Model Description"
+                }
+            },
             dynamicModelInput: {
                 "type": "input",
                 "path": "path.from.root.input.locales[subPath]",
@@ -199,7 +213,7 @@ angular.module('test', ['json-schema-ui', 'pascalprecht.translate'])
         $scope.customData = {};
 
         $scope.fields = fields;
-        $scope.formFields = [fields.input, fields.checkbox, fields.radio, fields.date, fields.dateYear, fields.select, fields.textarea, fields.array];
+        $scope.formFields = [fields.input, fields.inputWithCustomModelData, fields.checkbox, fields.radio, fields.date, fields.dateYear, fields.select, fields.textarea, fields.array];
         $scope.dynamicChangedModelFields = [fields.dynamicModelInput];
 
         $scope.changeLocalization = function(key) {

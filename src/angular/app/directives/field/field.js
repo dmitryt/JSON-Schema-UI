@@ -22,6 +22,14 @@
                 templateUrl: TEMPLATE_PATH,
                 link: {
                     pre: function preLink(scope, element, attrs) {
+                        var staticModel = $parse("field.model")(scope),
+                            path = $parse("field.path")(scope),
+                            modelRoot = null;
+                        if (staticModel) {
+                            modelRoot = ["data", path.split('@').reverse()[1]].filter(Boolean).join('.');
+                            $parse(modelRoot).assign(scope, angular.copy(staticModel, {}));
+                            scope.field.path = path.replace(/\@/g, '.');
+                        }
                         scope.$watch("field.path", function(value){
                             var modelPath = ["data", value].join(".");
                             if (angular.isDefined(value)) {
