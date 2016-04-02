@@ -24,10 +24,12 @@
                     pre: function preLink(scope, element, attrs) {
                         var staticModel = $parse("field.model")(scope),
                             path = $parse("field.path")(scope),
+                            getter = null,
                             modelRoot = null;
                         if (staticModel) {
                             modelRoot = ["data", path.split('@').reverse()[1]].filter(Boolean).join('.');
-                            $parse(modelRoot).assign(scope, angular.copy(staticModel, {}));
+                            getter = $parse(modelRoot);
+                            getter.assign(scope, angular.copy(staticModel, {}), getter(scope) || {});
                             scope.field.path = path.replace(/\@/g, '.');
                         }
                         scope.$watch("field.path", function(value){

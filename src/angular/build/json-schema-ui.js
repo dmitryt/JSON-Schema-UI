@@ -220,10 +220,12 @@ angular.module('json-schema-ui', [
                     pre: function preLink(scope, element, attrs) {
                         var staticModel = $parse("field.model")(scope),
                             path = $parse("field.path")(scope),
+                            getter = null,
                             modelRoot = null;
                         if (staticModel) {
                             modelRoot = ["data", path.split('@').reverse()[1]].filter(Boolean).join('.');
-                            $parse(modelRoot).assign(scope, angular.copy(staticModel, {}));
+                            getter = $parse(modelRoot);
+                            getter.assign(scope, angular.copy(staticModel, {}), getter(scope) || {});
                             scope.field.path = path.replace(/\@/g, '.');
                         }
                         scope.$watch("field.path", function(value){
@@ -303,80 +305,6 @@ angular.module('json-schema-ui', [
 						});
 					}
                 }
-			};
-		}
-	]);
-})();
-
-(function() {
-	'use strict';
-    var ID = 'scmFieldArray';
-	angular.module('json-schema-ui')
-	.directive(ID, ["$parse", "$q",
-		function($parse, $q) {
-			return {
-				restrict: 'E',
-				replace: true,
-				templateUrl: "/schema/field/array/array.html",
-				link: function(scope) {
-					var _field = scope.field,
-						getOrInitArray = function() {
-							var getter = $parse(_field.path),
-								setter = getter.assign;
-							if (!angular.isDefined(getter(scope.data))) {
-								setter(scope.data, []);
-							}
-							return getter(scope.data);
-						};
-
-					scope.values = getOrInitArray();
-					scope.onSaveItem = function() {
-						var cb = function() {
-								var fm = scope.formModel,
-									modelItem = _field.modelItem ? angular.extend({}, _field.modelItem, fm) : fm;
-								if (scope.editItemIndex > -1) {
-									values[scope.editItemIndex] = modelItem;
-				                } else {
-									values.unshift(modelItem);
-				                }
-								scope.resetForm();
-							},
-							values = scope.values;
-						if (_field.unique) {
-							var fieldObject = _field.fields.filter(function(o){
-									return o.path === _field.unique;
-								})[0],
-								fieldValues = values.map(function(o){
-									return $parse(fieldObject.path)(o);
-								}),
-								fieldUniqueIndex = fieldValues.indexOf($parse(fieldObject.path)(scope.formModel)),
-								df = $q.defer();
-							if (fieldUniqueIndex !== -1 && scope.editItemIndex === -1) {
-								scope.$emit('Json-Schema-Ui:scmFieldArray#onItemUpdate', {df: df, fieldLabel: $parse('view.label')(fieldObject)});
-								df.promise.then(function(){
-									scope.editItemIndex = fieldUniqueIndex;
-									cb();
-								});
-							} else {
-								cb();
-							}
-						} else {
-							cb();
-						}
-					};
-					scope.onRemoveItem = function(index) {
-						scope.values.splice(index, 1);
-					};
-					scope.onEditItem = function(index) {
-						scope.formModel = angular.copy(scope.values[index]);
-		                scope.editItemIndex = index;
-					};
-					scope.resetForm = function() {
-						scope.formModel = {};
-		                scope.editItemIndex = -1;
-					};
-					scope.resetForm();
-				}
 			};
 		}
 	]);
@@ -620,6 +548,80 @@ angular.module('json-schema-ui')
     ]);
 })();
 
+(function() {
+	'use strict';
+    var ID = 'scmFieldArray';
+	angular.module('json-schema-ui')
+	.directive(ID, ["$parse", "$q",
+		function($parse, $q) {
+			return {
+				restrict: 'E',
+				replace: true,
+				templateUrl: "/schema/field/array/array.html",
+				link: function(scope) {
+					var _field = scope.field,
+						getOrInitArray = function() {
+							var getter = $parse(_field.path),
+								setter = getter.assign;
+							if (!angular.isDefined(getter(scope.data))) {
+								setter(scope.data, []);
+							}
+							return getter(scope.data);
+						};
+
+					scope.values = getOrInitArray();
+					scope.onSaveItem = function() {
+						var cb = function() {
+								var fm = scope.formModel,
+									modelItem = _field.modelItem ? angular.extend({}, _field.modelItem, fm) : fm;
+								if (scope.editItemIndex > -1) {
+									values[scope.editItemIndex] = modelItem;
+				                } else {
+									values.unshift(modelItem);
+				                }
+								scope.resetForm();
+							},
+							values = scope.values;
+						if (_field.unique) {
+							var fieldObject = _field.fields.filter(function(o){
+									return o.path === _field.unique;
+								})[0],
+								fieldValues = values.map(function(o){
+									return $parse(fieldObject.path)(o);
+								}),
+								fieldUniqueIndex = fieldValues.indexOf($parse(fieldObject.path)(scope.formModel)),
+								df = $q.defer();
+							if (fieldUniqueIndex !== -1 && scope.editItemIndex === -1) {
+								scope.$emit('Json-Schema-Ui:scmFieldArray#onItemUpdate', {df: df, fieldLabel: $parse('view.label')(fieldObject)});
+								df.promise.then(function(){
+									scope.editItemIndex = fieldUniqueIndex;
+									cb();
+								});
+							} else {
+								cb();
+							}
+						} else {
+							cb();
+						}
+					};
+					scope.onRemoveItem = function(index) {
+						scope.values.splice(index, 1);
+					};
+					scope.onEditItem = function(index) {
+						scope.formModel = angular.copy(scope.values[index]);
+		                scope.editItemIndex = index;
+					};
+					scope.resetForm = function() {
+						scope.formModel = {};
+		                scope.editItemIndex = -1;
+					};
+					scope.resetForm();
+				}
+			};
+		}
+	]);
+})();
+
 ;(function(){
 
 'use strict';
@@ -629,8 +631,6 @@ angular.module('json-schema-ui').run(['$templateCache', function($templateCache)
   $templateCache.put('/schema/field/field.html', '<div class="b-schema-field b-schema-field--{{field.type}}" ng-cloak>\n    <label class="b-schema-field__container clearfix" ng-if="!field.complex">\n        <div class="b-schema-field__label" ng-class="{\'s-required\': field.required}" ng-show="field.view.label && field.type !== \'checkbox\'">\n            {{ field.view.label | translate }}\n        </div>\n    	<div class="b-schema-field__description" ng-hide="isReadonly || !field.view.description">{{ field.view.description | translate }}</div>\n        <div class="b-schema-field__value" ng-show="isReadonly && displayedValue">{{ displayedValue }}</div>\n        <%s class="b-schema-field__control" ng-hide="isReadonly"></%s>\n    </label>\n    <%s ng-if="field.complex"></%s>\n</div>\n');
 
   $templateCache.put('/schema/fieldset/fieldset.html', '<div class="b-schema-fieldset">\n    <scm-field data="data" field="field" is-readonly="isReadonly" sub-path="{{subPath}}" ng-repeat="field in fields"></scm-field>\n</div>\n');
-
-  $templateCache.put('/schema/field/array/array.html', '<div>\n    <div class="b-schema-field--array__label" ng-if=""></div>\n    <ng-form ng-if="!isReadonly">\n        <scm-field data="formModel" field="childField" sub-path="{{subPath}}" ng-repeat="childField in field.fields"></scm-field>\n        <div class="b-fields-array-buttons">\n            <button class="btn btn-primary" ng-click="onSaveItem()">{{editItemIndex > -1 ? \'BUTTON_UPDATE\' : \'BUTTON_SAVE\' | translate}}</button>\n            <button class="btn" ng-click="resetForm()">{{\'BUTTON_RESET\' | translate}}</button>\n        </div>\n    </ng-form>\n    <div class="b-schema-field--array__values">\n        <div class="b-schema-field--array__values__item row" ng-repeat="item in values">\n            <div class="cell col-xs-10 col-md-10">\n                <scm-field data="item" field="childField" is-readonly="true" sub-path="{{subPath}}" ng-repeat="childField in field.fields"></scm-field>\n            </div>\n            <div class="cell col-xs-2 col-md-2 text-right" ng-hide="isReadonly">\n                <div class="glyphicon glyphicon-pencil" ng-click="onEditItem($index)" title="Edit"></div>\n                <div class="glyphicon glyphicon-trash" ng-click="onRemoveItem($index)" title="Remove"></div>\n            </div>\n        </div>\n    </div>\n</div>\n');
 
   $templateCache.put('/schema/field/checkbox/checkbox.html', '<label class="b-schema-field--checkbox__table b-schema-field--checkbox__inner" ng-model scm-field-formatter uib-btn-checkbox btn-checkbox-true="field.value || true" btn-checkbox-false="null">\n    <div class="b-schema-field__cell">\n        <div class="b-schema-field--checkbox__inner__icon"></div>\n    </div>\n    <div class="b-schema-field__cell">\n        <div class="b-schema-field--checkbox__inner__text">{{field.view.label | translate}}</div>\n    </div>\n</label>\n');
 
@@ -643,6 +643,8 @@ angular.module('json-schema-ui').run(['$templateCache', function($templateCache)
   $templateCache.put('/schema/field/select/select.html', '<div>\n	<ui-select ng-model scm-field-formatter theme="bootstrap" ng-disabled="loading" on-select="onSelect()">\n		<ui-select-match placeholder="{{field.view.placeholder | translate}}">{{displayedValue || $select.selected.label}}</ui-select-match>\n		<ui-select-choices repeat="item.key as item in values | filter: {label: $select.search}">\n			<span ng-bind-html="item.label | highlight: $select.search"></span>\n		</ui-select-choices>\n	</ui-select>\n</div>\n');
 
   $templateCache.put('/schema/field/textarea/textarea.html', '<textarea ng-model scm-field-formatter ng-required="field.required" class="form-control"></textarea>\n');
+
+  $templateCache.put('/schema/field/array/array.html', '<div>\n    <div class="b-schema-field--array__label" ng-if=""></div>\n    <ng-form ng-if="!isReadonly">\n        <scm-field data="formModel" field="childField" sub-path="{{subPath}}" ng-repeat="childField in field.fields"></scm-field>\n        <div class="b-fields-array-buttons">\n            <button class="btn btn-primary" ng-click="onSaveItem()">{{editItemIndex > -1 ? \'BUTTON_UPDATE\' : \'BUTTON_SAVE\' | translate}}</button>\n            <button class="btn" ng-click="resetForm()">{{\'BUTTON_RESET\' | translate}}</button>\n        </div>\n    </ng-form>\n    <div class="b-schema-field--array__values">\n        <div class="b-schema-field--array__values__item row" ng-repeat="item in values">\n            <div class="cell col-xs-10 col-md-10">\n                <scm-field data="item" field="childField" is-readonly="true" sub-path="{{subPath}}" ng-repeat="childField in field.fields"></scm-field>\n            </div>\n            <div class="cell col-xs-2 col-md-2 text-right" ng-hide="isReadonly">\n                <div class="glyphicon glyphicon-pencil" ng-click="onEditItem($index)" title="Edit"></div>\n                <div class="glyphicon glyphicon-trash" ng-click="onRemoveItem($index)" title="Remove"></div>\n            </div>\n        </div>\n    </div>\n</div>\n');
 
 }]);
 

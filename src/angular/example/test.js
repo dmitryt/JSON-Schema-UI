@@ -116,7 +116,10 @@ angular.module('test', ['json-schema-ui', 'pascalprecht.translate'])
             },
             date: {
                 "type": "date",
-                "path": "path.from.root.date",
+                "path": "path.from.root.date@someValue",
+                "model": {
+                    "modelDate": "some data"
+                },
                 "view": {
                     "label": "Date Label",
                     "description": "Date Description"
