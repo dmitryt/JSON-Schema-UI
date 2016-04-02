@@ -22,10 +22,12 @@
 					scope.values = getOrInitArray();
 					scope.onSaveItem = function() {
 						var cb = function() {
+								var fm = scope.formModel,
+									modelItem = _field.modelItem ? angular.extend({}, _field.modelItem, fm) : fm;
 								if (scope.editItemIndex > -1) {
-									values[scope.editItemIndex] = scope.formModel;
+									values[scope.editItemIndex] = modelItem;
 				                } else {
-									values.unshift(scope.formModel);
+									values.unshift(modelItem);
 				                }
 								scope.resetForm();
 							},

@@ -151,7 +151,13 @@ angular.module('test', ['json-schema-ui', 'pascalprecht.translate'])
             array: {
                 "type": "array",
                 "complex": true,
-                "path": "path.from.root.array",
+                "path": "path.from.root.array@relative.model",
+                "model": {
+                    "some": "data is here"
+                },
+                "modelItem": {
+                    "itemModelData": "123"
+                },
                 "fields": [{
                     "type": "input",
                     "path": "child1",
