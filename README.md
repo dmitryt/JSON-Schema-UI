@@ -76,6 +76,8 @@ Let's take a look at structure of field schema:
 | value         | *Optional*. Actual for *checkbox* control. It's a value, that will be filled in model data, when checkbox will be checked. |
 | source         | *Optional*. Actual for *select* and *radio* control. Name of source data. Don't forget to cinfgiure *dictionaryEndpoint* to load it. |
 | complex        | *Optional*. Default is false. Every field has predefined behaviour - it has edit and view modes. But if the field is complex, than it wil be easier for client to provide its own behaviour for such cases. For instance, one of the predefined complex field - is *array* field. |
+| model        | *Optional*. Is used to extend field's model with static object. For nested fields *modelItem* property should be used |
+| modelItem    | *Optional*. The same as *model* property, but is used for *array* item fields. |
 | unique        | *Optional\|Experimental*. Is used for *array* field. If attribute is set as unique, than only one item of array has it. If user tries to add array item with the same attribute, than event will be fired. The key of event is 'Json-Schema-Ui:scmFieldArray#onItemUpdate'.|
 | required      | *Optional*. Is passed into ng-required |
 | disabled      | *Optional*. Is passed into ng-disabled |
