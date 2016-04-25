@@ -61,8 +61,7 @@ Let's take a look at structure of field schema:
     "type": "input",
     "path": "path.from.root.input",
     "view": {
-        "label": "Input Label",
-        "description": "Input Description"
+        "label": "Input Label"
     }
 }
 ```
@@ -83,7 +82,6 @@ Let's take a look at structure of field schema:
 | disabled      | *Optional*. Is passed into ng-disabled |
 | validators    | *Optional*. Array of validators with the next format [{label: <string>, fn: <function>}...]. Validator should return true if value if valid and false otherwise.|
 | view.label    | *Optional*. Label, that will be described under the provided control.|
-| view.description    | *Optional*. Description, that will be described under the provided control.|
 | view.minMode  | *Optional*. Actual for *date* control. Available option: "year".
 | view.placeholder    | *Optional*. Placeholder, that will be described in the provided control.|
 

@@ -5,8 +5,7 @@
                 "type": "input",
                 "path": "path.from.root.input",
                 "view": {
-                    "label": "External Source Input Label",
-                    "description": "External Source Input Description"
+                    "label": "External Source Input Label"
                 }
             },
             {

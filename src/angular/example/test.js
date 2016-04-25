@@ -22,13 +22,9 @@ angular.module('test', ['json-schema-ui', 'pascalprecht.translate'])
         });
         $translateProvider.translations('de', {
           'Input Label': "Die Beschriftung des Eingabefeldes",
-          'Input Description': "Beschreibung des Eingabefeldes",
           'Date Label': "Tag Datumsfeld",
-          'Date Description': "Datum Beschreibung des Feldes",
           'Select Label': "Tag Dropdown-Liste",
-          'Select Description': "Beschreibung Dropdown-Liste",
           'Textarea Label': "Markieren Sie das Texteingabefeld",
-          'Textarea Description': "Beschreibung des Texteingabebereich",
           'Checkbox Label': "Flaglabel",
           'Radio Label': "Schalter-Aufkleber",
           'Child1 Label': "Tag Nachkomme1",
@@ -40,13 +36,9 @@ angular.module('test', ['json-schema-ui', 'pascalprecht.translate'])
         });
         $translateProvider.translations('ru', {
           'Input Label': "Метка поля ввода",
-          'Input Description': "Описание поля ввода",
           'Date Label': "Метка поля даты",
-          'Date Description': "Описание поля даты",
           'Select Label': "Метка выпадающего списка",
-          'Select Description': "Описание выпадающего списка",
           'Textarea Label': "Метка области ввода текста",
-          'Textarea Description': "Описание области ввода текста",
           'Checkbox Label': "Метка флажка",
           'Radio Label': "Метка переключателя",
           'Child1 Label': "Метка потомка1",
@@ -72,8 +64,7 @@ angular.module('test', ['json-schema-ui', 'pascalprecht.translate'])
                 "type": "input",
                 "path": "path.from.root.input",
                 "view": {
-                    "label": "Input Label",
-                    "description": "Input Description"
+                    "label": "Input Label"
                 }
             },
             inputWithCustomModelData: {
@@ -86,16 +77,14 @@ angular.module('test', ['json-schema-ui', 'pascalprecht.translate'])
                     }
                 },
                 "view": {
-                    "label": "Input With Custom Model",
-                    "description": "Input With Custom Model Description"
+                    "label": "Input With Custom Model"
                 }
             },
             dynamicModelInput: {
                 "type": "input",
                 "path": "path.from.root.input.locales[subPath]",
                 "view": {
-                    "label": "Input Label",
-                    "description": "Input Description"
+                    "label": "Input Label"
                 }
             },
             checkbox: {
@@ -121,8 +110,7 @@ angular.module('test', ['json-schema-ui', 'pascalprecht.translate'])
                     "modelDate": "some data"
                 },
                 "view": {
-                    "label": "Date Label",
-                    "description": "Date Description"
+                    "label": "Date Label"
                 }
             },
             dateYear: {
@@ -139,16 +127,14 @@ angular.module('test', ['json-schema-ui', 'pascalprecht.translate'])
                 "path": "path.from.root.select",
                 "view": {
                     "label": "Select Label",
-                    "placeholder": "Select country",
-                    "description": "Select Description"
+                    "placeholder": "Select country"
                 }
             },
             textarea: {
                 "type": "textarea",
                 "path": "path.from.root.textarea",
                 "view": {
-                    "label": "Textarea Label",
-                    "description": "Textarea Description"
+                    "label": "Textarea Label"
                 }
             },
             array: {
@@ -177,10 +163,7 @@ angular.module('test', ['json-schema-ui', 'pascalprecht.translate'])
             },
             custom: {
                 "directive": "my-directive",
-                "path": "path.from.root.custom",
-                "view": {
-                    "description": "Custom Description"
-                }
+                "path": "path.from.root.custom"
             }
         };
         $scope.selected = {

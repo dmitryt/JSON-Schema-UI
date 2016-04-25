@@ -1,13 +1,15 @@
-<div class="input-group" ng-if="!isReadonly">
-    <input type="text" class="form-control"
-        uib-datepicker-popup="{{format}}"
-        ng-model scm-field-formatter
-        is-open="popup.opened"
-        show-button-bar="false"
-        datepicker-options="dateOptions"
-        ng-required="true"
-        close-text="Close" />
-    <div class="input-group-btn">
-        <button type="button" class="btn btn-default" ng-click="open()"><div class="glyphicon glyphicon-calendar"></div></button>
+<div ng-if="!isReadonly">
+    <div class="input-group">
+        <input type="text" class="form-control"
+            uib-datepicker-popup="{{format}}"
+            ng-model scm-field-formatter
+            is-open="popup.opened"
+            show-button-bar="false"
+            datepicker-options="dateOptions"
+            ng-required="true"
+            close-text="Close" />
+        <div class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="open()"><div class="glyphicon glyphicon-calendar"></div></button>
+        </div>
     </div>
 </div>

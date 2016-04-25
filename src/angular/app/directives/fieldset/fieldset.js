@@ -10,6 +10,7 @@
 					schema:'=',
 					data:'=',
 					isReadonly: "=",
+					display: "@",
 					subPath: "@"
 				},
 				restrict: "E",

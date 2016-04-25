@@ -15,6 +15,7 @@
                     field: '=',
                     data: '=',
                     isReadonly: "=",
+                    display: "@",
                     subPath: "@"
                 },
                 restrict: "E",

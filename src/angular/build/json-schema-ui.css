@@ -21,6 +21,20 @@
   width: 10px;
   height: 10px;
 }
+.b-schema-field.s--inline .b-schema-field__container {
+  display: flex;
+  align-items: center;
+}
+.b-schema-field.s--inline .b-schema-field__label {
+  flex: auto;
+  flex-shrink: 0;
+  flex-grow: 0;
+  padding-right: 10px;
+}
+.b-schema-field.s--inline .b-schema-field__value,
+.b-schema-field.s--inline .b-schema-field__control {
+  flex: auto;
+}
 .b-schema-field__table {
   display: table;
   width: 100%;
@@ -83,6 +97,9 @@
 }
 .b-schema-field--radio__inner.active .b-schema-field--radio__inner__icon {
   background-color: blue;
+}
+.b-schema-field--radio.s--inline .b-schema-field__control {
+  flex-grow: 0;
 }
 .b-schema-field--array {
   padding: 10px;

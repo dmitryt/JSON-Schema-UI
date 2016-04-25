@@ -6,7 +6,7 @@
 	}
 
     &__label {
-    	display: block;
+		display: block;
 		&.s-required {
 			&::after {
 				content: "*";
@@ -19,6 +19,23 @@
 			}
 		}
     }
+
+	&.s--inline &__container {
+		display: flex;
+		align-items: center;
+	}
+
+	&.s--inline &__label {
+		flex: auto;
+		flex-shrink: 0;
+		flex-grow: 0;
+		padding-right: 10px;
+	}
+
+	&.s--inline &__value,
+	&.s--inline &__control {
+		flex: auto;
+	}
 
 	&__table {
 		display: table;
