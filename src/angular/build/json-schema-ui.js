@@ -222,11 +222,14 @@ angular.module('json-schema-ui', [
                         var staticModel = $parse("field.model")(scope),
                             path = $parse("field.path")(scope),
                             getter = null,
-                            modelRoot = null;
+                            modelRoot = null,
+                            value = null;
                         if (staticModel) {
                             modelRoot = ["data", path.split('@').reverse()[1]].filter(Boolean).join('.');
                             getter = $parse(modelRoot);
-                            getter.assign(scope, angular.copy(staticModel, {}), getter(scope) || {});
+                            if (!getter(scope)) {
+                                getter.assign(scope, angular.copy(staticModel));
+                            }
                             scope.field.path = path.replace(/\@/g, '.');
                         }
                         scope.$watch("field.path", function(value){
@@ -313,42 +316,6 @@ angular.module('json-schema-ui', [
 })();
 
 (function() {
-    var ID = 'scmFieldDate';
-
-angular.module('json-schema-ui')
-.directive(ID, ["$parse", "schemaStateService",
-    function($parse, schemaStateService) {
-        return {
-            restrict: "E",
-            replace: true,
-            templateUrl: "/schema/field/date/date.html",
-            link: function(scope, element, attrs) {
-                var format = schemaStateService.get('dateFormat') || 'dd/MM/yyyy',
-                    minMode = $parse("field.view.minMode")(scope);
-                scope.open = function() {
-                    scope.popup.opened = true;
-                };
-
-                scope.dateOptions = {
-                    formatYear: 'yyyy',
-                    startingDay: 1,
-                    minMode: minMode || 'day',
-                    maxDate: new Date()
-                };
-
-                scope.popup = {
-                    opened: false
-                };
-
-                scope.format = minMode === 'year' ? 'yyyy' : format;
-            }
-        };
-    }
-]);
-
-})();
-
-(function() {
 	'use strict';
     var ID = 'scmFieldArray';
 	angular.module('json-schema-ui')
@@ -424,35 +391,6 @@ angular.module('json-schema-ui')
 
 (function() {
     'use strict';
-    var ID = 'scmFieldInput';
-    angular.module('json-schema-ui')
-    .directive(ID, ["$parse", "schemaFieldsService",
-        function($parse, schemaFieldsService) {
-            return {
-                restrict: "E",
-                replace: true,
-                templateUrl: "/schema/field/input/input.html",
-                link: {
-                    pre: function(scope, element, attrs) {
-                        var type = scope.field.type;
-                        if (type === 'email') {
-                            scope.pattern = schemaFieldsService.getPattern(type);
-                            scope.field.validators = [{
-                                label: 'HINT_ACCEPTED',
-                                fn: function(v) {
-                                    return scope.pattern.test(v);
-                                }
-                            }];
-                        }
-                    }
-                }
-            }
-        }
-    ]);
-})();
-
-(function() {
-    'use strict';
     var ID = 'scmFieldCheckbox';
     angular.module('json-schema-ui')
     .directive(ID, [
@@ -464,6 +402,42 @@ angular.module('json-schema-ui')
             }
         }
     ]);
+})();
+
+(function() {
+    var ID = 'scmFieldDate';
+
+angular.module('json-schema-ui')
+.directive(ID, ["$parse", "schemaStateService",
+    function($parse, schemaStateService) {
+        return {
+            restrict: "E",
+            replace: true,
+            templateUrl: "/schema/field/date/date.html",
+            link: function(scope, element, attrs) {
+                var format = schemaStateService.get('dateFormat') || 'dd/MM/yyyy',
+                    minMode = $parse("field.view.minMode")(scope);
+                scope.open = function() {
+                    scope.popup.opened = true;
+                };
+
+                scope.dateOptions = {
+                    formatYear: 'yyyy',
+                    startingDay: 1,
+                    minMode: minMode || 'day',
+                    maxDate: new Date()
+                };
+
+                scope.popup = {
+                    opened: false
+                };
+
+                scope.format = minMode === 'year' ? 'yyyy' : format;
+            }
+        };
+    }
+]);
+
 })();
 
 (function() {
@@ -531,40 +505,26 @@ angular.module('json-schema-ui')
 
 (function() {
     'use strict';
-    var ID = 'scmFieldSelect';
+    var ID = 'scmFieldInput';
     angular.module('json-schema-ui')
-    .directive(ID, ["$rootScope", "schemaFieldsService", "schemaStateService",
-        function($rootScope, schemaFieldsService, schemaStateService) {
+    .directive(ID, ["$parse", "schemaFieldsService",
+        function($parse, schemaFieldsService) {
             return {
                 restrict: "E",
                 replace: true,
-                templateUrl: "/schema/field/select/select.html",
-                link: function(scope, element, attrs) {
-                    scope.selected = {};
-                    var updateCb = function() {
-                            schemaFieldsService.getDictionary(scope.field.source).then(function(values){
-                                if (!Array.isArray(values)) {
-                                    return console.error("json-schema-ui#scmFieldSelect: Expected Array, got: ", values);
+                templateUrl: "/schema/field/input/input.html",
+                link: {
+                    pre: function(scope, element, attrs) {
+                        var type = scope.field.type;
+                        if (type === 'email') {
+                            scope.pattern = schemaFieldsService.getPattern(type);
+                            scope.field.validators = [{
+                                label: 'HINT_ACCEPTED',
+                                fn: function(v) {
+                                    return scope.pattern.test(v);
                                 }
-                                scope.values = values;
-                                scope.loading = values.length === 0;
-                                updateDisplayedValue();
-                            });
-                        },
-                        updateDisplayedValue = function() {
-                            var selectedItem = schemaFieldsService.findSelectedItem(scope.values, scope.field.path, scope.data);
-                            if (selectedItem) {
-                                scope.displayedValue = selectedItem.label;
-                            }
-                        };
-                    updateCb();
-                    scope.loading = true;
-                    scope.onSelect = updateDisplayedValue;
-                    if (schemaStateService.get('i18n')) {
-                        var token = schemaFieldsService.subscribeOnLocaleChanged(updateCb);
-                        scope.$on('destroy', function() {
-                            schemaFieldsService.unsubscribeOnLocaleChanged(token);
-                        });
+                            }];
+                        }
                     }
                 }
             }
@@ -611,6 +571,49 @@ angular.module('json-schema-ui')
 
 (function() {
     'use strict';
+    var ID = 'scmFieldSelect';
+    angular.module('json-schema-ui')
+    .directive(ID, ["$rootScope", "schemaFieldsService", "schemaStateService",
+        function($rootScope, schemaFieldsService, schemaStateService) {
+            return {
+                restrict: "E",
+                replace: true,
+                templateUrl: "/schema/field/select/select.html",
+                link: function(scope, element, attrs) {
+                    scope.selected = {};
+                    var updateCb = function() {
+                            schemaFieldsService.getDictionary(scope.field.source).then(function(values){
+                                if (!Array.isArray(values)) {
+                                    return console.error("json-schema-ui#scmFieldSelect: Expected Array, got: ", values);
+                                }
+                                scope.values = values;
+                                scope.loading = values.length === 0;
+                                updateDisplayedValue();
+                            });
+                        },
+                        updateDisplayedValue = function() {
+                            var selectedItem = schemaFieldsService.findSelectedItem(scope.values, scope.field.path, scope.data);
+                            if (selectedItem) {
+                                scope.displayedValue = selectedItem.label;
+                            }
+                        };
+                    updateCb();
+                    scope.loading = true;
+                    scope.onSelect = updateDisplayedValue;
+                    if (schemaStateService.get('i18n')) {
+                        var token = schemaFieldsService.subscribeOnLocaleChanged(updateCb);
+                        scope.$on('destroy', function() {
+                            schemaFieldsService.unsubscribeOnLocaleChanged(token);
+                        });
+                    }
+                }
+            }
+        }
+    ]);
+})();
+
+(function() {
+    'use strict';
     var ID = 'scmFieldTextarea';
     angular.module('json-schema-ui')
     .directive(ID, [
@@ -634,17 +637,17 @@ angular.module('json-schema-ui').run(['$templateCache', function($templateCache)
 
   $templateCache.put('/schema/fieldset/fieldset.html', '<div class="b-schema-fieldset">\n    <scm-field data="data" field="field" is-readonly="isReadonly" display="{{display}}" sub-path="{{subPath}}" ng-repeat="field in fields"></scm-field>\n</div>\n');
 
-  $templateCache.put('/schema/field/date/date.html', '<div ng-if="!isReadonly">\n    <div class="input-group">\n        <input type="text" class="form-control"\n            uib-datepicker-popup="{{format}}"\n            ng-model scm-field-formatter\n            is-open="popup.opened"\n            show-button-bar="false"\n            datepicker-options="dateOptions"\n            ng-required="true"\n            close-text="Close" />\n        <div class="input-group-btn">\n            <button type="button" class="btn btn-default" ng-click="open()"><div class="glyphicon glyphicon-calendar"></div></button>\n        </div>\n    </div>\n</div>\n');
-
   $templateCache.put('/schema/field/array/array.html', '<div>\n    <div class="b-schema-field--array__label" ng-if=""></div>\n    <ng-form ng-if="!isReadonly">\n        <scm-field data="formModel" field="childField" sub-path="{{subPath}}" ng-repeat="childField in field.fields"></scm-field>\n        <div class="b-fields-array-buttons">\n            <button class="btn btn-primary" ng-click="onSaveItem()">{{editItemIndex > -1 ? \'BUTTON_UPDATE\' : \'BUTTON_SAVE\' | translate}}</button>\n            <button class="btn" ng-click="resetForm()">{{\'BUTTON_RESET\' | translate}}</button>\n        </div>\n    </ng-form>\n    <div class="b-schema-field--array__values">\n        <div class="b-schema-field--array__values__item row" ng-repeat="item in values">\n            <div class="cell col-xs-10 col-md-10">\n                <scm-field data="item" field="childField" is-readonly="true" sub-path="{{subPath}}" ng-repeat="childField in field.fields"></scm-field>\n            </div>\n            <div class="cell col-xs-2 col-md-2 text-right" ng-hide="isReadonly">\n                <div class="glyphicon glyphicon-pencil" ng-click="onEditItem($index)" title="Edit"></div>\n                <div class="glyphicon glyphicon-trash" ng-click="onRemoveItem($index)" title="Remove"></div>\n            </div>\n        </div>\n    </div>\n</div>\n');
-
-  $templateCache.put('/schema/field/input/input.html', '<div ng-hide="isReadonly">\n    <div class="b-schema-field__table">\n        <div class="b-schema-field__cell">\n            <input type="{{field.type}}" ng-model scm-field-formatter ng-required="field.required" ng-disabled="field.disabled" class="form-control"/>\n        </div>\n        <div class="b-schema-field__cell" ng-show="field.validators.length">\n            <div class="b-schema-field__hint" ng-repeat="v in field.validators" ng-class="{accepted: __meta__.validation[v.label]}">{{v.label | translate: v.params}}</div>\n        </div>\n    </div>\n</div>\n');
 
   $templateCache.put('/schema/field/checkbox/checkbox.html', '<label class="b-schema-field--checkbox__table b-schema-field--checkbox__inner" ng-model scm-field-formatter uib-btn-checkbox btn-checkbox-true="field.value || true" btn-checkbox-false="null">\n    <div class="b-schema-field__cell">\n        <div class="b-schema-field--checkbox__inner__icon"></div>\n    </div>\n    <div class="b-schema-field__cell">\n        <div class="b-schema-field--checkbox__inner__text">{{field.view.label | translate}}</div>\n    </div>\n</label>\n');
 
-  $templateCache.put('/schema/field/select/select.html', '<div>\n	<ui-select ng-model scm-field-formatter theme="bootstrap" ng-disabled="loading" on-select="onSelect()">\n		<ui-select-match placeholder="{{field.view.placeholder | translate}}">{{displayedValue || $select.selected.label}}</ui-select-match>\n		<ui-select-choices repeat="item.key as item in values | filter: {label: $select.search}">\n			<span ng-bind-html="item.label | highlight: $select.search"></span>\n		</ui-select-choices>\n	</ui-select>\n</div>\n');
+  $templateCache.put('/schema/field/date/date.html', '<div ng-if="!isReadonly">\n    <div class="input-group">\n        <input type="text" class="form-control"\n            uib-datepicker-popup="{{format}}"\n            ng-model scm-field-formatter\n            is-open="popup.opened"\n            show-button-bar="false"\n            datepicker-options="dateOptions"\n            ng-required="true"\n            close-text="Close" />\n        <div class="input-group-btn">\n            <button type="button" class="btn btn-default" ng-click="open()"><div class="glyphicon glyphicon-calendar"></div></button>\n        </div>\n    </div>\n</div>\n');
+
+  $templateCache.put('/schema/field/input/input.html', '<div ng-hide="isReadonly">\n    <div class="b-schema-field__table">\n        <div class="b-schema-field__cell">\n            <input type="{{field.type}}" ng-model scm-field-formatter ng-required="field.required" ng-disabled="field.disabled" class="form-control"/>\n        </div>\n        <div class="b-schema-field__cell" ng-show="field.validators.length">\n            <div class="b-schema-field__hint" ng-repeat="v in field.validators" ng-class="{accepted: __meta__.validation[v.label]}">{{v.label | translate: v.params}}</div>\n        </div>\n    </div>\n</div>\n');
 
   $templateCache.put('/schema/field/radio/radio.html', '<label class="b-schema-field--radio__table b-schema-field--radio__inner" ng-repeat="item in values" ng-model scm-field-formatter uib-btn-radio="item.key">\n    <div class="b-schema-field__cell">\n        <div class="b-schema-field--radio__inner__icon"></div>\n    </div>\n    <div class="b-schema-field__cell">\n        <div class="b-schema-field--radio__inner__text">{{item.label | translate}}</div>\n    </div>\n</label>\n');
+
+  $templateCache.put('/schema/field/select/select.html', '<div>\n	<ui-select ng-model scm-field-formatter theme="bootstrap" ng-disabled="loading" on-select="onSelect()">\n		<ui-select-match placeholder="{{field.view.placeholder | translate}}">{{displayedValue || $select.selected.label}}</ui-select-match>\n		<ui-select-choices repeat="item.key as item in values | filter: {label: $select.search}">\n			<span ng-bind-html="item.label | highlight: $select.search"></span>\n		</ui-select-choices>\n	</ui-select>\n</div>\n');
 
   $templateCache.put('/schema/field/textarea/textarea.html', '<textarea ng-model scm-field-formatter ng-required="field.required" class="form-control"></textarea>\n');
 

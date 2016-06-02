@@ -26,11 +26,14 @@
                         var staticModel = $parse("field.model")(scope),
                             path = $parse("field.path")(scope),
                             getter = null,
-                            modelRoot = null;
+                            modelRoot = null,
+                            value = null;
                         if (staticModel) {
                             modelRoot = ["data", path.split('@').reverse()[1]].filter(Boolean).join('.');
                             getter = $parse(modelRoot);
-                            getter.assign(scope, angular.copy(staticModel, {}), getter(scope) || {});
+                            if (!getter(scope)) {
+                                getter.assign(scope, angular.copy(staticModel));
+                            }
                             scope.field.path = path.replace(/\@/g, '.');
                         }
                         scope.$watch("field.path", function(value){
