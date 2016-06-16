@@ -22,8 +22,12 @@
                         FORMATTERS = {
                             date: function(value) {
                                 var result = value;
-                                if (result && mode === 'year') {
-                                    result = new Date(value, 0);
+                                if (result) {
+                                    if (mode === 'year') {
+                                        result = new Date(value, 0);
+                                    } else {
+                                        result = new Date(value);
+                                    }
                                 }
                                 return result;
                             }
