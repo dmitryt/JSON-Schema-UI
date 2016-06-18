@@ -27,7 +27,15 @@
                             path = $parse("field.path")(scope),
                             getter = null,
                             modelRoot = null,
-                            value = null;
+                            value = null,
+                            initValue = function() {
+                                var path = ['data', scope.field.path].join('.'),
+                                    ftype = $parse('type')(scope.field),
+                                    defaultValue = ftype === 'array' ? [] : '';
+                                if (!$parse(path)(scope)) {
+                                    $parse(path).assign(scope, defaultValue);
+                                }
+                            };
                         if (staticModel) {
                             modelRoot = ["data", path.split('@').reverse()[1]].filter(Boolean).join('.');
                             getter = $parse(modelRoot);
@@ -42,6 +50,11 @@
                                 scope.displayedValue = $parse(modelPath)(scope);
                             }
                         });
+                        if (scope.field.path.indexOf('subPath') !== -1) {
+                            scope.$watch("subPath", initValue);
+                        } else {
+                            initValue();
+                        }
                         scope.__meta__ = {};
                         scope.getValue = function(key) {
                             var path = scope.field.path,
